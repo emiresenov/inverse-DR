@@ -1,4 +1,4 @@
-import numpy as np
+import jax.numpy as jnp
 
 u = 1.0
 t_0 = 0.0
@@ -9,10 +9,14 @@ c = 0.01
 
 
 def solution(t):
-    return - t / (r*c) + np.log(u/r)
+    return - t / (r*c) + jnp.log(u/r)
 
 
 def get_dataset():
-    t = np.linspace(t_0, t_end, n_samples)
+    t = jnp.linspace(t_0, t_end, n_samples)
     u = solution(t)
     return t,u
+
+
+if __name__ == "__main__":
+    print(get_dataset())
