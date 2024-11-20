@@ -1,0 +1,16 @@
+{"time":"2024-11-20T10:15:40.971729+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-20T10:15:40.971799+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/examples/rc/wandb/run-20241120_101540-aov7khyc/logs/debug-core.log"}
+{"time":"2024-11-20T10:15:41.086991+01:00","level":"INFO","msg":"created new stream","id":"aov7khyc"}
+{"time":"2024-11-20T10:15:41.087027+01:00","level":"INFO","msg":"stream: started","id":"aov7khyc"}
+{"time":"2024-11-20T10:15:41.087038+01:00","level":"INFO","msg":"handler: started","stream_id":"aov7khyc"}
+{"time":"2024-11-20T10:15:41.08704+01:00","level":"INFO","msg":"sender: started","stream_id":"aov7khyc"}
+{"time":"2024-11-20T10:15:41.087073+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"aov7khyc"}
+{"time":"2024-11-20T10:15:41.385557+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-20T10:15:42.469306+01:00","level":"INFO","msg":"stream: closing","id":"aov7khyc"}
+{"time":"2024-11-20T10:15:42.469337+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-20T10:15:42.469699+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-20T10:15:43.194313+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-20T10:15:43.450379+01:00","level":"INFO","msg":"handler: closed","stream_id":"aov7khyc"}
+{"time":"2024-11-20T10:15:43.450439+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"aov7khyc"}
+{"time":"2024-11-20T10:15:43.450968+01:00","level":"INFO","msg":"sender: closed","stream_id":"aov7khyc"}
+{"time":"2024-11-20T10:15:43.451171+01:00","level":"INFO","msg":"stream: closed","id":"aov7khyc"}

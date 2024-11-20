@@ -43,7 +43,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 5000
+    training.max_steps = 2000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -73,7 +73,7 @@ def get_config():
     saving.num_keep_ckpts = 10
 
     # Input shape for initializing Flax models
-    config.input_dim = 2
+    config.input_dim = 1
 
     # Integer for PRNG random seed.
     config.seed = 42

@@ -1,0 +1,35 @@
+Waiting for JIT...
+0.0
+Traceback (most recent call last):
+  File "/opt/anaconda3/lib/python3.11/site-packages/jax/_src/api.py", line 1020, in _get_axis_size
+    return shape[axis]
+           ~~~~~^^^^^^
+IndexError: tuple index out of range
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/Users/emiresenov/jaxrc/examples/rc/main.py", line 42, in <module>
+    app.run(main)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 308, in run
+    _run_main(main, args)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/examples/rc/main.py", line 34, in main
+    train.train_and_evaluate(FLAGS.config, FLAGS.workdir)
+  File "/Users/emiresenov/jaxrc/examples/rc/train.py", line 51, in train_and_evaluate
+    model.state = model.step(model.state, batch)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.11/site-packages/jaxpi/models.py", line 171, in step
+    grads = grad(self.loss)(state.params, state.weights, batch, *args)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.11/site-packages/jaxpi/models.py", line 124, in loss
+    losses = self.losses(params, batch, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/examples/rc/models.py", line 56, in losses
+    u_pred = vmap(self.u_net, (None, 0))(params, self.t0)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+ValueError: vmap was requested to map its argument along axis 0, which implies that its rank should be at least 1, but is only 0 (its shape is ())
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.

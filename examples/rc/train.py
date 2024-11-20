@@ -26,23 +26,20 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     logger = Logger()
 
     # Get dataset
-    u_ref, t_star, x_star = get_dataset()
+    t_star, u_ref  = get_dataset()
     u0 = u_ref[0]
 
     t0 = t_star[0]
-    t1 = t_star[-1]
-
-    x0 = x_star[0]
-    x1 = x_star[-1]
+    t_end = t_star[-1]
 
     # Define domain
-    dom = jnp.array([[t0, t1], [x0, x1]])
+    dom = jnp.array([[t0, t_end]])
 
     # Define residual sampler
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.Burgers(config, u0, t_star, x_star)
+    model = models.Burgers(config, u0, t_star)
 
     # Initialize evaluator
     evaluator = models.BurgersEvaluator(config, model)

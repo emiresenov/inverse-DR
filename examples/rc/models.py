@@ -11,12 +11,11 @@ from matplotlib import pyplot as plt
 
 
 class Burgers(ForwardIVP):
-    def __init__(self, config, u0, t_star, x_star):
+    def __init__(self, config, u0, t_star):
         super().__init__(config)
 
         self.u0 = u0
         self.t_star = t_star
-        self.x_star = x_star
 
         self.t0 = t_star[0]
         self.t1 = t_star[-1]
@@ -25,17 +24,17 @@ class Burgers(ForwardIVP):
         self.u_pred_fn = vmap(vmap(self.u_net, (None, None, 0)), (None, 0, None))
         self.r_pred_fn = vmap(vmap(self.r_net, (None, None, 0)), (None, 0, None))
 
-    def u_net(self, params, t, x):
-        z = jnp.stack([t, x])
+    def u_net(self, params, t):
+        z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
         return u[0]
 
-    def grad_net(self, params, t, x):
-        u_t = grad(self.u_net, argnums=1)(params, t, x)
+    def grad_net(self, params, t):
+        u_t = grad(self.u_net, argnums=1)(params, t)
         return u_t
 
-    def r_net(self, params, t, x):
-        u_t = self.grad_net(params, t, x)
+    def r_net(self, params, t):
+        u_t = self.grad_net(params, t)
         return u_t + 0.1
 
     @partial(jit, static_argnums=(0,))
@@ -43,7 +42,7 @@ class Burgers(ForwardIVP):
         "Compute residuals and weights for causal training"
         # Sort time coordinates
         t_sorted = batch[:, 0].sort()
-        r_pred = vmap(self.r_net, (None, 0, 0))(params, t_sorted, batch[:, 1])
+        r_pred = vmap(self.r_net, (None, 0))(params, t_sorted)
         # Split residuals into chunks
         r_pred = r_pred.reshape(self.num_chunks, -1)
         l = jnp.mean(r_pred**2, axis=1)
@@ -53,7 +52,7 @@ class Burgers(ForwardIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        u_pred = vmap(self.u_net, (None, None, 0))(params, self.t0, self.x_star)
+        u_pred = self.u_net(params, self.t0)
         ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
 
         # Residual loss
@@ -70,7 +69,7 @@ class Burgers(ForwardIVP):
     @partial(jit, static_argnums=(0,))
     def compute_diag_ntk(self, params, batch):
         ics_ntk = vmap(ntk_fn, (None, None, None, 0))(
-            self.u_net, params, self.t0, self.x_star
+            self.u_net, params, self.t0
         )
 
         # Consider the effect of causal weights
@@ -97,7 +96,7 @@ class Burgers(ForwardIVP):
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):
-        u_pred = self.u_pred_fn(params, self.t_star, self.x_star)
+        u_pred = self.u_pred_fn(params, self.t_star)
         error = jnp.linalg.norm(u_pred - u_test) / jnp.linalg.norm(u_test)
         return error
 
@@ -112,7 +111,7 @@ class BurgersEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u_pred = self.model.u_pred_fn(params, self.model.t_star, self.model.x_star)
+        u_pred = self.model.u_pred_fn(params, self.model.t_star)
         fig = plt.figure(figsize=(6, 5))
         plt.imshow(u_pred.T, cmap="jet")
         self.log_dict["u_pred"] = fig
