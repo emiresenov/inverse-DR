@@ -39,10 +39,10 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.Burgers(config, u0, t_star)
+    model = models.CaseZero(config, t_star, u0)
 
     # Initialize evaluator
-    evaluator = models.BurgersEvaluator(config, model)
+    evaluator = models.CaseZeroEvaluator(config, model)
 
     print("Waiting for JIT...")
     start_time = time.time()
