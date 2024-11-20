@@ -55,7 +55,7 @@ class CaseZero(ForwardIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        u_pred = vmap(self.u_net, (None, 0))(params, self.t0) # -------------- DEBUG
+        u_pred = vmap(self.u_net, (0, None))(params, self.t0) # -------------- DEBUG
         ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
 
         # Residual loss
@@ -105,7 +105,7 @@ class CaseZero(ForwardIVP):
 
 
 
-class BurgersEvaluator(BaseEvaluator):
+class CaseZeroEvaluator(BaseEvaluator):
     def __init__(self, config, model):
         super().__init__(config, model)
 

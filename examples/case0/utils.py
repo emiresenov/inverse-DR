@@ -18,7 +18,7 @@ def get_dataset():
     return t,u
 
 
-from jax import random
+'''from jax import random
 if __name__ == "__main__":
     
     # batch test
@@ -30,4 +30,4 @@ if __name__ == "__main__":
             minval=dom[:, 0],
             maxval=dom[:, 1],
         )
-    print(batch[:, 3])
+    print(batch[:, 3])'''

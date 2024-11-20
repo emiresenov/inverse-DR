@@ -1,0 +1,16 @@
+{
+  "os":  "macOS-14.5-arm64-arm-64bit",
+  "python":  "3.11.7",
+  "startedAt":  "2024-11-20T11:48:42.947264Z",
+  "program":  "/Users/emiresenov/jaxrc/examples/rc/main.py",
+  "codePath":  "examples/rc/main.py",
+  "git":  {
+    "remote":  "https://github.com/emiresenov/jaxrc.git",
+    "commit":  "d401606f1ad9a628a625565c910c9c79a1b64aec"
+  },
+  "email":  "emiresenov96@gmail.com",
+  "root":  "/Users/emiresenov/jaxrc/examples/case0",
+  "host":  "Emirs-MacBook-Pro.local",
+  "username":  "emiresenov",
+  "executable":  "/opt/anaconda3/bin/python"
+}

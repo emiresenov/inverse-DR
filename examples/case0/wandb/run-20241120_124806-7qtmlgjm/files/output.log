@@ -1,0 +1,14 @@
+Traceback (most recent call last):
+  File "/Users/emiresenov/jaxrc/examples/case0/main.py", line 42, in <module>
+    app.run(main)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 308, in run
+    _run_main(main, args)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/examples/case0/main.py", line 34, in main
+    train.train_and_evaluate(FLAGS.config, FLAGS.workdir)
+  File "/Users/emiresenov/jaxrc/examples/case0/train.py", line 45, in train_and_evaluate
+    evaluator = models.CaseZeroEvaluator(config, model)
+                ^^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: module 'models' has no attribute 'CaseZeroEvaluator'

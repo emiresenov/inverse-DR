@@ -1,0 +1,16 @@
+{"time":"2024-11-20T12:48:42.94979+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-20T12:48:42.949824+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/examples/case0/wandb/run-20241120_124842-fs22cfty/logs/debug-core.log"}
+{"time":"2024-11-20T12:48:43.057861+01:00","level":"INFO","msg":"created new stream","id":"fs22cfty"}
+{"time":"2024-11-20T12:48:43.057917+01:00","level":"INFO","msg":"stream: started","id":"fs22cfty"}
+{"time":"2024-11-20T12:48:43.057951+01:00","level":"INFO","msg":"handler: started","stream_id":"fs22cfty"}
+{"time":"2024-11-20T12:48:43.057981+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"fs22cfty"}
+{"time":"2024-11-20T12:48:43.058035+01:00","level":"INFO","msg":"sender: started","stream_id":"fs22cfty"}
+{"time":"2024-11-20T12:48:43.663485+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-20T12:48:44.817463+01:00","level":"INFO","msg":"stream: closing","id":"fs22cfty"}
+{"time":"2024-11-20T12:48:44.817492+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-20T12:48:44.817904+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-20T12:48:47.253491+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-20T12:48:47.519709+01:00","level":"INFO","msg":"handler: closed","stream_id":"fs22cfty"}
+{"time":"2024-11-20T12:48:47.519724+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"fs22cfty"}
+{"time":"2024-11-20T12:48:47.519832+01:00","level":"INFO","msg":"sender: closed","stream_id":"fs22cfty"}
+{"time":"2024-11-20T12:48:47.520053+01:00","level":"INFO","msg":"stream: closed","id":"fs22cfty"}

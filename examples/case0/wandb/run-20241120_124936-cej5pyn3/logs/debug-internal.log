@@ -1,0 +1,16 @@
+{"time":"2024-11-20T12:49:36.261942+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-20T12:49:36.262017+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/examples/case0/wandb/run-20241120_124936-cej5pyn3/logs/debug-core.log"}
+{"time":"2024-11-20T12:49:36.374964+01:00","level":"INFO","msg":"created new stream","id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:36.375004+01:00","level":"INFO","msg":"stream: started","id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:36.375024+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:36.375027+01:00","level":"INFO","msg":"handler: started","stream_id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:36.375053+01:00","level":"INFO","msg":"sender: started","stream_id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:36.744093+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-20T12:49:37.896181+01:00","level":"INFO","msg":"stream: closing","id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:37.896205+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-20T12:49:37.896929+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-20T12:49:38.774921+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-20T12:49:39.122144+01:00","level":"INFO","msg":"handler: closed","stream_id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:39.122166+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:39.122182+01:00","level":"INFO","msg":"sender: closed","stream_id":"cej5pyn3"}
+{"time":"2024-11-20T12:49:39.122504+01:00","level":"INFO","msg":"stream: closed","id":"cej5pyn3"}
