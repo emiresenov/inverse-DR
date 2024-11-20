@@ -18,5 +18,16 @@ def get_dataset():
     return t,u
 
 
+from jax import random
 if __name__ == "__main__":
-    print(jnp.array([[0., 50.]])[:, 0])
+    
+    # batch test
+    dom = jnp.array([[0., 50.]])
+    dim = dom.shape[0]
+    batch = random.uniform(
+            random.PRNGKey(1234),
+            shape=(4, dim),
+            minval=dom[:, 0],
+            maxval=dom[:, 1],
+        )
+    print(batch[:, 3])

@@ -21,8 +21,8 @@ class CaseZero(ForwardIVP):
         self.t1 = t_star[-1]
 
         # Predictions over t
-        self.u_pred_fn = vmap(self.u_net, (0, None))
-        self.r_pred_fn = vmap(self.r_net, (0, None))
+        self.u_pred_fn = vmap(self.u_net, (0, None)) # -------------- DEBUG
+        self.r_pred_fn = vmap(self.r_net, (0, None)) # -------------- DEBUG
 
 
     # Prediction from net for initial value
@@ -44,8 +44,8 @@ class CaseZero(ForwardIVP):
     def res_and_w(self, params, batch):
         "Compute residuals and weights for causal training"
         # Sort time coordinates
-        t_sorted = batch.sort()                                    # -------------- DEBUG
-        r_pred = vmap(self.r_net, (None, 0))(params, t_sorted)     # -------------- DEBUG
+        t_sorted = batch[:, 0].sort()
+        r_pred = vmap(self.r_net, (None, 0))(params, t_sorted) # -------------- DEBUG
         # Split residuals into chunks
         r_pred = r_pred.reshape(self.num_chunks, -1)
         l = jnp.mean(r_pred**2, axis=1)
@@ -55,7 +55,7 @@ class CaseZero(ForwardIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        u_pred = self.u_net(params, self.t0)
+        u_pred = vmap(self.u_net, (None, 0))(params, self.t0) # -------------- DEBUG
         ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
 
         # Residual loss
@@ -63,7 +63,7 @@ class CaseZero(ForwardIVP):
             l, w = self.res_and_w(params, batch)
             res_loss = jnp.mean(l * w)
         else:
-            r_pred = vmap(self.r_net, (None, 0, 0))(params, batch[:, 0], batch[:, 1])
+            r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0]) # -------------- DEBUG
             res_loss = jnp.mean((r_pred) ** 2)
 
         loss_dict = {"ics": ics_loss, "res": res_loss}
@@ -71,16 +71,16 @@ class CaseZero(ForwardIVP):
 
     @partial(jit, static_argnums=(0,))
     def compute_diag_ntk(self, params, batch):
-        ics_ntk = vmap(ntk_fn, (None, None, None, 0))(
+        ics_ntk = vmap(ntk_fn, (None, None, 0))(
             self.u_net, params, self.t0
         )
 
         # Consider the effect of causal weights
         if self.config.weighting.use_causal:
             # sort the time step for causal loss
-            batch = jnp.array([batch[:, 0].sort(), batch[:, 1]]).T
-            res_ntk = vmap(ntk_fn, (None, None, 0, 0))(
-                self.r_net, params, batch[:, 0], batch[:, 1]
+            batch = jnp.array([batch[:, 0].sort()]).T # -------------- DEBUG
+            res_ntk = vmap(ntk_fn, (None, None, 0))( # -------------- DEBUG
+                self.r_net, params, batch[:, 0] # -------------- DEBUG
             )
             res_ntk = res_ntk.reshape(self.num_chunks, -1)  # shape: (num_chunks, -1)
             res_ntk = jnp.mean(
@@ -89,8 +89,8 @@ class CaseZero(ForwardIVP):
             _, casual_weights = self.res_and_w(params, batch)
             res_ntk = res_ntk * casual_weights  # multiply by causal weights
         else:
-            res_ntk = vmap(ntk_fn, (None, None, 0, 0))(
-                self.r_net, params, batch[:, 0], batch[:, 1]
+            res_ntk = vmap(ntk_fn, (None, None, 0))( # -------------- DEBUG
+                self.r_net, params, batch[:, 0] # -------------- DEBUG
             )
 
         ntk_dict = {"ics": ics_ntk, "res": res_ntk}
@@ -105,7 +105,7 @@ class CaseZero(ForwardIVP):
 
 
 
-class CaseZeroEvaluator(BaseEvaluator):
+class BurgersEvaluator(BaseEvaluator):
     def __init__(self, config, model):
         super().__init__(config, model)
 
@@ -114,7 +114,7 @@ class CaseZeroEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u_pred = self.model.u_pred_fn(params, self.model.t_star)
+        u_pred = self.model.u_pred_fn(params, self.model.t_star) # -------------- DEBUG
         fig = plt.figure(figsize=(6, 5))
         plt.imshow(u_pred.T, cmap="jet")
         self.log_dict["u_pred"] = fig
