@@ -13,8 +13,7 @@ def solution(t):
 def get_dataset():
     t = np.linspace(t_0, t_end, n_samples)
     u = solution(t)
-    x = np.linspace(u[0],u[-1], n_samples)
-    return u,t,x
+    return u,t
 
 
 #if __name__ == '__main__':
