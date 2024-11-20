@@ -36,8 +36,8 @@ class UniformSampler(BaseSampler):
         batch = random.uniform(
             key,
             shape=(self.batch_size, self.dim),
-            minval=self.dom[:, 0],
-            maxval=self.dom[:, 1],
+            minval=self.dom[0],
+            maxval=self.dom[1],
         )
 
         return batch
