@@ -69,33 +69,6 @@ class CaseZero(ForwardIVP):
         loss_dict = {"ics": ics_loss, "res": res_loss}
         return loss_dict
 
-    @partial(jit, static_argnums=(0,))
-    def compute_diag_ntk(self, params, batch):
-        ics_ntk = vmap(ntk_fn, (None, None, 0))(
-            self.u_net, params, self.t0
-        )
-
-        # Consider the effect of causal weights
-        if self.config.weighting.use_causal:
-            # sort the time step for causal loss
-            batch = jnp.array([batch[:, 0].sort()]).T # -------------- DEBUG
-            res_ntk = vmap(ntk_fn, (None, None, 0))( # -------------- DEBUG
-                self.r_net, params, batch[:, 0] # -------------- DEBUG
-            )
-            res_ntk = res_ntk.reshape(self.num_chunks, -1)  # shape: (num_chunks, -1)
-            res_ntk = jnp.mean(
-                res_ntk, axis=1
-            )  # average convergence rate over each chunk
-            _, casual_weights = self.res_and_w(params, batch)
-            res_ntk = res_ntk * casual_weights  # multiply by causal weights
-        else:
-            res_ntk = vmap(ntk_fn, (None, None, 0))( # -------------- DEBUG
-                self.r_net, params, batch[:, 0] # -------------- DEBUG
-            )
-
-        ntk_dict = {"ics": ics_ntk, "res": res_ntk}
-
-        return ntk_dict
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):

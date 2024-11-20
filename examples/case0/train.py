@@ -7,7 +7,6 @@ from jax.tree_util import tree_map
 
 import ml_collections
 from absl import logging
-import wandb
 
 from jaxpi.samplers import UniformSampler
 from jaxpi.logging import Logger
@@ -58,7 +57,6 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
                 state = jax.device_get(tree_map(lambda x: x[0], model.state))
                 batch = jax.device_get(tree_map(lambda x: x[0], batch))
                 log_dict = evaluator(state, batch, u_ref)
-                wandb.log(log_dict, step)
 
                 end_time = time.time()
                 logger.log_iter(step, start_time, end_time, log_dict)
