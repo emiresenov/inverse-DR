@@ -63,24 +63,24 @@ class CaseZero(ForwardIVP):
             l, w = self.res_and_w(params, batch)
             res_loss = jnp.mean(l * w)
         else:
-            r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0]) # -------------- DEBUG (WHERE IS BATCH COMING FFROM)
+            r_pred = vmap(self.r_net, (None, 0, 0))(params, batch[:, 0], batch[:, 1])
             res_loss = jnp.mean((r_pred) ** 2)
 
         loss_dict = {"ics": ics_loss, "res": res_loss}
         return loss_dict
 
     @partial(jit, static_argnums=(0,))
-    def compute_diag_ntk(self, params, batch): # FIND OUT WHERE THIS IS GETTING CALLED
-        ics_ntk = vmap(ntk_fn, (None, None, 0))(                     # -------------- DEBUG
+    def compute_diag_ntk(self, params, batch):
+        ics_ntk = vmap(ntk_fn, (None, None, None, 0))(
             self.u_net, params, self.t0
         )
 
         # Consider the effect of causal weights
         if self.config.weighting.use_causal:
             # sort the time step for causal loss
-            batch = jnp.array([batch[:, 0].sort()]).T
-            res_ntk = vmap(ntk_fn, (None, None, 0, 0))(             # -------------- DEBUG
-                self.r_net, params, batch[:, 0]                  # -------------- DEBUG
+            batch = jnp.array([batch[:, 0].sort(), batch[:, 1]]).T
+            res_ntk = vmap(ntk_fn, (None, None, 0, 0))(
+                self.r_net, params, batch[:, 0], batch[:, 1]
             )
             res_ntk = res_ntk.reshape(self.num_chunks, -1)  # shape: (num_chunks, -1)
             res_ntk = jnp.mean(
@@ -89,8 +89,8 @@ class CaseZero(ForwardIVP):
             _, casual_weights = self.res_and_w(params, batch)
             res_ntk = res_ntk * casual_weights  # multiply by causal weights
         else:
-            res_ntk = vmap(ntk_fn, (None, None, 0))(        # -------------- DEBUG
-                self.r_net, params, batch[:, 0]             # -------------- DEBUG
+            res_ntk = vmap(ntk_fn, (None, None, 0, 0))(
+                self.r_net, params, batch[:, 0], batch[:, 1]
             )
 
         ntk_dict = {"ics": ics_ntk, "res": res_ntk}

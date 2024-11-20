@@ -18,5 +18,5 @@ def get_dataset():
     return t,u
 
 
-#if __name__ == "__main__":
-    #print(jnp.array([0., 50.])[1])
+if __name__ == "__main__":
+    print(jnp.array([[0., 50.]])[:, 0])
