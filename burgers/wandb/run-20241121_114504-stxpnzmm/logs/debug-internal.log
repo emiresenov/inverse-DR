@@ -1,0 +1,8 @@
+{"time":"2024-11-21T11:45:04.263017+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-21T11:45:04.263082+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/burgers/wandb/run-20241121_114504-stxpnzmm/logs/debug-core.log"}
+{"time":"2024-11-21T11:45:04.379246+01:00","level":"INFO","msg":"created new stream","id":"stxpnzmm"}
+{"time":"2024-11-21T11:45:04.379713+01:00","level":"INFO","msg":"stream: started","id":"stxpnzmm"}
+{"time":"2024-11-21T11:45:04.379992+01:00","level":"INFO","msg":"sender: started","stream_id":"stxpnzmm"}
+{"time":"2024-11-21T11:45:04.380029+01:00","level":"INFO","msg":"handler: started","stream_id":"stxpnzmm"}
+{"time":"2024-11-21T11:45:04.380076+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"stxpnzmm"}
+{"time":"2024-11-21T11:45:04.815687+01:00","level":"INFO","msg":"Starting system monitor"}
