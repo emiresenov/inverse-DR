@@ -6,4 +6,8 @@ def get_dataset():
     u_ref = data["usol"]
     t_star = data["t"].flatten()
 
-    return u_ref, t_star
+    return u_ref[:, 0], t_star
+
+
+
+#print(get_dataset()[0].shape)

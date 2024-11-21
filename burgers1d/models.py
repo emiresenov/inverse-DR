@@ -10,7 +10,7 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 from matplotlib import pyplot as plt
 
 
-class Burgers(ForwardIVP):
+class Burgers1D(ForwardIVP):
     def __init__(self, config, u0, t_star):
         super().__init__(config)
 
@@ -71,11 +71,12 @@ class Burgers(ForwardIVP):
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):
         u_pred = self.u_pred_fn(params, self.t_star)
+        print(f'u_pred: {u_pred}, u_test: {u_test}')
         error = jnp.linalg.norm(u_pred - u_test) / jnp.linalg.norm(u_test)
         return error
 
 
-class BurgersEvaluator(BaseEvaluator):
+class Burgers1DEvaluator(BaseEvaluator):
     def __init__(self, config, model):
         super().__init__(config, model)
 
