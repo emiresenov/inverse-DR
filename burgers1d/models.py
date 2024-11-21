@@ -43,7 +43,7 @@ class Burgers(ForwardIVP):
         "Compute residuals and weights for causal training"
         # Sort time coordinates
         t_sorted = batch[:, 0].sort()
-        r_pred = vmap(self.r_net, (None, 0, 0))(params, t_sorted, batch[:, 1])
+        r_pred = vmap(self.r_net, (None, 0))(params, t_sorted)
         # Split residuals into chunks
         r_pred = r_pred.reshape(self.num_chunks, -1)
         l = jnp.mean(r_pred**2, axis=1)
@@ -53,7 +53,7 @@ class Burgers(ForwardIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        u_pred = vmap(self.u_net, (None, None, 0))(params, self.t0, self.x_star)
+        u_pred = vmap(self.u_net, (None, 0))(params, self.t0)
         ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
 
         # Residual loss
@@ -61,46 +61,18 @@ class Burgers(ForwardIVP):
             l, w = self.res_and_w(params, batch)
             res_loss = jnp.mean(l * w)
         else:
-            r_pred = vmap(self.r_net, (None, 0, 0))(params, batch[:, 0], batch[:, 1])
+            r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
             res_loss = jnp.mean((r_pred) ** 2)
 
         loss_dict = {"ics": ics_loss, "res": res_loss}
         return loss_dict
 
-    @partial(jit, static_argnums=(0,))
-    def compute_diag_ntk(self, params, batch):
-        ics_ntk = vmap(ntk_fn, (None, None, None, 0))(
-            self.u_net, params, self.t0, self.x_star
-        )
-
-        # Consider the effect of causal weights
-        if self.config.weighting.use_causal:
-            # sort the time step for causal loss
-            batch = jnp.array([batch[:, 0].sort(), batch[:, 1]]).T
-            res_ntk = vmap(ntk_fn, (None, None, 0, 0))(
-                self.r_net, params, batch[:, 0], batch[:, 1]
-            )
-            res_ntk = res_ntk.reshape(self.num_chunks, -1)  # shape: (num_chunks, -1)
-            res_ntk = jnp.mean(
-                res_ntk, axis=1
-            )  # average convergence rate over each chunk
-            _, casual_weights = self.res_and_w(params, batch)
-            res_ntk = res_ntk * casual_weights  # multiply by causal weights
-        else:
-            res_ntk = vmap(ntk_fn, (None, None, 0, 0))(
-                self.r_net, params, batch[:, 0], batch[:, 1]
-            )
-
-        ntk_dict = {"ics": ics_ntk, "res": res_ntk}
-
-        return ntk_dict
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):
         u_pred = self.u_pred_fn(params, self.t_star)
         error = jnp.linalg.norm(u_pred - u_test) / jnp.linalg.norm(u_test)
         return error
-
 
 
 class BurgersEvaluator(BaseEvaluator):
