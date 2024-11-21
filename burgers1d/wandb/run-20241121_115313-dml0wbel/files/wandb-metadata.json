@@ -1,0 +1,17 @@
+{
+  "os":  "macOS-14.5-arm64-arm-64bit",
+  "python":  "3.11.7",
+  "startedAt":  "2024-11-21T10:53:13.611723Z",
+  "program":  "/Users/emiresenov/jaxrc/burgers1d/main.py",
+  "codePath":  "burgers1d/main.py",
+  "git":  {
+    "remote":  "https://github.com/emiresenov/jaxrc.git",
+    "commit":  "44b3d4efce0694e02ad1f15c4843f027f3a6f1a8"
+  },
+  "email":  "emiresenov96@gmail.com",
+  "root":  "/Users/emiresenov/jaxrc/burgers1d",
+  "host":  "dhcp-140-34.vpn.chalmers.se",
+  "username":  "emiresenov",
+  "executable":  "/opt/anaconda3/bin/python",
+  "codePathLocal":  "main.py"
+}

@@ -11,37 +11,32 @@ from matplotlib import pyplot as plt
 
 
 class Burgers(ForwardIVP):
-    def __init__(self, config, u0, t_star, x_star):
+    def __init__(self, config, u0, t_star):
         super().__init__(config)
 
         self.u0 = u0
         self.t_star = t_star
-        self.x_star = x_star
 
         self.t0 = t_star[0]
         self.t1 = t_star[-1]
 
         # Predictions over a grid
-        self.u_pred_fn = vmap(vmap(self.u_net, (None, None, 0)), (None, 0, None))
-        self.r_pred_fn = vmap(vmap(self.r_net, (None, None, 0)), (None, 0, None))
+        self.u_pred_fn = vmap(self.u_net, (None, 0))
+        self.r_pred_fn = vmap(self.r_net, (None, 0))
 
-    def u_net(self, params, t, x):
-        z = jnp.stack([t, x])
+    def u_net(self, params, t):
+        z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
         return u[0]
 
-    def grad_net(self, params, t, x):
-        u_t = grad(self.u_net, argnums=1)(params, t, x)
-        u_x = grad(self.u_net, argnums=2)(params, t, x)
-        u_xx = grad(grad(self.u_net, argnums=2), argnums=2)(params, t, x)
-        return u_t, u_x, u_xx
+    def grad_net(self, params, t):
+        u_t = grad(self.u_net, argnums=1)(params, t)
+        return u_t
 
-    def r_net(self, params, t, x):
-        u = self.u_net(params, t, x)
-        u_t = grad(self.u_net, argnums=1)(params, t, x)
-        u_x = grad(self.u_net, argnums=2)(params, t, x)
-        u_xx = grad(grad(self.u_net, argnums=2), argnums=2)(params, t, x)
-        return u_t + u * u_x - 0.01 / jnp.pi * u_xx
+    def r_net(self, params, t):
+        u = self.u_net(params, t)
+        u_t = grad(self.u_net, argnums=1)(params, t)
+        return u_t + u
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -102,7 +97,7 @@ class Burgers(ForwardIVP):
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):
-        u_pred = self.u_pred_fn(params, self.t_star, self.x_star)
+        u_pred = self.u_pred_fn(params, self.t_star)
         error = jnp.linalg.norm(u_pred - u_test) / jnp.linalg.norm(u_test)
         return error
 
@@ -117,7 +112,7 @@ class BurgersEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u_pred = self.model.u_pred_fn(params, self.model.t_star, self.model.x_star)
+        u_pred = self.model.u_pred_fn(params, self.model.t_star)
         fig = plt.figure(figsize=(6, 5))
         plt.imshow(u_pred.T, cmap="jet")
         self.log_dict["u_pred"] = fig
