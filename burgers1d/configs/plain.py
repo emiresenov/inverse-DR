@@ -67,7 +67,7 @@ def get_config():
     logging.log_losses = True
     logging.log_weights = True
     logging.log_grads = True
-    logging.log_ntk = True
+    logging.log_ntk = False
     logging.log_preds = False
 
     # # Input shape for initializing Flax models

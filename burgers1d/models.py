@@ -53,7 +53,7 @@ class Burgers(ForwardIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        u_pred = vmap(self.u_net, (None, 0))(params, self.t0)
+        u_pred = self.u_net(params, self.t0)
         ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
 
         # Residual loss
