@@ -1,0 +1,31 @@
+Waiting for JIT...
+[14:10:44 - main - INFO] --------------------------
+[14:10:44 - main - INFO] Iter:   0    Time: 3.238
+[14:10:44 - main - INFO] -----------  -------------
+[14:10:44 - main - INFO] ics_loss     5.285e+00
+[14:10:44 - main - INFO] res_loss     1.309e+01
+[14:10:44 - main - INFO] l2_error     3.419e+00
+[14:11:03 - main - INFO] ---------------------------
+[14:11:03 - main - INFO] Iter: 100    Time: 18.473
+[14:11:03 - main - INFO] -----------  --------------
+[14:11:03 - main - INFO] ics_loss     2.302e-02
+[14:11:03 - main - INFO] res_loss     3.285e-02
+[14:11:03 - main - INFO] l2_error     3.379e-01
+[14:11:23 - main - INFO] ---------------------------
+[14:11:23 - main - INFO] Iter: 200    Time: 20.305
+[14:11:23 - main - INFO] -----------  --------------
+[14:11:23 - main - INFO] ics_loss     2.581e-02
+[14:11:23 - main - INFO] res_loss     3.267e-02
+[14:11:23 - main - INFO] l2_error     3.354e-01
+[14:11:42 - main - INFO] ---------------------------
+[14:11:42 - main - INFO] Iter: 300    Time: 18.641
+[14:11:42 - main - INFO] -----------  --------------
+[14:11:42 - main - INFO] ics_loss     2.404e-02
+[14:11:42 - main - INFO] res_loss     3.138e-02
+[14:11:42 - main - INFO] l2_error     3.229e-01
+[14:12:00 - main - INFO] ---------------------------
+[14:12:00 - main - INFO] Iter: 400    Time: 18.915
+[14:12:00 - main - INFO] -----------  --------------
+[14:12:00 - main - INFO] ics_loss     1.847e-02
+[14:12:00 - main - INFO] res_loss     3.197e-02
+[14:12:00 - main - INFO] l2_error     2.910e-01

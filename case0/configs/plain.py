@@ -18,13 +18,11 @@ def get_config():
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 4
-    arch.hidden_dim = 256
+    arch.num_layers = 3
+    arch.hidden_dim = 40
     arch.out_dim = 1
     arch.activation = "tanh"
-    arch.periodicity = ml_collections.ConfigDict(
-        {"period": (jnp.pi,), "axis": (1,), "trainable": (False,)}
-    )
+    arch.periodicity = None
     arch.fourier_emb = None
     arch.reparam = None
 
@@ -36,17 +34,17 @@ def get_config():
     optim.eps = 1e-8
     optim.learning_rate = 1e-3
     optim.decay_rate = 0.9
-    optim.decay_steps = 2000
+    optim.decay_steps = 4000
     optim.grad_accum_steps = 0
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 2000
+    training.max_steps = 15000
     training.batch_size_per_device = 4096
 
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
-    weighting.scheme = None
+    weighting.scheme = "grad_norm"
     weighting.init_weights = ml_collections.ConfigDict({"ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
