@@ -19,8 +19,8 @@ from utils import get_dataset
 
 def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     # Initialize W&B
-    #wandb_config = config.wandb
-    #wandb.init(project=wandb_config.project, name=wandb_config.name)
+    wandb_config = config.wandb
+    wandb.init(project=wandb_config.project, name=wandb_config.name)
 
     # Initialize logger
     logger = Logger()
