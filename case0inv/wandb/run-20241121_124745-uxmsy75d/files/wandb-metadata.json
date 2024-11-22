@@ -1,0 +1,39 @@
+{
+  "os":  "macOS-14.5-arm64-arm-64bit",
+  "python":  "3.11.7",
+  "startedAt":  "2024-11-21T11:47:45.208151Z",
+  "program":  "/Users/emiresenov/jaxrc/burgers1d/main.py",
+  "codePath":  "burgers1d/main.py",
+  "git":  {
+    "remote":  "https://github.com/emiresenov/jaxrc.git",
+    "commit":  "49f8f372c450630d9ed837f14b49f6148781ddf0"
+  },
+  "email":  "emiresenov96@gmail.com",
+  "root":  "/Users/emiresenov/jaxrc/burgers1d",
+  "host":  "dhcp-140-34.vpn.chalmers.se",
+  "username":  "emiresenov",
+  "executable":  "/opt/anaconda3/bin/python",
+  "codePathLocal":  "main.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "138501730304"
+    }
+  },
+  "memory":  {
+    "total":  "17179869184"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  },
+  "apple":  {
+    "name":  "Apple M1 Pro",
+    "ecpuCores":  2,
+    "pcpuCores":  6,
+    "gpuCores":  14,
+    "memoryGb":  16
+  }
+}
