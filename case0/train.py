@@ -1,6 +1,6 @@
 import os
 import time
-
+import matplotlib.pyplot as plt
 import jax
 import jax.numpy as jnp
 from jax.tree_util import tree_map
@@ -74,4 +74,30 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
                 ckpt_path = os.path.join(os.getcwd(), config.wandb.name, "ckpt")
                 save_checkpoint(model.state, ckpt_path, keep=config.saving.num_keep_ckpts)
 
+    u_pred = model.u_pred_fn(state.params, model.t_star)
+    # plot
+    fig = plt.figure(figsize=(18, 5))
+    plt.subplot(1, 3, 1)
+    plt.plot(t_star, u_ref)
+    plt.title("Exact")
+    plt.tight_layout()
+
+    plt.subplot(1, 3, 2)
+    plt.plot(t_star, u_pred)
+    plt.title("Predicted")
+    plt.tight_layout()
+
+    plt.subplot(1, 3, 3)
+    plt.plot(t_star, jnp.abs(u_ref - u_pred))
+    plt.title("Absolute error")
+    plt.tight_layout()
+
+    # Save the figure
+    save_dir = os.path.join(workdir, "figures", config.wandb.name)
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
+
+    fig_path = os.path.join(save_dir, "case0.pdf")
+    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
+    
     return model

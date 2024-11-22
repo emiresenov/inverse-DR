@@ -1,0 +1,16 @@
+{"time":"2024-11-22T15:59:36.080497+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-22T15:59:36.080562+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0/wandb/run-20241122_155936-eweo5l3r/logs/debug-core.log"}
+{"time":"2024-11-22T15:59:36.192389+01:00","level":"INFO","msg":"created new stream","id":"eweo5l3r"}
+{"time":"2024-11-22T15:59:36.192428+01:00","level":"INFO","msg":"stream: started","id":"eweo5l3r"}
+{"time":"2024-11-22T15:59:36.192442+01:00","level":"INFO","msg":"handler: started","stream_id":"eweo5l3r"}
+{"time":"2024-11-22T15:59:36.192465+01:00","level":"INFO","msg":"sender: started","stream_id":"eweo5l3r"}
+{"time":"2024-11-22T15:59:36.192517+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"eweo5l3r"}
+{"time":"2024-11-22T15:59:36.489786+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-22T16:00:34.793745+01:00","level":"INFO","msg":"stream: closing","id":"eweo5l3r"}
+{"time":"2024-11-22T16:00:34.793823+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-22T16:00:34.795635+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-22T16:00:35.554316+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-22T16:00:35.78153+01:00","level":"INFO","msg":"handler: closed","stream_id":"eweo5l3r"}
+{"time":"2024-11-22T16:00:35.781566+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"eweo5l3r"}
+{"time":"2024-11-22T16:00:35.781775+01:00","level":"INFO","msg":"sender: closed","stream_id":"eweo5l3r"}
+{"time":"2024-11-22T16:00:35.782408+01:00","level":"INFO","msg":"stream: closed","id":"eweo5l3r"}

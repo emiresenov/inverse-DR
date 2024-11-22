@@ -7,7 +7,7 @@ def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "eval"
+    config.mode = "train"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
@@ -19,7 +19,7 @@ def get_config():
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
     arch.num_layers = 3
-    arch.hidden_dim = 40
+    arch.hidden_dim = 60
     arch.out_dim = 1
     arch.activation = "tanh"
     arch.periodicity = None
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 15000
+    training.max_steps = 13000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -49,7 +49,7 @@ def get_config():
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 
-    weighting.use_causal = None
+    weighting.use_causal = True
     weighting.causal_tol = 1.0
     weighting.num_chunks = 32
 
