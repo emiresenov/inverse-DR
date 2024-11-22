@@ -10,7 +10,7 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 from matplotlib import pyplot as plt
 
 
-class Burgers1D(ForwardIVP):
+class CaseZero(ForwardIVP):
     def __init__(self, config, u0, t_star):
         super().__init__(config)
 
@@ -20,10 +20,11 @@ class Burgers1D(ForwardIVP):
         self.t0 = t_star[0]
         self.t1 = t_star[-1]
 
-        # Predictions over a grid
+        # Predictions over time t
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
 
+    # Initial condition prediction
     def u_net(self, params, t):
         z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
@@ -33,10 +34,11 @@ class Burgers1D(ForwardIVP):
         u_t = grad(self.u_net, argnums=1)(params, t)
         return u_t
 
+    # Diff eq prediction
     def r_net(self, params, t):
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
-        return u_t + u
+        return u_t + 0.1
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -76,7 +78,7 @@ class Burgers1D(ForwardIVP):
         return error
 
 
-class Burgers1DEvaluator(BaseEvaluator):
+class CaseZeroEvaluator(BaseEvaluator):
     def __init__(self, config, model):
         super().__init__(config, model)
 

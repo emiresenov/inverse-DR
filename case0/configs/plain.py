@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "PINN-Burgers"
+    wandb.project = "Case 0 forward"
     wandb.name = "plain"
     wandb.tag = None
 
@@ -41,7 +41,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 200000
+    training.max_steps = 2000
     training.batch_size_per_device = 4096
 
     # Weighting
