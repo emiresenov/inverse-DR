@@ -71,7 +71,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R' : jnp.array([800]),
+        'R' : jnp.array([800.]),
         'C' : jnp.array([0.07])
     }
 

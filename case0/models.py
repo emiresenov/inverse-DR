@@ -26,6 +26,7 @@ class CaseZero(ForwardIVP):
 
     # Initial condition prediction
     def u_net(self, params, t):
+        print(params)
         z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
         return u[0]

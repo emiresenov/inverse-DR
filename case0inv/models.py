@@ -26,6 +26,7 @@ class CaseZero(InverseIVP):
     # Initial condition prediction
     def u_net(self, params, t):
         z = jnp.stack([t])
+        print(params)
         u = self.state.apply_fn(params, z)
         return u[0]
 
@@ -35,7 +36,6 @@ class CaseZero(InverseIVP):
 
     # Diff eq prediction
     def r_net(self, params, t):
-        u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
         return u_t + 1 / jnp.dot(params['R'], params['C'])
 

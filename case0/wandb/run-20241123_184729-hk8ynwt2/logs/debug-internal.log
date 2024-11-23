@@ -1,0 +1,8 @@
+{"time":"2024-11-23T18:47:29.541357+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-23T18:47:29.541445+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0/wandb/run-20241123_184729-hk8ynwt2/logs/debug-core.log"}
+{"time":"2024-11-23T18:47:29.655953+01:00","level":"INFO","msg":"created new stream","id":"hk8ynwt2"}
+{"time":"2024-11-23T18:47:29.656171+01:00","level":"INFO","msg":"stream: started","id":"hk8ynwt2"}
+{"time":"2024-11-23T18:47:29.656347+01:00","level":"INFO","msg":"handler: started","stream_id":"hk8ynwt2"}
+{"time":"2024-11-23T18:47:29.656404+01:00","level":"INFO","msg":"sender: started","stream_id":"hk8ynwt2"}
+{"time":"2024-11-23T18:47:29.656408+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"hk8ynwt2"}
+{"time":"2024-11-23T18:47:29.936173+01:00","level":"INFO","msg":"Starting system monitor"}

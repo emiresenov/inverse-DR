@@ -1,0 +1,16 @@
+{"time":"2024-11-23T18:49:58.63446+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-23T18:49:58.63456+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241123_184958-xpyniri5/logs/debug-core.log"}
+{"time":"2024-11-23T18:49:58.747169+01:00","level":"INFO","msg":"created new stream","id":"xpyniri5"}
+{"time":"2024-11-23T18:49:58.747208+01:00","level":"INFO","msg":"stream: started","id":"xpyniri5"}
+{"time":"2024-11-23T18:49:58.747221+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"xpyniri5"}
+{"time":"2024-11-23T18:49:58.747223+01:00","level":"INFO","msg":"sender: started","stream_id":"xpyniri5"}
+{"time":"2024-11-23T18:49:58.747249+01:00","level":"INFO","msg":"handler: started","stream_id":"xpyniri5"}
+{"time":"2024-11-23T18:49:58.994782+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-23T18:49:59.976308+01:00","level":"INFO","msg":"stream: closing","id":"xpyniri5"}
+{"time":"2024-11-23T18:49:59.976328+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-23T18:49:59.97687+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-23T18:50:00.732252+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-23T18:50:00.965786+01:00","level":"INFO","msg":"handler: closed","stream_id":"xpyniri5"}
+{"time":"2024-11-23T18:50:00.965811+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"xpyniri5"}
+{"time":"2024-11-23T18:50:00.96602+01:00","level":"INFO","msg":"sender: closed","stream_id":"xpyniri5"}
+{"time":"2024-11-23T18:50:00.966643+01:00","level":"INFO","msg":"stream: closed","id":"xpyniri5"}

@@ -1,0 +1,30 @@
+Waiting for JIT...
+{'C': Traced<ShapedArray(float32[1])>with<DynamicJaxprTrace(level=4/1)>, 'R': Traced<ShapedArray(float32[1])>with<DynamicJaxprTrace(level=4/1)>, 'nn_params': {'params': {'Dense_0': {'bias': Traced<ShapedArray(float32[60])>with<DynamicJaxprTrace(level=4/1)>, 'kernel': Traced<ShapedArray(float32[1,60])>with<DynamicJaxprTrace(level=4/1)>}, 'Dense_1': {'bias': Traced<ShapedArray(float32[60])>with<DynamicJaxprTrace(level=4/1)>, 'kernel': Traced<ShapedArray(float32[60,60])>with<DynamicJaxprTrace(level=4/1)>}, 'Dense_2': {'bias': Traced<ShapedArray(float32[60])>with<DynamicJaxprTrace(level=4/1)>, 'kernel': Traced<ShapedArray(float32[60,60])>with<DynamicJaxprTrace(level=4/1)>}, 'Dense_3': {'bias': Traced<ShapedArray(float32[1])>with<DynamicJaxprTrace(level=4/1)>, 'kernel': Traced<ShapedArray(float32[60,1])>with<DynamicJaxprTrace(level=4/1)>}}}}
+Traceback (most recent call last):
+  File "/Users/emiresenov/jaxrc/case0inv/main.py", line 38, in <module>
+    app.run(main)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 308, in run
+    _run_main(main, args)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/case0inv/main.py", line 33, in main
+    train.train_and_evaluate(FLAGS.config, FLAGS.workdir)
+  File "/Users/emiresenov/jaxrc/case0inv/train.py", line 50, in train_and_evaluate
+    model.state = model.step(model.state, batch)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.11/site-packages/jaxpi/models.py", line 197, in step
+    grads = grad(self.loss)(state.params, state.weights, batch, *args)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.11/site-packages/jaxpi/models.py", line 150, in loss
+    losses = self.losses(params, batch, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/case0inv/models.py", line 57, in losses
+    u_pred = self.u_net(params, self.t0)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/case0inv/models.py", line 30, in u_net
+    u = self.state.apply_fn(params, z)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+flax.errors.ApplyScopeInvalidVariablesTypeError: The first argument passed to an apply function should be a dictionary of collections. Each collection should be a dictionary with string keys. (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.ApplyScopeInvalidVariablesTypeError)
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
