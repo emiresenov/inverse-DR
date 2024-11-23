@@ -70,7 +70,10 @@ def get_config():
     
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
-    inverse.params = [jnp.array([800.0]), jnp.array([0.07])]
+    inverse.params = {
+        'R' : jnp.array([800]),
+        'C' : jnp.array([0.07])
+    }
 
     # # Input shape for initializing Flax models
     config.input_dim = 1
