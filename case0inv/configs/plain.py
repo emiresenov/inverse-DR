@@ -75,7 +75,7 @@ def get_config():
         'C' : jnp.array([0.07])
     }
 
-    # # Input shape for initializing Flax models
+    # Input shape for initializing Flax models
     config.input_dim = 1
 
     # Integer for PRNG random seed.

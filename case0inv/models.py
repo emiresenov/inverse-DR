@@ -3,18 +3,17 @@ from functools import partial
 import jax.numpy as jnp
 from jax import lax, jit, grad, vmap, jacrev
 
-from jaxpi.models import ForwardIVP
+from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
 from jaxpi.utils import ntk_fn, flatten_pytree
 
 from matplotlib import pyplot as plt
 
 
-class CaseZero(ForwardIVP):
-    def __init__(self, config, u0, t_star):
+class CaseZero(InverseIVP):
+    def __init__(self, config, t_star):
         super().__init__(config)
 
-        self.u0 = u0
         self.t_star = t_star
 
         self.t0 = t_star[0]
@@ -38,7 +37,7 @@ class CaseZero(ForwardIVP):
     def r_net(self, params, t):
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
-        return u_t + 0.1
+        return u_t + 1 / jnp.dot(params['R'], params['C'])
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -56,7 +55,8 @@ class CaseZero(ForwardIVP):
     def losses(self, params, batch):
         # Initial condition loss
         u_pred = self.u_net(params, self.t0)
-        ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
+        u0 = jnp.log(1/params['R'][0])
+        ics_loss = jnp.mean((u0 - u_pred) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:

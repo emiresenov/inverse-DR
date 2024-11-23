@@ -8,3 +8,6 @@ d = {
 
 for i in d:
     print(d[i])
+    
+    
+print(jnp.dot(jnp.array([800]), jnp.array([0.07])))

@@ -27,7 +27,6 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     # Get dataset
     u_ref, t_star = get_dataset()
-    u0 = u_ref[0]
 
     t0 = t_star[0]
     t1 = t_star[-1]
@@ -39,7 +38,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.CaseZero(config, u0, t_star)
+    model = models.CaseZero(config, t_star)
 
     # Initialize evaluator
     evaluator = models.CaseZeroEvaluator(config, model)
