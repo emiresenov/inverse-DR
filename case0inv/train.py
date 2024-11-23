@@ -91,8 +91,8 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     plt.title("Absolute error")
     plt.tight_layout()
     
-    print(f'predicted R: {state.params['params']['R']}')
-    print(f'predicted C: {state.params['params']['C']}')
+    print(f"predicted R: {state.params['params']['R']}")
+    print(f"predicted C: {state.params['params']['C']}")
 
     # Save the figure
     save_dir = os.path.join(workdir, "figures", config.wandb.name)
