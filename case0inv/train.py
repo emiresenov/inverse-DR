@@ -99,7 +99,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
 
-    fig_path = os.path.join(save_dir, "case0.pdf")
+    fig_path = os.path.join(save_dir, "case0inv.pdf")
     fig.savefig(fig_path, bbox_inches="tight", dpi=300)
     
     return model
