@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 10000
+    training.max_steps = 15000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -66,7 +66,7 @@ def get_config():
     logging.log_weights = True
     logging.log_grads = True
     logging.log_ntk = False
-    logging.log_preds = False
+    logging.log_preds = True
     
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()

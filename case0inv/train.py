@@ -19,8 +19,8 @@ from utils import get_dataset
 
 def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     # Initialize W&B
-    #wandb_config = config.wandb
-    #wandb.init(project=wandb_config.project, name=wandb_config.name)
+    wandb_config = config.wandb
+    wandb.init(project=wandb_config.project, name=wandb_config.name)
 
     # Initialize logger
     logger = Logger()
@@ -60,6 +60,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
                 state = jax.device_get(tree_map(lambda x: x[0], model.state))
                 batch = jax.device_get(tree_map(lambda x: x[0], batch))
                 log_dict = evaluator(state, batch, u_ref)
+                wandb.log(log_dict, step)
 
                 end_time = time.time()
                 logger.log_iter(step, start_time, end_time, log_dict)
@@ -73,32 +74,6 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
                 ckpt_path = os.path.join(os.getcwd(), config.wandb.name, "ckpt")
                 save_checkpoint(model.state, ckpt_path, keep=config.saving.num_keep_ckpts)'''
 
-    u_pred = model.u_pred_fn(state.params, model.t_star)
-    # plot
-    fig = plt.figure(figsize=(18, 5))
-    plt.subplot(1, 3, 1)
-    plt.plot(t_star, u_ref)
-    plt.title("Exact")
-    plt.tight_layout()
-
-    plt.subplot(1, 3, 2)
-    plt.plot(t_star, u_pred)
-    plt.title("Predicted")
-    plt.tight_layout()
-
-    plt.subplot(1, 3, 3)
-    plt.plot(t_star, jnp.abs(u_ref - u_pred))
-    plt.title("Absolute error")
-    plt.tight_layout()
     
-    print(f"predicted tau: {state.params['params']['tau']}")
-
-    # Save the figure
-    save_dir = os.path.join(workdir, "figures", config.wandb.name)
-    if not os.path.isdir(save_dir):
-        os.makedirs(save_dir)
-
-    fig_path = os.path.join(save_dir, "case0inv.pdf")
-    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
     
     return model
