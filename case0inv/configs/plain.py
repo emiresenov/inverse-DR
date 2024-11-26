@@ -18,8 +18,8 @@ def get_config():
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 3
-    arch.hidden_dim = 60
+    arch.num_layers = 1
+    arch.hidden_dim = 30
     arch.out_dim = 1
     arch.activation = "tanh"
     arch.periodicity = None
@@ -34,7 +34,7 @@ def get_config():
     optim.eps = 1e-8
     optim.learning_rate = 1e-3
     optim.decay_rate = 0.9
-    optim.decay_steps = 4000
+    optim.decay_steps = 2000
     optim.grad_accum_steps = 0
 
     # Training
@@ -71,7 +71,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'tau' : jnp.array([6.])
+        'tau' : jnp.array([1.]) # Starting val. True val = 10
     }
 
     # Input shape for initializing Flax models
