@@ -39,17 +39,17 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 15000
+    training.max_steps = 10000
     training.batch_size_per_device = 4096
 
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
-    weighting.scheme = "grad_norm"
+    weighting.scheme = None
     weighting.init_weights = ml_collections.ConfigDict({"ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 
-    weighting.use_causal = True
+    weighting.use_causal = False
     weighting.causal_tol = 1.0
     weighting.num_chunks = 32
 
@@ -72,7 +72,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'tau' : jnp.array([1.]) # Starting val. True val = 10
+        'tau' : jnp.array([5.]) # Starting val. True val = 10
     }
 
     # Input shape for initializing Flax models

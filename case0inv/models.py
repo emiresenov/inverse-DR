@@ -56,7 +56,6 @@ class CaseZero(InverseIVP):
         # Initial condition loss
         u_pred = self.u_net(params, self.t0)
         u0 = jnp.log(1/1000.)
-        print(f'u0: {u0}')
         ics_loss = jnp.mean((u0 - u_pred) ** 2)
 
         # Residual loss

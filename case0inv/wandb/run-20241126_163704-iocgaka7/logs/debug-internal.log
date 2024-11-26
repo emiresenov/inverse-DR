@@ -1,0 +1,16 @@
+{"time":"2024-11-26T16:37:04.846771+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-26T16:37:04.846837+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241126_163704-iocgaka7/logs/debug-core.log"}
+{"time":"2024-11-26T16:37:04.957848+01:00","level":"INFO","msg":"created new stream","id":"iocgaka7"}
+{"time":"2024-11-26T16:37:04.958067+01:00","level":"INFO","msg":"stream: started","id":"iocgaka7"}
+{"time":"2024-11-26T16:37:04.958241+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"iocgaka7"}
+{"time":"2024-11-26T16:37:04.958243+01:00","level":"INFO","msg":"sender: started","stream_id":"iocgaka7"}
+{"time":"2024-11-26T16:37:04.958303+01:00","level":"INFO","msg":"handler: started","stream_id":"iocgaka7"}
+{"time":"2024-11-26T16:37:05.197352+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-26T16:37:16.693846+01:00","level":"INFO","msg":"stream: closing","id":"iocgaka7"}
+{"time":"2024-11-26T16:37:16.694055+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-26T16:37:16.694407+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-26T16:37:17.529905+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-26T16:37:17.811264+01:00","level":"INFO","msg":"handler: closed","stream_id":"iocgaka7"}
+{"time":"2024-11-26T16:37:17.811276+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"iocgaka7"}
+{"time":"2024-11-26T16:37:17.811402+01:00","level":"INFO","msg":"sender: closed","stream_id":"iocgaka7"}
+{"time":"2024-11-26T16:37:17.813748+01:00","level":"INFO","msg":"stream: closed","id":"iocgaka7"}

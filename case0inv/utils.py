@@ -10,7 +10,7 @@ def solution(t):
     return - t / (R * C) + jnp.log(U / R)
 
 def get_dataset():
-    t = jnp.linspace(0.0, 50.0, 30)
+    t = jnp.linspace(0.0, 50.0, 100)
     u = solution(t)
     return u, t
 
