@@ -91,7 +91,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     plt.title("Absolute error")
     plt.tight_layout()
     
-    print(f"predicted R: {state.params['params']['R']}")
+    #print(f"predicted R: {state.params['params']['R']}")
     print(f"predicted C: {state.params['params']['C']}")
 
     # Save the figure

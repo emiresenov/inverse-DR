@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 25000
+    training.max_steps = 10000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -49,7 +49,7 @@ def get_config():
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 
-    weighting.use_causal = False
+    weighting.use_causal = True
     weighting.causal_tol = 1.0
     weighting.num_chunks = 32
 
@@ -71,7 +71,6 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R' : jnp.array([800.]),
         'C' : jnp.array([0.07])
     }
 
