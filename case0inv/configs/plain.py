@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 forward"
+    wandb.project = "Case 0 inverse"
     wandb.name = "plain"
     wandb.tag = None
 
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 25000
+    training.max_steps = 10000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -71,7 +71,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'tau' : jnp.array([10.])
+        'tau' : jnp.array([6.])
     }
 
     # Input shape for initializing Flax models
