@@ -90,9 +90,13 @@ class CaseZeroEvaluator(BaseEvaluator):
     def log_preds(self, params):
         u_pred = self.model.u_pred_fn(params, self.model.t_star)
         fig = plt.figure(figsize=(6, 5))
-        plt.imshow(u_pred.T, cmap="jet")
+        plt.plot(u_pred)
         self.log_dict["u_pred"] = fig
         plt.close()
+    
+    def log_inv_params(self, params):
+        self.log_dict["tau"] = params['params']['tau'][0]
+        
 
     def __call__(self, state, batch, u_ref):
         self.log_dict = super().__call__(state, batch)
@@ -106,5 +110,8 @@ class CaseZeroEvaluator(BaseEvaluator):
 
         if self.config.logging.log_preds:
             self.log_preds(state.params)
+        
+        if self.config.logging.log_inv_params:
+            self.log_inv_params(state.params)
 
         return self.log_dict

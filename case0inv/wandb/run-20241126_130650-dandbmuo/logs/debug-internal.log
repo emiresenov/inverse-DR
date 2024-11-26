@@ -1,0 +1,8 @@
+{"time":"2024-11-26T13:06:50.80436+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-26T13:06:50.804418+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241126_130650-dandbmuo/logs/debug-core.log"}
+{"time":"2024-11-26T13:06:50.915334+01:00","level":"INFO","msg":"created new stream","id":"dandbmuo"}
+{"time":"2024-11-26T13:06:50.915397+01:00","level":"INFO","msg":"stream: started","id":"dandbmuo"}
+{"time":"2024-11-26T13:06:50.915462+01:00","level":"INFO","msg":"handler: started","stream_id":"dandbmuo"}
+{"time":"2024-11-26T13:06:50.915451+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"dandbmuo"}
+{"time":"2024-11-26T13:06:50.915493+01:00","level":"INFO","msg":"sender: started","stream_id":"dandbmuo"}
+{"time":"2024-11-26T13:06:51.215896+01:00","level":"INFO","msg":"Starting system monitor"}

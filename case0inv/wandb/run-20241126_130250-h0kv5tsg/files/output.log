@@ -1,0 +1,21 @@
+Waiting for JIT...
+u0: Traced<ShapedArray(float32[], weak_type=True)>with<DynamicJaxprTrace(level=4/1)>
+u0: Traced<ShapedArray(float32[], weak_type=True)>with<DynamicJaxprTrace(level=1/0)>
+u_pred: Traced<ShapedArray(float32[30])>with<DynamicJaxprTrace(level=1/0)>, u_test: Traced<ShapedArray(float32[30])>with<DynamicJaxprTrace(level=1/0)>
+Traceback (most recent call last):
+  File "/Users/emiresenov/jaxrc/case0inv/main.py", line 38, in <module>
+    app.run(main)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 308, in run
+    _run_main(main, args)
+  File "/opt/anaconda3/lib/python3.11/site-packages/absl/app.py", line 254, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/case0inv/main.py", line 33, in main
+    train.train_and_evaluate(FLAGS.config, FLAGS.workdir)
+  File "/Users/emiresenov/jaxrc/case0inv/train.py", line 62, in train_and_evaluate
+    log_dict = evaluator(state, batch, u_ref)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/emiresenov/jaxrc/case0inv/models.py", line 115, in __call__
+    self.log_log_inv_params(state.params)
+    ^^^^^^^^^^^^^^^^^^^^^^^
+AttributeError: 'CaseZeroEvaluator' object has no attribute 'log_log_inv_params'

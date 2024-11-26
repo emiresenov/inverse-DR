@@ -67,6 +67,7 @@ def get_config():
     logging.log_grads = True
     logging.log_ntk = False
     logging.log_preds = True
+    logging.log_inv_params = True
     
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
