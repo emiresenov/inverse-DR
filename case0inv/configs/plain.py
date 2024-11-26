@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 10000
+    training.max_steps = 25000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -71,7 +71,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'C' : jnp.array([0.07])
+        'tau' : jnp.array([10.])
     }
 
     # Input shape for initializing Flax models
