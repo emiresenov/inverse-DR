@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 inverse"
+    wandb.project = "Case 0 inverse – Adam experiments"
     wandb.name = "plain"
     wandb.tag = None
 
@@ -72,7 +72,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'tau' : jnp.array([5.]) # Starting val. True val = 10
+        'tau' : jnp.array([1.]) # Starting val. True val = 10
     }
 
     # Input shape for initializing Flax models

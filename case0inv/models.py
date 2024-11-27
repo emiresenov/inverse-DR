@@ -73,7 +73,6 @@ class CaseZero(InverseIVP):
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):
         u_pred = self.u_pred_fn(params, self.t_star)
-        print(f'u_pred: {u_pred}, u_test: {u_test}')
         error = jnp.linalg.norm(u_pred - u_test) / jnp.linalg.norm(u_test)
         return error
 
