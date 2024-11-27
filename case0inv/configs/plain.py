@@ -32,9 +32,9 @@ def get_config():
     optim.beta1 = 0.9
     optim.beta2 = 0.999
     optim.eps = 1e-8
-    optim.learning_rate = 1e-3
+    optim.learning_rate = 1e-1
     optim.decay_rate = 0.9
-    optim.decay_steps = 2000
+    optim.decay_steps = 1000
     optim.grad_accum_steps = 0
 
     # Training
