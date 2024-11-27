@@ -1,9 +1,0 @@
-{"time":"2024-11-26T12:28:17.658801+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2024-11-26T12:28:17.658853+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241126_122817-n5mlzb1k/logs/debug-core.log"}
-{"time":"2024-11-26T12:28:17.768801+01:00","level":"INFO","msg":"created new stream","id":"n5mlzb1k"}
-{"time":"2024-11-26T12:28:17.768837+01:00","level":"INFO","msg":"stream: started","id":"n5mlzb1k"}
-{"time":"2024-11-26T12:28:17.76885+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"n5mlzb1k"}
-{"time":"2024-11-26T12:28:17.768881+01:00","level":"INFO","msg":"sender: started","stream_id":"n5mlzb1k"}
-{"time":"2024-11-26T12:28:17.768898+01:00","level":"INFO","msg":"handler: started","stream_id":"n5mlzb1k"}
-{"time":"2024-11-26T12:28:18.0734+01:00","level":"INFO","msg":"Starting system monitor"}
-{"time":"2024-11-26T12:28:58.07563+01:00","level":"ERROR","msg":"monitor: cpu: error sampling metrics: input/output error"}
