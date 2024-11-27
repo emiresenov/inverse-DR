@@ -1,0 +1,16 @@
+{"time":"2024-11-27T16:45:31.477468+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-27T16:45:31.477529+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241127_164531-ymnir4c5/logs/debug-core.log"}
+{"time":"2024-11-27T16:45:31.586832+01:00","level":"INFO","msg":"created new stream","id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:31.587048+01:00","level":"INFO","msg":"stream: started","id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:31.587225+01:00","level":"INFO","msg":"sender: started","stream_id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:31.587227+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:31.587278+01:00","level":"INFO","msg":"handler: started","stream_id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:31.892659+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-27T16:45:47.512889+01:00","level":"INFO","msg":"stream: closing","id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:47.513117+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-27T16:45:47.513467+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-27T16:45:48.244537+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-27T16:45:48.488846+01:00","level":"INFO","msg":"handler: closed","stream_id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:48.488868+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:48.489142+01:00","level":"INFO","msg":"sender: closed","stream_id":"ymnir4c5"}
+{"time":"2024-11-27T16:45:48.489665+01:00","level":"INFO","msg":"stream: closed","id":"ymnir4c5"}

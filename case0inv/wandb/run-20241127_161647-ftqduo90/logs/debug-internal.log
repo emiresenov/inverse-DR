@@ -1,0 +1,16 @@
+{"time":"2024-11-27T16:16:47.024481+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-27T16:16:47.024527+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241127_161647-ftqduo90/logs/debug-core.log"}
+{"time":"2024-11-27T16:16:47.134928+01:00","level":"INFO","msg":"created new stream","id":"ftqduo90"}
+{"time":"2024-11-27T16:16:47.134975+01:00","level":"INFO","msg":"stream: started","id":"ftqduo90"}
+{"time":"2024-11-27T16:16:47.13515+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ftqduo90"}
+{"time":"2024-11-27T16:16:47.135304+01:00","level":"INFO","msg":"handler: started","stream_id":"ftqduo90"}
+{"time":"2024-11-27T16:16:47.135304+01:00","level":"INFO","msg":"sender: started","stream_id":"ftqduo90"}
+{"time":"2024-11-27T16:16:47.430544+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-27T16:16:48.156526+01:00","level":"INFO","msg":"stream: closing","id":"ftqduo90"}
+{"time":"2024-11-27T16:16:48.156758+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-27T16:16:48.157264+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-27T16:16:48.920395+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-27T16:16:49.131443+01:00","level":"INFO","msg":"handler: closed","stream_id":"ftqduo90"}
+{"time":"2024-11-27T16:16:49.131457+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ftqduo90"}
+{"time":"2024-11-27T16:16:49.131709+01:00","level":"INFO","msg":"sender: closed","stream_id":"ftqduo90"}
+{"time":"2024-11-27T16:16:49.132148+01:00","level":"INFO","msg":"stream: closed","id":"ftqduo90"}

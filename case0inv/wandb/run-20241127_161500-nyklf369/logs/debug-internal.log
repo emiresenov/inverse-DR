@@ -1,0 +1,16 @@
+{"time":"2024-11-27T16:15:00.944226+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-27T16:15:00.944289+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241127_161500-nyklf369/logs/debug-core.log"}
+{"time":"2024-11-27T16:15:01.058544+01:00","level":"INFO","msg":"created new stream","id":"nyklf369"}
+{"time":"2024-11-27T16:15:01.058864+01:00","level":"INFO","msg":"stream: started","id":"nyklf369"}
+{"time":"2024-11-27T16:15:01.059067+01:00","level":"INFO","msg":"handler: started","stream_id":"nyklf369"}
+{"time":"2024-11-27T16:15:01.059145+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"nyklf369"}
+{"time":"2024-11-27T16:15:01.059145+01:00","level":"INFO","msg":"sender: started","stream_id":"nyklf369"}
+{"time":"2024-11-27T16:15:01.526663+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-27T16:15:02.547806+01:00","level":"INFO","msg":"stream: closing","id":"nyklf369"}
+{"time":"2024-11-27T16:15:02.548079+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-27T16:15:02.548451+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-27T16:15:03.251865+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-27T16:15:03.482694+01:00","level":"INFO","msg":"handler: closed","stream_id":"nyklf369"}
+{"time":"2024-11-27T16:15:03.48293+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"nyklf369"}
+{"time":"2024-11-27T16:15:03.483081+01:00","level":"INFO","msg":"sender: closed","stream_id":"nyklf369"}
+{"time":"2024-11-27T16:15:03.48345+01:00","level":"INFO","msg":"stream: closed","id":"nyklf369"}
