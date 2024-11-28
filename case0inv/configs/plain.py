@@ -11,15 +11,15 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 inverse – Scheduler experiments"
-    wandb.name = "lr=1e-2, decay_rate=0.1"
+    wandb.project = "Case 0 inverse – longer run 1e-1"
+    wandb.name = "lr=5e-1, 30k iters, 15 units"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 1
-    arch.hidden_dim = 30
+    arch.num_layers = 2
+    arch.hidden_dim = 15
     arch.out_dim = 1
     arch.activation = "tanh"
     arch.periodicity = None
@@ -32,14 +32,14 @@ def get_config():
     optim.beta1 = 0.9
     optim.beta2 = 0.999
     optim.eps = 1e-8
-    optim.learning_rate = 1e-2
-    optim.decay_rate = 0.1
+    optim.learning_rate = 5e-2
+    optim.decay_rate = 0.9
     optim.decay_steps = 1000
     optim.grad_accum_steps = 0
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 10000
+    training.max_steps = 30000
     training.batch_size_per_device = 4096
 
     # Weighting

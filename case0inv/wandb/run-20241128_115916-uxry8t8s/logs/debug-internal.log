@@ -1,0 +1,16 @@
+{"time":"2024-11-28T11:59:16.398129+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-28T11:59:16.398218+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241128_115916-uxry8t8s/logs/debug-core.log"}
+{"time":"2024-11-28T11:59:16.508902+01:00","level":"INFO","msg":"created new stream","id":"uxry8t8s"}
+{"time":"2024-11-28T11:59:16.508946+01:00","level":"INFO","msg":"stream: started","id":"uxry8t8s"}
+{"time":"2024-11-28T11:59:16.508958+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"uxry8t8s"}
+{"time":"2024-11-28T11:59:16.508959+01:00","level":"INFO","msg":"handler: started","stream_id":"uxry8t8s"}
+{"time":"2024-11-28T11:59:16.508999+01:00","level":"INFO","msg":"sender: started","stream_id":"uxry8t8s"}
+{"time":"2024-11-28T11:59:16.739543+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-28T12:00:02.586998+01:00","level":"INFO","msg":"stream: closing","id":"uxry8t8s"}
+{"time":"2024-11-28T12:00:02.587053+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-28T12:00:02.587439+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-28T12:00:03.310618+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-28T12:00:03.540161+01:00","level":"INFO","msg":"handler: closed","stream_id":"uxry8t8s"}
+{"time":"2024-11-28T12:00:03.540191+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"uxry8t8s"}
+{"time":"2024-11-28T12:00:03.540365+01:00","level":"INFO","msg":"sender: closed","stream_id":"uxry8t8s"}
+{"time":"2024-11-28T12:00:03.540835+01:00","level":"INFO","msg":"stream: closed","id":"uxry8t8s"}
