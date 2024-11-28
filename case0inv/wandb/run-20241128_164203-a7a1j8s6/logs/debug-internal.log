@@ -1,0 +1,19 @@
+{"time":"2024-11-28T16:42:03.784816+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-28T16:42:03.784886+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241128_164203-a7a1j8s6/logs/debug-core.log"}
+{"time":"2024-11-28T16:42:04.000157+01:00","level":"INFO","msg":"created new stream","id":"a7a1j8s6"}
+{"time":"2024-11-28T16:42:04.000209+01:00","level":"INFO","msg":"stream: started","id":"a7a1j8s6"}
+{"time":"2024-11-28T16:42:04.000247+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"a7a1j8s6"}
+{"time":"2024-11-28T16:42:04.000279+01:00","level":"INFO","msg":"handler: started","stream_id":"a7a1j8s6"}
+{"time":"2024-11-28T16:42:04.00027+01:00","level":"INFO","msg":"sender: started","stream_id":"a7a1j8s6"}
+{"time":"2024-11-28T16:42:04.374263+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-28T16:43:03.510151+01:00","level":"INFO","msg":"stream: closing","id":"a7a1j8s6"}
+{"time":"2024-11-28T16:43:03.510201+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-28T16:43:03.510694+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-28T16:43:03.861342+01:00","level":"WARN","msg":"No job ingredients found, not creating job artifact"}
+{"time":"2024-11-28T16:43:03.861448+01:00","level":"WARN","msg":"No source type found, not creating job artifact"}
+{"time":"2024-11-28T16:43:03.861488+01:00","level":"INFO","msg":"sender: sendDefer: no job artifact to save"}
+{"time":"2024-11-28T16:43:04.662995+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-28T16:43:05.38787+01:00","level":"INFO","msg":"handler: closed","stream_id":"a7a1j8s6"}
+{"time":"2024-11-28T16:43:05.387905+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"a7a1j8s6"}
+{"time":"2024-11-28T16:43:05.388015+01:00","level":"INFO","msg":"sender: closed","stream_id":"a7a1j8s6"}
+{"time":"2024-11-28T16:43:05.388319+01:00","level":"INFO","msg":"stream: closed","id":"a7a1j8s6"}
