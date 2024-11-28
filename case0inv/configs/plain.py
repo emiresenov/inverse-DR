@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 inverse – Adam experiments"
-    wandb.name = "plain"
+    wandb.project = "Case 0 inverse – Scheduler experiments"
+    wandb.name = "lr=1e-2, decay_rate=0.1"
     wandb.tag = None
 
     # Arch
@@ -32,8 +32,8 @@ def get_config():
     optim.beta1 = 0.9
     optim.beta2 = 0.999
     optim.eps = 1e-8
-    optim.learning_rate = 1e-3
-    optim.decay_rate = 0.9
+    optim.learning_rate = 1e-2
+    optim.decay_rate = 0.1
     optim.decay_steps = 1000
     optim.grad_accum_steps = 0
 
@@ -63,7 +63,7 @@ def get_config():
     logging.log_every_steps = 100
     logging.log_errors = True
     logging.log_losses = True
-    logging.log_weights = True
+    logging.log_weights = False
     logging.log_grads = True
     logging.log_ntk = False
     logging.log_preds = True

@@ -1,0 +1,16 @@
+{"time":"2024-11-28T11:01:51.649282+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-28T11:01:51.649363+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241128_110151-twt13kou/logs/debug-core.log"}
+{"time":"2024-11-28T11:01:51.762246+01:00","level":"INFO","msg":"created new stream","id":"twt13kou"}
+{"time":"2024-11-28T11:01:51.7623+01:00","level":"INFO","msg":"stream: started","id":"twt13kou"}
+{"time":"2024-11-28T11:01:51.762327+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"twt13kou"}
+{"time":"2024-11-28T11:01:51.762374+01:00","level":"INFO","msg":"sender: started","stream_id":"twt13kou"}
+{"time":"2024-11-28T11:01:51.762343+01:00","level":"INFO","msg":"handler: started","stream_id":"twt13kou"}
+{"time":"2024-11-28T11:01:52.058306+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-28T11:02:07.240243+01:00","level":"INFO","msg":"stream: closing","id":"twt13kou"}
+{"time":"2024-11-28T11:02:07.240286+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-28T11:02:07.240789+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-28T11:02:07.974342+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-28T11:02:08.187112+01:00","level":"INFO","msg":"handler: closed","stream_id":"twt13kou"}
+{"time":"2024-11-28T11:02:08.187364+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"twt13kou"}
+{"time":"2024-11-28T11:02:08.188101+01:00","level":"INFO","msg":"sender: closed","stream_id":"twt13kou"}
+{"time":"2024-11-28T11:02:08.188129+01:00","level":"INFO","msg":"stream: closed","id":"twt13kou"}

@@ -1,0 +1,16 @@
+{"time":"2024-11-28T10:52:49.231686+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-28T10:52:49.231756+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0inv/wandb/run-20241128_105249-wzdqihgd/logs/debug-core.log"}
+{"time":"2024-11-28T10:52:49.354153+01:00","level":"INFO","msg":"created new stream","id":"wzdqihgd"}
+{"time":"2024-11-28T10:52:49.354375+01:00","level":"INFO","msg":"stream: started","id":"wzdqihgd"}
+{"time":"2024-11-28T10:52:49.354615+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"wzdqihgd"}
+{"time":"2024-11-28T10:52:49.354598+01:00","level":"INFO","msg":"handler: started","stream_id":"wzdqihgd"}
+{"time":"2024-11-28T10:52:49.354609+01:00","level":"INFO","msg":"sender: started","stream_id":"wzdqihgd"}
+{"time":"2024-11-28T10:52:49.641107+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-28T10:53:05.114207+01:00","level":"INFO","msg":"stream: closing","id":"wzdqihgd"}
+{"time":"2024-11-28T10:53:05.114441+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-28T10:53:05.114773+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-28T10:53:07.805834+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-28T10:53:08.015051+01:00","level":"INFO","msg":"handler: closed","stream_id":"wzdqihgd"}
+{"time":"2024-11-28T10:53:08.015099+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"wzdqihgd"}
+{"time":"2024-11-28T10:53:08.015345+01:00","level":"INFO","msg":"sender: closed","stream_id":"wzdqihgd"}
+{"time":"2024-11-28T10:53:08.016976+01:00","level":"INFO","msg":"stream: closed","id":"wzdqihgd"}
