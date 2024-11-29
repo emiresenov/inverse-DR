@@ -1,0 +1,16 @@
+{"time":"2024-11-29T10:41:34.865374+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-29T10:41:34.865452+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241129_104134-jxe8v9an/logs/debug-core.log"}
+{"time":"2024-11-29T10:41:34.976644+01:00","level":"INFO","msg":"created new stream","id":"jxe8v9an"}
+{"time":"2024-11-29T10:41:34.976684+01:00","level":"INFO","msg":"stream: started","id":"jxe8v9an"}
+{"time":"2024-11-29T10:41:34.976687+01:00","level":"INFO","msg":"handler: started","stream_id":"jxe8v9an"}
+{"time":"2024-11-29T10:41:34.976726+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"jxe8v9an"}
+{"time":"2024-11-29T10:41:34.976695+01:00","level":"INFO","msg":"sender: started","stream_id":"jxe8v9an"}
+{"time":"2024-11-29T10:41:35.241121+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-29T10:42:05.470632+01:00","level":"INFO","msg":"stream: closing","id":"jxe8v9an"}
+{"time":"2024-11-29T10:42:05.470656+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-29T10:42:05.470956+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-29T10:42:06.434288+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-29T10:42:06.628015+01:00","level":"INFO","msg":"handler: closed","stream_id":"jxe8v9an"}
+{"time":"2024-11-29T10:42:06.628042+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"jxe8v9an"}
+{"time":"2024-11-29T10:42:06.628067+01:00","level":"INFO","msg":"sender: closed","stream_id":"jxe8v9an"}
+{"time":"2024-11-29T10:42:06.628566+01:00","level":"INFO","msg":"stream: closed","id":"jxe8v9an"}

@@ -11,14 +11,14 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 inverse – longer run 1e-1"
-    wandb.name = "lr=5e-1, 30k iters, 15 units"
+    wandb.project = "Case 0 inverse – tau_0 = 15"
+    wandb.name = "lr=1e-2"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 2
+    arch.num_layers = 1
     arch.hidden_dim = 15
     arch.out_dim = 1
     arch.activation = "tanh"
@@ -32,7 +32,7 @@ def get_config():
     optim.beta1 = 0.9
     optim.beta2 = 0.999
     optim.eps = 1e-8
-    optim.learning_rate = 5e-2
+    optim.learning_rate = 1e-2
     optim.decay_rate = 0.9
     optim.decay_steps = 1000
     optim.grad_accum_steps = 0
@@ -44,12 +44,12 @@ def get_config():
 
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
-    weighting.scheme = None
+    weighting.scheme = "grad_norm"
     weighting.init_weights = ml_collections.ConfigDict({"ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 
-    weighting.use_causal = False
+    weighting.use_causal = True
     weighting.causal_tol = 1.0
     weighting.num_chunks = 32
 
@@ -72,7 +72,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'tau' : jnp.array([1.]) # Starting val. True val = 10
+        'tau' : jnp.array([15.]) # Starting val. True val = 10
     }
 
     # Input shape for initializing Flax models

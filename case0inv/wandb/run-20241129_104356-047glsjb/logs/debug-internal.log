@@ -1,0 +1,16 @@
+{"time":"2024-11-29T10:43:56.062848+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-11-29T10:43:56.062925+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241129_104356-047glsjb/logs/debug-core.log"}
+{"time":"2024-11-29T10:43:56.177296+01:00","level":"INFO","msg":"created new stream","id":"047glsjb"}
+{"time":"2024-11-29T10:43:56.177365+01:00","level":"INFO","msg":"stream: started","id":"047glsjb"}
+{"time":"2024-11-29T10:43:56.177679+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"047glsjb"}
+{"time":"2024-11-29T10:43:56.177679+01:00","level":"INFO","msg":"handler: started","stream_id":"047glsjb"}
+{"time":"2024-11-29T10:43:56.177749+01:00","level":"INFO","msg":"sender: started","stream_id":"047glsjb"}
+{"time":"2024-11-29T10:43:56.48811+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-11-29T10:44:26.748335+01:00","level":"INFO","msg":"stream: closing","id":"047glsjb"}
+{"time":"2024-11-29T10:44:26.748365+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-11-29T10:44:26.748784+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-11-29T10:44:28.240819+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-11-29T10:44:28.462115+01:00","level":"INFO","msg":"handler: closed","stream_id":"047glsjb"}
+{"time":"2024-11-29T10:44:28.462165+01:00","level":"INFO","msg":"sender: closed","stream_id":"047glsjb"}
+{"time":"2024-11-29T10:44:28.462153+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"047glsjb"}
+{"time":"2024-11-29T10:44:28.462354+01:00","level":"INFO","msg":"stream: closed","id":"047glsjb"}
