@@ -1,7 +1,7 @@
 import scipy.io
 import jax.numpy as jnp
 
-U = 5.0
+U = 10.0
 R_0 = 25.0
 R_1 = 0.5
 C_1 = 8.0
@@ -18,3 +18,5 @@ def get_dataset():
     u = solution(t)
     return u, t
 
+
+print(get_dataset())
