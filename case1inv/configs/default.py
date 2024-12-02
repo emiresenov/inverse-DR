@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "Case 1 inverse"
-    wandb.name = "lr=1e-2"
+    wandb.name = "lr=1e-1"
     wandb.tag = None
 
     # Arch
@@ -32,7 +32,7 @@ def get_config():
     optim.beta1 = 0.9
     optim.beta2 = 0.999
     optim.eps = 1e-8
-    optim.learning_rate = 1e-2
+    optim.learning_rate = 1e-1
     optim.decay_rate = 0.9
     optim.decay_steps = 1000
     optim.grad_accum_steps = 0

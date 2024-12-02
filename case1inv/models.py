@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 
 
 class CaseOne(InverseIVP):
-    def __init__(self, config, t_star):
+    def __init__(self, config, u0, t_star):
         super().__init__(config)
 
         self.t_star = t_star
@@ -42,7 +42,7 @@ class CaseOne(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return u_t + (1/(R1*C1))*(1-(U_dc/R0)*jnp.exp(-u))
+        return u_t + (1/(R1*C1))*(u-U_dc/R0)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -59,11 +59,16 @@ class CaseOne(InverseIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
+        '''
+        I think we need a measurement at t0 if this is going to work at all.
+        With synthetic data, this is no issuem but with measurements, we
+        should keep this in mind. 
+        '''
         U_dc = 10 # TODO: Move to config
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         u_pred = self.u_net(params, self.t0)
-        u0 = jnp.log(U_dc/R0 + U_dc/R1)
+        u0 = U_dc/R0 + U_dc/R1
         ics_loss = jnp.mean((u0 - u_pred) ** 2)
 
         # Residual loss
