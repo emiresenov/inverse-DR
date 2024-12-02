@@ -58,8 +58,11 @@ class CaseOne(InverseIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
+        U_dc = 10 # TODO: Move to config
+        R0 = params['params']['R0']
+        R1 = params['params']['R1']
         u_pred = self.u_net(params, self.t0)
-        u0 = jnp.log(1/1000.)
+        u0 = jnp.log(U_dc/R0 + U_dc/R1)
         ics_loss = jnp.mean((u0 - u_pred) ** 2)
 
         # Residual loss
