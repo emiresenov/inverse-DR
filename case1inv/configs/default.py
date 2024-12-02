@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 1 inverse"
+    wandb.project = "Case 1 inverse – convergence demo"
     wandb.name = "lr=1e-1"
     wandb.tag = None
 
