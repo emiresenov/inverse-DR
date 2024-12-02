@@ -10,6 +10,6 @@ def get_dataset():
     return u_ref, t_star, x_star
 
 
-u_ref, t_star, x_star = get_dataset()
+'''u_ref, t_star, x_star = get_dataset()
 u0 = u_ref[0, :]
-print(u0)
+print(u0)'''

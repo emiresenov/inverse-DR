@@ -11,15 +11,13 @@ from matplotlib import pyplot as plt
 
 
 class CaseOne(InverseIVP):
-    def __init__(self, config, u0, t_star):
+    def __init__(self, config, u_ref, t_star):
         super().__init__(config)
-
-
         self.t_star = t_star
+        self.u_ref = u_ref
 
-        self.u0 = u0
         self.t0 = t_star[0]
-        self.t1 = t_star[-1]
+        self.u0 = u_ref[0]
 
         # Predictions over time t
         self.u_pred_fn = vmap(self.u_net, (None, 0))
@@ -62,15 +60,15 @@ class CaseOne(InverseIVP):
     def losses(self, params, batch):
         # Initial condition loss
         '''
-        I think we need a measurement at t0 if this is going to work at all.
-        With synthetic data, this is no issuem but with measurements, we
+        I think we need a measurement u0 at t0 if this is going to work at all.
+        With synthetic data this is no issue, but with measurements we
         should keep this in mind. 
         '''
-        #U_dc = 10 # TODO: Move to config
+        U_dc = 10 # TODO: Move to config
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        u_pred = self.u_net(params, self.t0)
-        ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
+        u0_pred = U_dc/R0 + U_dc/R1
+        ics_loss = jnp.mean((self.u0 - u0_pred) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:
@@ -80,7 +78,10 @@ class CaseOne(InverseIVP):
             r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
             res_loss = jnp.mean((r_pred) ** 2)
 
-        loss_dict = {"ics": ics_loss, "res": res_loss}
+        u_pred = self.u_net(params, self.t_star)
+        data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
+
+        loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
         return loss_dict
 
 
