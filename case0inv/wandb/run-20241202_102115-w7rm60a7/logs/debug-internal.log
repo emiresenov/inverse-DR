@@ -1,0 +1,16 @@
+{"time":"2024-12-02T10:21:15.211542+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-02T10:21:15.211605+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241202_102115-w7rm60a7/logs/debug-core.log"}
+{"time":"2024-12-02T10:21:15.359107+01:00","level":"INFO","msg":"created new stream","id":"w7rm60a7"}
+{"time":"2024-12-02T10:21:15.359214+01:00","level":"INFO","msg":"stream: started","id":"w7rm60a7"}
+{"time":"2024-12-02T10:21:15.359261+01:00","level":"INFO","msg":"handler: started","stream_id":"w7rm60a7"}
+{"time":"2024-12-02T10:21:15.359268+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"w7rm60a7"}
+{"time":"2024-12-02T10:21:15.359302+01:00","level":"INFO","msg":"sender: started","stream_id":"w7rm60a7"}
+{"time":"2024-12-02T10:21:15.65334+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-02T10:22:14.042443+01:00","level":"INFO","msg":"stream: closing","id":"w7rm60a7"}
+{"time":"2024-12-02T10:22:14.042478+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-02T10:22:14.042742+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-02T10:22:15.323689+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-02T10:22:15.781281+01:00","level":"INFO","msg":"handler: closed","stream_id":"w7rm60a7"}
+{"time":"2024-12-02T10:22:15.78131+01:00","level":"INFO","msg":"sender: closed","stream_id":"w7rm60a7"}
+{"time":"2024-12-02T10:22:15.781303+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"w7rm60a7"}
+{"time":"2024-12-02T10:22:15.781652+01:00","level":"INFO","msg":"stream: closed","id":"w7rm60a7"}

@@ -23,10 +23,12 @@ class CaseZero(InverseIVP):
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
 
-    # Initial condition prediction
+
     def u_net(self, params, t):
         z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
+        print(f'u from u_net{u}')
+        print(f'u[0] from u_net{u[0]}')
         return u[0]
 
     def grad_net(self, params, t):

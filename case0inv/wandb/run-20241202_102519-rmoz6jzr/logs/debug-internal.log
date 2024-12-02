@@ -1,0 +1,16 @@
+{"time":"2024-12-02T10:25:19.029953+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-02T10:25:19.029999+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241202_102519-rmoz6jzr/logs/debug-core.log"}
+{"time":"2024-12-02T10:25:19.13997+01:00","level":"INFO","msg":"created new stream","id":"rmoz6jzr"}
+{"time":"2024-12-02T10:25:19.140007+01:00","level":"INFO","msg":"stream: started","id":"rmoz6jzr"}
+{"time":"2024-12-02T10:25:19.140041+01:00","level":"INFO","msg":"sender: started","stream_id":"rmoz6jzr"}
+{"time":"2024-12-02T10:25:19.140068+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"rmoz6jzr"}
+{"time":"2024-12-02T10:25:19.140096+01:00","level":"INFO","msg":"handler: started","stream_id":"rmoz6jzr"}
+{"time":"2024-12-02T10:25:19.444165+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-02T10:26:15.390806+01:00","level":"INFO","msg":"stream: closing","id":"rmoz6jzr"}
+{"time":"2024-12-02T10:26:15.390881+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-02T10:26:15.391146+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-02T10:26:16.797559+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-02T10:26:17.315856+01:00","level":"INFO","msg":"handler: closed","stream_id":"rmoz6jzr"}
+{"time":"2024-12-02T10:26:17.315868+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"rmoz6jzr"}
+{"time":"2024-12-02T10:26:17.315882+01:00","level":"INFO","msg":"sender: closed","stream_id":"rmoz6jzr"}
+{"time":"2024-12-02T10:26:17.315952+01:00","level":"INFO","msg":"stream: closed","id":"rmoz6jzr"}
