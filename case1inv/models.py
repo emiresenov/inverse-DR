@@ -26,7 +26,7 @@ class CaseOne(InverseIVP):
     # Prediction function given current params over time t
     def u_net(self, params, t):
         z = jnp.stack([t])
-        u = self.state.apply_fn(params, z)
+        u = self.state.apply_fn(params, z) # THIS LINE
         return u[0] # Unpack tensor
 
     # Calculate gradients
@@ -78,7 +78,7 @@ class CaseOne(InverseIVP):
             r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
             res_loss = jnp.mean((r_pred) ** 2)
 
-        u_pred = self.u_net(params, self.t0) #THIS LINE
+        u_pred = vmap(self.u_net, (None, 0))(params, self.t_star) #THIS LINE
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 
         loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}

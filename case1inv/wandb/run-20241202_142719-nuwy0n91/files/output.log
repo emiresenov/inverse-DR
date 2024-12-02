@@ -1,0 +1,64 @@
+[1.]
+[-0.0586912   0.41766432 -0.11834399  0.11480705  0.05907655  0.33171517
+  0.50300276 -0.11978792 -0.43856826  0.07829898 -0.05558272 -0.35952163
+  0.37906364  0.3862841  -0.30999503]
+Waiting for JIT...
+Traced<ShapedArray(float32[1])>with<BatchTrace(level=5/1)> with
+  val = Traced<ShapedArray(float32[4096,1])>with<DynamicJaxprTrace(level=4/1)>
+  batch_dim = 0
+Traced<ShapedArray(float32[15])>with<BatchTrace(level=5/1)> with
+  val = Traced<ShapedArray(float32[4096,15])>with<DynamicJaxprTrace(level=4/1)>
+  batch_dim = 0
+Traced<ShapedArray(float32[1])>with<JVPTrace(level=7/1)> with
+  primal = Traced<ShapedArray(float32[1])>with<BatchTrace(level=5/1)> with
+    val = Traced<ShapedArray(float32[4096,1])>with<DynamicJaxprTrace(level=4/1)>
+    batch_dim = 0
+  tangent = Traced<ShapedArray(float32[1])>with<JaxprTrace(level=6/1)> with
+    pval = (ShapedArray(float32[1]), None)
+    recipe = JaxprEqnRecipe(eqn_id=<object object at 0x308a97d50>, in_tracers=(Traced<ShapedArray(float32[]):JaxprTrace(level=6/1)>,), out_tracer_refs=[<weakref at 0x31bd723e0; to 'JaxprTracer' at 0x31bd70b40>], out_avals=[ShapedArray(float32[1])], primitive=broadcast_in_dim, params={'shape': (1,), 'broadcast_dimensions': ()}, effects=frozenset(), source_info=<jax._src.source_info_util.SourceInfo object at 0x31bd4c070>, ctx=JaxprEqnContext(compute_type=None, threefry_partitionable=False, xla_metadata={}))
+Traced<ShapedArray(float32[15])>with<JVPTrace(level=7/1)> with
+  primal = Traced<ShapedArray(float32[15])>with<BatchTrace(level=5/1)> with
+    val = Traced<ShapedArray(float32[4096,15])>with<DynamicJaxprTrace(level=4/1)>
+    batch_dim = 0
+  tangent = Traced<ShapedArray(float32[15])>with<JaxprTrace(level=6/1)> with
+    pval = (ShapedArray(float32[15]), None)
+    recipe = JaxprEqnRecipe(eqn_id=<object object at 0x31bdac180>, in_tracers=(Traced<ShapedArray(float32[15]):JaxprTrace(level=6/1)>, Traced<ShapedArray(float32[15]):JaxprTrace(level=6/1)>, Traced<ShapedArray(float32[15]):JaxprTrace(level=6/1)>), out_tracer_refs=[<weakref at 0x31bd72ed0; to 'JaxprTracer' at 0x31bd73610>], out_avals=[ShapedArray(float32[15])], primitive=pjit, params={'jaxpr': { [34m[22m[1mlambda [39m[22m[22m; a[35m:f32[15][39m b[35m:f32[15][39m c[35m:f32[15][39m. [34m[22m[1mlet
+    [39m[22m[22md[35m:f32[15][39m = mul a b
+    e[35m:f32[15][39m = add a d
+    f[35m:f32[15][39m = mul e c
+  [34m[22m[1min [39m[22m[22m(f,) }, 'in_shardings': (UnspecifiedValue, UnspecifiedValue, UnspecifiedValue), 'out_shardings': (UnspecifiedValue,), 'in_layouts': (None, None, None), 'out_layouts': (None,), 'resource_env': None, 'donated_invars': (False, False, False), 'name': 'tanh', 'keep_unused': False, 'inline': True}, effects=set(), source_info=<jax._src.source_info_util.SourceInfo object at 0x31bda5000>, ctx=JaxprEqnContext(compute_type=None, threefry_partitionable=False, xla_metadata={}))
+Traced<ShapedArray(float32[1,100])>with<DynamicJaxprTrace(level=4/1)>
+Traceback (most recent call last):
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/main.py", line 38, in <module>
+    app.run(main)
+  File "/opt/anaconda3/lib/python3.12/site-packages/absl/app.py", line 308, in run
+    _run_main(main, args)
+  File "/opt/anaconda3/lib/python3.12/site-packages/absl/app.py", line 254, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/main.py", line 33, in main
+    train.train_and_evaluate(FLAGS.config, FLAGS.workdir)
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/train.py", line 49, in train_and_evaluate
+    model.state = model.step(model.state, batch)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/models.py", line 195, in step
+    grads = grad(self.loss)(state.params, state.weights, batch, *args)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/models.py", line 148, in loss
+    losses = self.losses(params, batch, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/models.py", line 81, in losses
+    u_pred = self.u_net(params, self.t_star) #THIS LINE
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/models.py", line 29, in u_net
+    u = self.state.apply_fn(params, z) # THIS LINE
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/archs.py", line 152, in __call__
+    x = Dense(features=self.hidden_dim, reparam=self.reparam)(x)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/archs.py", line 104, in __call__
+    kernel = self.param(
+             ^^^^^^^^^^^
+flax.errors.ScopeParamShapeError: Initializer expected to generate shape (1, 15) but got shape (100, 15) instead for parameter "kernel" in "/Dense_0". (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.ScopeParamShapeError)
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.
