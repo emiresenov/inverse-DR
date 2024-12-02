@@ -1,0 +1,35 @@
+Waiting for JIT...
+Traceback (most recent call last):
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/main.py", line 38, in <module>
+    app.run(main)
+  File "/opt/anaconda3/lib/python3.12/site-packages/absl/app.py", line 308, in run
+    _run_main(main, args)
+  File "/opt/anaconda3/lib/python3.12/site-packages/absl/app.py", line 254, in _run_main
+    sys.exit(main(argv))
+             ^^^^^^^^^^
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/main.py", line 33, in main
+    train.train_and_evaluate(FLAGS.config, FLAGS.workdir)
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/train.py", line 49, in train_and_evaluate
+    model.state = model.step(model.state, batch)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/models.py", line 195, in step
+    grads = grad(self.loss)(state.params, state.weights, batch, *args)
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/models.py", line 148, in loss
+    losses = self.losses(params, batch, *args)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/models.py", line 81, in losses
+    u_pred = self.u_net(params, self.t_star)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/Users/esenov/Documents/GitHub/jaxrc/case1inv/models.py", line 29, in u_net
+    u = self.state.apply_fn(params, z)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/archs.py", line 151, in __call__
+    x = Dense(features=self.hidden_dim, reparam=self.reparam)(x)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/anaconda3/lib/python3.12/site-packages/jaxpi/archs.py", line 103, in __call__
+    kernel = self.param(
+             ^^^^^^^^^^^
+flax.errors.ScopeParamShapeError: Initializer expected to generate shape (1, 15) but got shape (100, 15) instead for parameter "kernel" in "/Dense_0". (https://flax.readthedocs.io/en/latest/api_reference/flax.errors.html#flax.errors.ScopeParamShapeError)
+--------------------
+For simplicity, JAX has removed its internal frames from the traceback of the following exception. Set JAX_TRACEBACK_FILTERING=off to include these.

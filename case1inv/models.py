@@ -78,7 +78,7 @@ class CaseOne(InverseIVP):
             r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
             res_loss = jnp.mean((r_pred) ** 2)
 
-        u_pred = self.u_net(params, self.t_star)
+        u_pred = self.u_net(params, self.t0) #THIS LINE
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 
         loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
