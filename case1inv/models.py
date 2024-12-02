@@ -23,7 +23,7 @@ class CaseOne(InverseIVP):
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
 
-    # Prediction function given current params over time t
+    # Prediction function for a given point in the domain
     def u_net(self, params, t):
         z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
@@ -34,7 +34,7 @@ class CaseOne(InverseIVP):
         u_t = grad(self.u_net, argnums=1)(params, t)
         return u_t
 
-    # Diff eq prediction
+    # Diff eq prediction (residual)
     def r_net(self, params, t):
         U_dc = self.config.constants.U_dc
         u = self.u_net(params, t)
@@ -59,11 +59,6 @@ class CaseOne(InverseIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        '''
-        I think we need a measurement u0 at t0 if this is going to work at all.
-        With synthetic data this is no issue, but with measurements we
-        should keep this in mind. 
-        '''
         U_dc = self.config.constants.U_dc
         R0 = params['params']['R0']
         R1 = params['params']['R1']
