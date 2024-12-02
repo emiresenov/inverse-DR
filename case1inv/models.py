@@ -36,7 +36,7 @@ class CaseOne(InverseIVP):
 
     # Diff eq prediction
     def r_net(self, params, t):
-        U_dc = 10 # TODO: Move to config
+        U_dc = self.config.constants.U_dc
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
         R0 = params['params']['R0']
@@ -64,7 +64,7 @@ class CaseOne(InverseIVP):
         With synthetic data this is no issue, but with measurements we
         should keep this in mind. 
         '''
-        U_dc = 10 # TODO: Move to config
+        U_dc = self.config.constants.U_dc
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         u0_pred = U_dc/R0 + U_dc/R1

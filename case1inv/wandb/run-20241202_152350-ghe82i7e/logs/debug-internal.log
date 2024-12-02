@@ -1,0 +1,16 @@
+{"time":"2024-12-02T15:23:50.147467+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-02T15:23:50.147511+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case1inv/wandb/run-20241202_152350-ghe82i7e/logs/debug-core.log"}
+{"time":"2024-12-02T15:23:50.284302+01:00","level":"INFO","msg":"created new stream","id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:50.284416+01:00","level":"INFO","msg":"stream: started","id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:50.284465+01:00","level":"INFO","msg":"handler: started","stream_id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:50.284459+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:50.284583+01:00","level":"INFO","msg":"sender: started","stream_id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:50.580497+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-02T15:23:53.754789+01:00","level":"INFO","msg":"stream: closing","id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:53.75483+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-02T15:23:53.755361+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-02T15:23:56.141557+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-02T15:23:56.378346+01:00","level":"INFO","msg":"handler: closed","stream_id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:56.379017+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:56.379169+01:00","level":"INFO","msg":"sender: closed","stream_id":"ghe82i7e"}
+{"time":"2024-12-02T15:23:56.379649+01:00","level":"INFO","msg":"stream: closed","id":"ghe82i7e"}

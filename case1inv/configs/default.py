@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 80000
+    training.max_steps = 40000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -76,6 +76,10 @@ def get_config():
         'R1' : jnp.array([1.]), # true = 0.1
         'C1' : jnp.array([1.])  # true = 8 
     }
+
+    # Constants
+    config.constants = constants = ml_collections.ConfigDict()
+    constants.U_dc = 10.0
 
     # Input shape for initializing Flax models
     config.input_dim = 1

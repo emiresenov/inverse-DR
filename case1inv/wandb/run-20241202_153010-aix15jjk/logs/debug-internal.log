@@ -1,0 +1,16 @@
+{"time":"2024-12-02T15:30:10.851327+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-02T15:30:10.851377+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case1inv/wandb/run-20241202_153010-aix15jjk/logs/debug-core.log"}
+{"time":"2024-12-02T15:30:10.964393+01:00","level":"INFO","msg":"created new stream","id":"aix15jjk"}
+{"time":"2024-12-02T15:30:10.964443+01:00","level":"INFO","msg":"stream: started","id":"aix15jjk"}
+{"time":"2024-12-02T15:30:10.964478+01:00","level":"INFO","msg":"sender: started","stream_id":"aix15jjk"}
+{"time":"2024-12-02T15:30:10.964661+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"aix15jjk"}
+{"time":"2024-12-02T15:30:10.964885+01:00","level":"INFO","msg":"handler: started","stream_id":"aix15jjk"}
+{"time":"2024-12-02T15:30:11.225244+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-02T15:30:12.016526+01:00","level":"INFO","msg":"stream: closing","id":"aix15jjk"}
+{"time":"2024-12-02T15:30:12.016737+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-02T15:30:12.016979+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-02T15:30:12.768197+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-02T15:30:12.977941+01:00","level":"INFO","msg":"handler: closed","stream_id":"aix15jjk"}
+{"time":"2024-12-02T15:30:12.97796+01:00","level":"INFO","msg":"sender: closed","stream_id":"aix15jjk"}
+{"time":"2024-12-02T15:30:12.977954+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"aix15jjk"}
+{"time":"2024-12-02T15:30:12.978177+01:00","level":"INFO","msg":"stream: closed","id":"aix15jjk"}
