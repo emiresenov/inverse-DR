@@ -85,7 +85,7 @@ class CaseOne(InverseIVP):
         return error
 
 
-class CaseZeroEvaluator(BaseEvaluator):
+class CaseOneEvaluator(BaseEvaluator):
     def __init__(self, config, model):
         super().__init__(config, model)
 
