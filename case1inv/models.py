@@ -14,8 +14,10 @@ class CaseOne(InverseIVP):
     def __init__(self, config, u0, t_star):
         super().__init__(config)
 
+
         self.t_star = t_star
 
+        self.u0 = u0
         self.t0 = t_star[0]
         self.t1 = t_star[-1]
 
@@ -64,12 +66,11 @@ class CaseOne(InverseIVP):
         With synthetic data, this is no issuem but with measurements, we
         should keep this in mind. 
         '''
-        U_dc = 10 # TODO: Move to config
+        #U_dc = 10 # TODO: Move to config
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         u_pred = self.u_net(params, self.t0)
-        u0 = U_dc/R0 + U_dc/R1
-        ics_loss = jnp.mean((u0 - u_pred) ** 2)
+        ics_loss = jnp.mean((self.u0 - u_pred) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:

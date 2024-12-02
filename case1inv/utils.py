@@ -17,6 +17,3 @@ def get_dataset():
     t = jnp.linspace(0.0, t_end, n_samples)
     u = solution(t)
     return u, t
-
-
-print(get_dataset())
