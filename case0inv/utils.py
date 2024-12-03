@@ -3,7 +3,7 @@ import jax.numpy as jnp
 
 U = 1.0
 R = 100.0
-C = 0.01
+C = 0.1
 
 t_end = 50.0
 n_samples = 100

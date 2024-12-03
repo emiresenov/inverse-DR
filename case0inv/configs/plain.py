@@ -72,8 +72,8 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R' : jnp.array([50.]), # true value = 100
-        'C' : jnp.array([0.6])  # true value = 0.01
+        'R' : jnp.array([1.]), # true value = 100
+        'C' : jnp.array([1.])  # true value = 0.01
     }
 
     # Constants
