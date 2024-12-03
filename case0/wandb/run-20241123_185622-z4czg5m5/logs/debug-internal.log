@@ -1,8 +1,0 @@
-{"time":"2024-11-23T18:56:22.942394+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
-{"time":"2024-11-23T18:56:22.942489+01:00","level":"INFO","msg":"created symlink","path":"/Users/emiresenov/jaxrc/case0/wandb/run-20241123_185622-z4czg5m5/logs/debug-core.log"}
-{"time":"2024-11-23T18:56:23.057526+01:00","level":"INFO","msg":"created new stream","id":"z4czg5m5"}
-{"time":"2024-11-23T18:56:23.057768+01:00","level":"INFO","msg":"stream: started","id":"z4czg5m5"}
-{"time":"2024-11-23T18:56:23.057936+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"z4czg5m5"}
-{"time":"2024-11-23T18:56:23.057938+01:00","level":"INFO","msg":"sender: started","stream_id":"z4czg5m5"}
-{"time":"2024-11-23T18:56:23.058041+01:00","level":"INFO","msg":"handler: started","stream_id":"z4czg5m5"}
-{"time":"2024-11-23T18:56:23.302514+01:00","level":"INFO","msg":"Starting system monitor"}

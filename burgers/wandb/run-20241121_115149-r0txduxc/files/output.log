@@ -1,7 +1,0 @@
-Waiting for JIT...
-[11:51:54 - main - INFO] --------------------------
-[11:51:54 - main - INFO] Iter:   0    Time: 3.698
-[11:51:54 - main - INFO] -----------  -------------
-[11:51:54 - main - INFO] ics_loss     5.285e+00
-[11:51:54 - main - INFO] res_loss     1.309e+01
-[11:51:54 - main - INFO] l2_error     3.419e+00
