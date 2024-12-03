@@ -62,9 +62,9 @@ def get_config():
     config.logging = logging = ml_collections.ConfigDict()
     logging.log_every_steps = 100
     logging.log_errors = True
-    logging.log_losses = True
+    logging.log_losses = False
     logging.log_weights = False
-    logging.log_grads = True
+    logging.log_grads = False
     logging.log_ntk = False
     logging.log_preds = True
     logging.log_inv_params = True

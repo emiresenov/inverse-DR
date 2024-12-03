@@ -31,8 +31,6 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     t0 = t_star[0]
     t1 = t_star[-1]
 
-    print(f'{t1=}')
-
     # Define domain
     dom = jnp.array([[t0, t1]])
 

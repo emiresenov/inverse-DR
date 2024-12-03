@@ -106,6 +106,7 @@ class CaseOneEvaluator(BaseEvaluator):
         u_pred = self.model.u_pred_fn(params, self.model.t_star)
         fig = plt.figure(figsize=(6, 5))
         plt.plot(self.model.t_star, u_pred)
+        plt.scatter(self.model.t_star, self.model.u_ref, s=50, c='purple')
         self.log_dict["u_pred"] = fig
         plt.close()
     

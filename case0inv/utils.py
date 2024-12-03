@@ -1,5 +1,6 @@
 import scipy.io
 import jax.numpy as jnp
+from numpy import random
 
 U = 1.0
 R = 100.0
@@ -13,8 +14,9 @@ def solution(t):
 
 def get_dataset():
     t = jnp.linspace(0.0, t_end, n_samples)
+    #noise = random.normal(0,1,len(t))
+    #u = solution(t) + noise
     u = solution(t)
-    print(len(t))
     return u, t
 
 
