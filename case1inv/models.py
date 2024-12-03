@@ -58,12 +58,18 @@ class CaseOne(InverseIVP):
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
+        '''
+        Question: which initial condition loss do we use?
+        1: data measurement at t0 - ic squared
+        2: model prediction at t0 - ic squared
+        '''
         # Initial condition loss
         U_dc = self.config.constants.U_dc
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        u0_pred = U_dc/R0 + U_dc/R1
-        ics_loss = jnp.mean((self.u0 - u0_pred) ** 2)
+        ic = U_dc/R0 + U_dc/R1
+        u0_pred = self.u_net(params, self.t0)
+        ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:
