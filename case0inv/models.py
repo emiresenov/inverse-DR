@@ -93,7 +93,7 @@ class CaseZeroEvaluator(BaseEvaluator):
     def log_preds(self, params):
         u_pred = self.model.u_pred_fn(params, self.model.t_star)
         fig = plt.figure(figsize=(6, 5))
-        plt.plot(u_pred)
+        plt.plot(self.model.t_star, u_pred)
         self.log_dict["u_pred"] = fig
         plt.close()
     

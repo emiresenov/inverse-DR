@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 inverse – convergence"
+    wandb.project = "Case 0 DEMO"
     wandb.name = "lr=1e-1"
     wandb.tag = None
 
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 40000
+    training.max_steps = 25000
     training.batch_size_per_device = 4096
 
     # Weighting

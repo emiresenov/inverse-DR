@@ -1,0 +1,39 @@
+{
+  "os":  "macOS-14.7-arm64-arm-64bit",
+  "python":  "3.12.7",
+  "startedAt":  "2024-12-03T12:02:28.714880Z",
+  "program":  "/Users/esenov/Documents/GitHub/jaxrc/case0inv/main.py",
+  "codePath":  "case0inv/main.py",
+  "git":  {
+    "remote":  "https://github.com/emiresenov/jaxrc.git",
+    "commit":  "c8ec49d7f2ad935928c4bfc76e0d7960f37db753"
+  },
+  "email":  "emiresenov96@gmail.com",
+  "root":  "/Users/esenov/Documents/GitHub/jaxrc/case0inv",
+  "host":  "CM-HFF29P6723",
+  "username":  "esenov",
+  "executable":  "/opt/anaconda3/bin/python",
+  "codePathLocal":  "main.py",
+  "cpu_count":  8,
+  "cpu_count_logical":  8,
+  "disk":  {
+    "/":  {
+      "total":  "494384795648",
+      "used":  "69655257088"
+    }
+  },
+  "memory":  {
+    "total":  "17179869184"
+  },
+  "cpu":  {
+    "count":  8,
+    "countLogical":  8
+  },
+  "apple":  {
+    "name":  "Apple M3",
+    "ecpuCores":  4,
+    "pcpuCores":  4,
+    "gpuCores":  10,
+    "memoryGb":  16
+  }
+}
