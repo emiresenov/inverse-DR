@@ -19,7 +19,7 @@ class CaseOne(InverseIVP):
         self.t0 = t_star[0]
         self.u0 = u_ref[0]
 
-        # Predictions over time t
+        # Vectorizing functions over multiple data points
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
 
@@ -68,7 +68,7 @@ class CaseOne(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         ic = U_dc/R0 + U_dc/R1
-        u0_pred = self.u_net(params, self.t0)
+        u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
         # Residual loss
@@ -79,6 +79,7 @@ class CaseOne(InverseIVP):
             r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
             res_loss = jnp.mean((r_pred) ** 2)
 
+        # Data loss
         u_pred = self.u_pred_fn(params, self.t_star)
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 

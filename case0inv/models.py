@@ -11,24 +11,19 @@ from matplotlib import pyplot as plt
 
 
 class CaseZero(InverseIVP):
-    def __init__(self, config, t_star):
+    def __init__(self, config, u_ref, t_star):
         super().__init__(config)
-
         self.t_star = t_star
+        self.u_ref = u_ref
 
         self.t0 = t_star[0]
-        self.t1 = t_star[-1]
 
-        # Predictions over time t
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
-
 
     def u_net(self, params, t):
         z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
-        print(f'u from u_net{u}')
-        print(f'u[0] from u_net{u[0]}')
         return u[0]
 
     def grad_net(self, params, t):
@@ -38,8 +33,9 @@ class CaseZero(InverseIVP):
     # Diff eq prediction
     def r_net(self, params, t):
         u_t = grad(self.u_net, argnums=1)(params, t)
-        tau = params['params']['tau']
-        return u_t + 1 / tau
+        R = params['params']['R']
+        C = params['params']['C']
+        return u_t + 1/(R*C)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -56,9 +52,11 @@ class CaseZero(InverseIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        u_pred = self.u_net(params, self.t0)
-        u0 = jnp.log(1/1000.)
-        ics_loss = jnp.mean((u0 - u_pred) ** 2)
+        U_dc = self.config.constants.U_dc
+        R = params['params']['R']
+        ic = jnp.log(U_dc/R)
+        #u0_pred = self.u_net(params, self.t0)
+        ics_loss = jnp.mean((self.u_ref[0] - ic) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:
@@ -68,7 +66,11 @@ class CaseZero(InverseIVP):
             r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
             res_loss = jnp.mean((r_pred) ** 2)
 
-        loss_dict = {"ics": ics_loss, "res": res_loss}
+        # Data loss
+        u_pred = self.u_pred_fn(params, self.t_star)
+        data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
+
+        loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
         return loss_dict
 
 
@@ -95,7 +97,8 @@ class CaseZeroEvaluator(BaseEvaluator):
         plt.close()
     
     def log_inv_params(self, params):
-        self.log_dict["tau"] = params['params']['tau'][0]
+        self.log_dict["R"] = params['params']['R'][0]
+        self.log_dict["C"] = params['params']['C'][0]
         
 
     def __call__(self, state, batch, u_ref):

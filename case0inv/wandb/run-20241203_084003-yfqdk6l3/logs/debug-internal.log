@@ -1,0 +1,16 @@
+{"time":"2024-12-03T08:40:03.538388+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-03T08:40:03.538478+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241203_084003-yfqdk6l3/logs/debug-core.log"}
+{"time":"2024-12-03T08:40:03.650403+01:00","level":"INFO","msg":"created new stream","id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:03.650439+01:00","level":"INFO","msg":"stream: started","id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:03.65045+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:03.650461+01:00","level":"INFO","msg":"handler: started","stream_id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:03.650503+01:00","level":"INFO","msg":"sender: started","stream_id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:03.891723+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-03T08:40:43.741262+01:00","level":"INFO","msg":"stream: closing","id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:43.741286+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-03T08:40:43.741594+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-03T08:40:44.666872+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-03T08:40:44.951781+01:00","level":"INFO","msg":"handler: closed","stream_id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:44.951819+01:00","level":"INFO","msg":"sender: closed","stream_id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:44.951801+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"yfqdk6l3"}
+{"time":"2024-12-03T08:40:44.952354+01:00","level":"INFO","msg":"stream: closed","id":"yfqdk6l3"}

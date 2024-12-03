@@ -2,15 +2,17 @@ import scipy.io
 import jax.numpy as jnp
 
 U = 1.0
-T = 10.0
-R = 1000.0
+R = 100.0
 C = 0.01
 
+t_end = 50.0
+n_samples = 100
+
 def solution(t):
-    return - t / (R * C) + jnp.log(U / R)
+    return - t/(R*C)+jnp.log(U/R)
 
 def get_dataset():
-    t = jnp.linspace(0.0, 50.0, 100)
+    t = jnp.linspace(0.0, t_end, n_samples)
     u = solution(t)
     return u, t
 
