@@ -1,0 +1,16 @@
+{"time":"2024-12-04T10:12:26.53804+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-04T10:12:26.538094+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241204_101226-r2p7fgat/logs/debug-core.log"}
+{"time":"2024-12-04T10:12:26.649313+01:00","level":"INFO","msg":"created new stream","id":"r2p7fgat"}
+{"time":"2024-12-04T10:12:26.649505+01:00","level":"INFO","msg":"stream: started","id":"r2p7fgat"}
+{"time":"2024-12-04T10:12:26.649582+01:00","level":"INFO","msg":"sender: started","stream_id":"r2p7fgat"}
+{"time":"2024-12-04T10:12:26.649646+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"r2p7fgat"}
+{"time":"2024-12-04T10:12:26.649712+01:00","level":"INFO","msg":"handler: started","stream_id":"r2p7fgat"}
+{"time":"2024-12-04T10:12:29.956203+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-04T10:13:16.494341+01:00","level":"INFO","msg":"stream: closing","id":"r2p7fgat"}
+{"time":"2024-12-04T10:13:16.494707+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-04T10:13:16.495013+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-04T10:13:17.329052+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-04T10:13:17.541203+01:00","level":"INFO","msg":"handler: closed","stream_id":"r2p7fgat"}
+{"time":"2024-12-04T10:13:17.541229+01:00","level":"INFO","msg":"sender: closed","stream_id":"r2p7fgat"}
+{"time":"2024-12-04T10:13:17.541219+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"r2p7fgat"}
+{"time":"2024-12-04T10:13:17.541509+01:00","level":"INFO","msg":"stream: closed","id":"r2p7fgat"}

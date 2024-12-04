@@ -1,0 +1,16 @@
+{"time":"2024-12-04T10:06:57.820268+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-04T10:06:57.820327+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241204_100657-od5edr04/logs/debug-core.log"}
+{"time":"2024-12-04T10:06:57.933312+01:00","level":"INFO","msg":"created new stream","id":"od5edr04"}
+{"time":"2024-12-04T10:06:57.933471+01:00","level":"INFO","msg":"stream: started","id":"od5edr04"}
+{"time":"2024-12-04T10:06:57.933507+01:00","level":"INFO","msg":"sender: started","stream_id":"od5edr04"}
+{"time":"2024-12-04T10:06:57.933621+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"od5edr04"}
+{"time":"2024-12-04T10:06:57.933902+01:00","level":"INFO","msg":"handler: started","stream_id":"od5edr04"}
+{"time":"2024-12-04T10:06:58.175681+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-04T10:07:23.687801+01:00","level":"INFO","msg":"stream: closing","id":"od5edr04"}
+{"time":"2024-12-04T10:07:23.68797+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-04T10:07:23.688198+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-04T10:07:24.617259+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-04T10:07:24.889545+01:00","level":"INFO","msg":"handler: closed","stream_id":"od5edr04"}
+{"time":"2024-12-04T10:07:24.88956+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"od5edr04"}
+{"time":"2024-12-04T10:07:24.889582+01:00","level":"INFO","msg":"sender: closed","stream_id":"od5edr04"}
+{"time":"2024-12-04T10:07:24.890127+01:00","level":"INFO","msg":"stream: closed","id":"od5edr04"}

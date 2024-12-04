@@ -1,0 +1,16 @@
+{"time":"2024-12-04T10:21:19.976224+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-04T10:21:19.976278+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241204_102119-gswx5jgu/logs/debug-core.log"}
+{"time":"2024-12-04T10:21:20.088732+01:00","level":"INFO","msg":"created new stream","id":"gswx5jgu"}
+{"time":"2024-12-04T10:21:20.088975+01:00","level":"INFO","msg":"stream: started","id":"gswx5jgu"}
+{"time":"2024-12-04T10:21:20.089008+01:00","level":"INFO","msg":"sender: started","stream_id":"gswx5jgu"}
+{"time":"2024-12-04T10:21:20.08911+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"gswx5jgu"}
+{"time":"2024-12-04T10:21:20.08927+01:00","level":"INFO","msg":"handler: started","stream_id":"gswx5jgu"}
+{"time":"2024-12-04T10:21:20.34255+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-04T10:22:06.759223+01:00","level":"INFO","msg":"stream: closing","id":"gswx5jgu"}
+{"time":"2024-12-04T10:22:06.75945+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-04T10:22:06.759699+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-04T10:22:08.040385+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-04T10:22:08.275563+01:00","level":"INFO","msg":"handler: closed","stream_id":"gswx5jgu"}
+{"time":"2024-12-04T10:22:08.275591+01:00","level":"INFO","msg":"sender: closed","stream_id":"gswx5jgu"}
+{"time":"2024-12-04T10:22:08.275577+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"gswx5jgu"}
+{"time":"2024-12-04T10:22:08.275908+01:00","level":"INFO","msg":"stream: closed","id":"gswx5jgu"}

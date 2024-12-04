@@ -1,0 +1,1 @@
+{"_wandb":{"runtime":45},"C":0.17422576248645782,"_timestamp":1.7333033556410692e+09,"_runtime":45.132721,"_step":44900,"l2_error":0.013986161909997463,"u_pred":{"sha256":"d68155524ae145417476a536cc0beb1cd20ca57dfcfd0791873e5e31df765f66","size":9778,"path":"media/plotly/u_pred_44800_d68155524ae145417476.plotly.json","_type":"plotly-file"},"R":49.230167388916016}
