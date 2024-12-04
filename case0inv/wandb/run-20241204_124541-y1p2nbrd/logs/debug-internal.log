@@ -1,0 +1,8 @@
+{"time":"2024-12-04T12:45:41.144215+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-04T12:45:41.144282+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241204_124541-y1p2nbrd/logs/debug-core.log"}
+{"time":"2024-12-04T12:45:41.259512+01:00","level":"INFO","msg":"created new stream","id":"y1p2nbrd"}
+{"time":"2024-12-04T12:45:41.25957+01:00","level":"INFO","msg":"stream: started","id":"y1p2nbrd"}
+{"time":"2024-12-04T12:45:41.259613+01:00","level":"INFO","msg":"handler: started","stream_id":"y1p2nbrd"}
+{"time":"2024-12-04T12:45:41.259678+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"y1p2nbrd"}
+{"time":"2024-12-04T12:45:41.259678+01:00","level":"INFO","msg":"sender: started","stream_id":"y1p2nbrd"}
+{"time":"2024-12-04T12:45:41.638821+01:00","level":"INFO","msg":"Starting system monitor"}

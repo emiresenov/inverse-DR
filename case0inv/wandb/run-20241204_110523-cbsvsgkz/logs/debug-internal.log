@@ -1,0 +1,16 @@
+{"time":"2024-12-04T11:05:23.730076+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-04T11:05:23.730146+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241204_110523-cbsvsgkz/logs/debug-core.log"}
+{"time":"2024-12-04T11:05:23.852972+01:00","level":"INFO","msg":"created new stream","id":"cbsvsgkz"}
+{"time":"2024-12-04T11:05:23.853003+01:00","level":"INFO","msg":"stream: started","id":"cbsvsgkz"}
+{"time":"2024-12-04T11:05:23.853018+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"cbsvsgkz"}
+{"time":"2024-12-04T11:05:23.853044+01:00","level":"INFO","msg":"handler: started","stream_id":"cbsvsgkz"}
+{"time":"2024-12-04T11:05:23.853112+01:00","level":"INFO","msg":"sender: started","stream_id":"cbsvsgkz"}
+{"time":"2024-12-04T11:05:24.127362+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-04T11:06:10.39402+01:00","level":"INFO","msg":"stream: closing","id":"cbsvsgkz"}
+{"time":"2024-12-04T11:06:10.394047+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-04T11:06:10.39433+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-04T11:06:11.337555+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-04T11:06:11.570462+01:00","level":"INFO","msg":"handler: closed","stream_id":"cbsvsgkz"}
+{"time":"2024-12-04T11:06:11.5705+01:00","level":"INFO","msg":"sender: closed","stream_id":"cbsvsgkz"}
+{"time":"2024-12-04T11:06:11.57049+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"cbsvsgkz"}
+{"time":"2024-12-04T11:06:11.571067+01:00","level":"INFO","msg":"stream: closed","id":"cbsvsgkz"}

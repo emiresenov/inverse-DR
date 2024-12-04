@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 AdamW test"
+    wandb.project = "Case 0 l1 test"
     wandb.name = "lr=1e-1"
     wandb.tag = None
 
@@ -45,7 +45,7 @@ def get_config():
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
     weighting.scheme = None
-    weighting.init_weights = ml_collections.ConfigDict({"data": 0.2, "ics": 1.0, "res": 1.0})
+    weighting.init_weights = ml_collections.ConfigDict({"data": 1.0, "ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 
