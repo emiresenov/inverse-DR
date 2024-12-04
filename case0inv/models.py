@@ -55,9 +55,9 @@ class CaseZero(InverseIVP):
         U_dc = self.config.constants.U_dc
         R = params['params']['R']
         ic = jnp.log(U_dc/R)
-        u0_pred = self.u_net(params, self.t0)
-        ics_loss = jnp.mean((u0_pred - ic) ** 2)
-        #ics_loss = jnp.mean((self.u_ref[0] - ic) ** 2)
+        #u0_pred = self.u_net(params, self.t0)
+        #ics_loss = jnp.mean((u0_pred - ic) ** 2)
+        ics_loss = jnp.mean((self.u_ref[0] - ic) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:
