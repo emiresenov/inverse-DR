@@ -1,0 +1,16 @@
+{"time":"2024-12-05T16:10:13.639709+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-05T16:10:13.63975+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case1inv/wandb/run-20241205_161013-zdv7sv8i/logs/debug-core.log"}
+{"time":"2024-12-05T16:10:13.752906+01:00","level":"INFO","msg":"created new stream","id":"zdv7sv8i"}
+{"time":"2024-12-05T16:10:13.753139+01:00","level":"INFO","msg":"stream: started","id":"zdv7sv8i"}
+{"time":"2024-12-05T16:10:13.753181+01:00","level":"INFO","msg":"sender: started","stream_id":"zdv7sv8i"}
+{"time":"2024-12-05T16:10:13.753245+01:00","level":"INFO","msg":"handler: started","stream_id":"zdv7sv8i"}
+{"time":"2024-12-05T16:10:13.753266+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"zdv7sv8i"}
+{"time":"2024-12-05T16:10:14.201326+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-05T16:11:00.057228+01:00","level":"INFO","msg":"stream: closing","id":"zdv7sv8i"}
+{"time":"2024-12-05T16:11:00.057461+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-05T16:11:00.057748+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-05T16:11:03.195768+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-05T16:11:03.40855+01:00","level":"INFO","msg":"handler: closed","stream_id":"zdv7sv8i"}
+{"time":"2024-12-05T16:11:03.408563+01:00","level":"INFO","msg":"sender: closed","stream_id":"zdv7sv8i"}
+{"time":"2024-12-05T16:11:03.40856+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"zdv7sv8i"}
+{"time":"2024-12-05T16:11:03.408809+01:00","level":"INFO","msg":"stream: closed","id":"zdv7sv8i"}

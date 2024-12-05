@@ -1,0 +1,16 @@
+{"time":"2024-12-05T15:40:01.937356+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-05T15:40:01.937455+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241205_154001-vmkz5fic/logs/debug-core.log"}
+{"time":"2024-12-05T15:40:02.056513+01:00","level":"INFO","msg":"created new stream","id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:02.056771+01:00","level":"INFO","msg":"stream: started","id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:02.056862+01:00","level":"INFO","msg":"sender: started","stream_id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:02.05694+01:00","level":"INFO","msg":"handler: started","stream_id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:02.056952+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:02.32327+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-05T15:40:54.442025+01:00","level":"INFO","msg":"stream: closing","id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:54.442222+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-05T15:40:54.442493+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-05T15:40:56.01445+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-05T15:40:56.415136+01:00","level":"INFO","msg":"handler: closed","stream_id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:56.415204+01:00","level":"INFO","msg":"sender: closed","stream_id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:56.415185+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"vmkz5fic"}
+{"time":"2024-12-05T15:40:56.415756+01:00","level":"INFO","msg":"stream: closed","id":"vmkz5fic"}

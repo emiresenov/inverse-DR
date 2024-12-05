@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 1 DEMO"
+    wandb.project = "Case 1 Demo with noise"
     wandb.name = "lr=1e-1"
     wandb.tag = None
 
@@ -39,12 +39,12 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 30000
+    training.max_steps = 40000
     training.batch_size_per_device = 4096
 
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
-    weighting.scheme = None
+    weighting.scheme = "grad_norm"
     weighting.init_weights = ml_collections.ConfigDict({"data": 1.0, "ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
@@ -63,7 +63,7 @@ def get_config():
     logging.log_every_steps = 100
     logging.log_errors = True
     logging.log_losses = False
-    logging.log_weights = False
+    logging.log_weights = True
     logging.log_grads = False
     logging.log_ntk = False
     logging.log_preds = True

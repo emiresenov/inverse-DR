@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 l1 test"
-    wandb.name = "lr=1e-1"
+    wandb.project = "Case 0 demo with noise"
+    wandb.name = "Gaussian, N(0.5)"
     wandb.tag = None
 
     # Arch
@@ -39,12 +39,12 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 45000
+    training.max_steps = 40000
     training.batch_size_per_device = 4096
 
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
-    weighting.scheme = None
+    weighting.scheme = "grad_norm"
     weighting.init_weights = ml_collections.ConfigDict({"data": 1.0, "ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000

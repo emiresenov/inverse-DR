@@ -1,0 +1,16 @@
+{"time":"2024-12-05T16:06:21.941975+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-05T16:06:21.942016+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241205_160621-pwmb59ha/logs/debug-core.log"}
+{"time":"2024-12-05T16:06:22.057276+01:00","level":"INFO","msg":"created new stream","id":"pwmb59ha"}
+{"time":"2024-12-05T16:06:22.057329+01:00","level":"INFO","msg":"stream: started","id":"pwmb59ha"}
+{"time":"2024-12-05T16:06:22.057385+01:00","level":"INFO","msg":"sender: started","stream_id":"pwmb59ha"}
+{"time":"2024-12-05T16:06:22.057377+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"pwmb59ha"}
+{"time":"2024-12-05T16:06:22.057537+01:00","level":"INFO","msg":"handler: started","stream_id":"pwmb59ha"}
+{"time":"2024-12-05T16:06:22.326061+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-05T16:07:07.842009+01:00","level":"INFO","msg":"stream: closing","id":"pwmb59ha"}
+{"time":"2024-12-05T16:07:07.842188+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-05T16:07:07.84248+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-05T16:07:08.777248+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-05T16:07:09.152794+01:00","level":"INFO","msg":"handler: closed","stream_id":"pwmb59ha"}
+{"time":"2024-12-05T16:07:09.152814+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"pwmb59ha"}
+{"time":"2024-12-05T16:07:09.152815+01:00","level":"INFO","msg":"sender: closed","stream_id":"pwmb59ha"}
+{"time":"2024-12-05T16:07:09.153338+01:00","level":"INFO","msg":"stream: closed","id":"pwmb59ha"}
