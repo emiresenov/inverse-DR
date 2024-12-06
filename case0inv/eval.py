@@ -50,6 +50,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     # Convert to DataFrame for easy manipulation
     df = pd.DataFrame(history)
+    history.to_csv("wandb_run_history.csv", index=False)
     print(df.head())  # Display the data
     print(df.columns.tolist())
     print(df['R'])
