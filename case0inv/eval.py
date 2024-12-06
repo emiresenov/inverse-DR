@@ -27,5 +27,14 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     fig = plt.figure(figsize=(6, 5))
     plt.plot(model.t_star, u_pred)
+    plt.scatter(model.t_star, model.u_ref, s=50, c='purple')
+
+    # Save the figure
+    save_dir = os.path.join(workdir, "figures", config.wandb.name)
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
+
+    fig_path = os.path.join(save_dir, "case0.pdf")
+    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
 
     
