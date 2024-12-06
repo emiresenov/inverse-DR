@@ -1,6 +1,8 @@
 import scipy.io
 import jax.numpy as jnp
-from numpy import random
+import numpy as np
+
+np.random.seed(42)
 
 U = 10.0
 R_0 = 25.0
@@ -16,6 +18,6 @@ def solution(t):
 
 def get_dataset():
     t = jnp.linspace(0.0, t_end, n_samples)
-    noise = random.normal(0, 1.0, len(t))
+    noise = np.random.normal(0, 1.0, len(t))
     u = solution(t) + noise
     return u, t
