@@ -6,7 +6,7 @@ from jaxpi.utils import restore_checkpoint
 import models
 from utils import get_dataset
 import wandb
-
+import pandas as pd
 
 
 
@@ -36,16 +36,22 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     # Initialize API
     api = wandb.Api()
-
-    # Fetch all runs from the project (sorted by created_at by default)
     runs = api.runs(f"{config.wandb.project}")
 
     # Get the last run
     if runs:
-        last_run = runs[-1]  # The most recent run is the first in the list
+        last_run = runs[-1] 
         run_id = last_run.id
         print(f"Last run ID: {run_id}")
     else:
         print("No runs found in the project.")
+    
+    history = last_run.history()  # Replace with your keys
+
+    # Convert to DataFrame for easy manipulation
+    df = pd.DataFrame(history)
+    print(df.head())  # Display the data
+    print(df.columns.tolist())
+    print(df['R'])
 
     
