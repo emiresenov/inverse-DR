@@ -14,6 +14,7 @@ import jax
 jax.config.update("jax_default_matmul_precision", "highest")
 
 import train
+import eval
 
 
 FLAGS = flags.FLAGS
@@ -31,6 +32,9 @@ config_flags.DEFINE_config_file(
 def main(argv):
     if FLAGS.config.mode == "train":
         train.train_and_evaluate(FLAGS.config, FLAGS.workdir)
+    
+    elif FLAGS.config.mode == "eval":
+        eval.evaluate(FLAGS.config, FLAGS.workdir)
 
 
 if __name__ == "__main__":

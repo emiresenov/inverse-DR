@@ -1,0 +1,16 @@
+{"time":"2024-12-06T13:56:09.92247+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-06T13:56:09.922513+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241206_135609-mftoa9ev/logs/debug-core.log"}
+{"time":"2024-12-06T13:56:10.036229+01:00","level":"INFO","msg":"created new stream","id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:10.036472+01:00","level":"INFO","msg":"stream: started","id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:10.036565+01:00","level":"INFO","msg":"sender: started","stream_id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:10.03666+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:10.03667+01:00","level":"INFO","msg":"handler: started","stream_id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:10.279707+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-06T13:56:52.548182+01:00","level":"INFO","msg":"stream: closing","id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:52.548554+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-06T13:56:52.548864+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-06T13:56:53.516208+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-06T13:56:53.827254+01:00","level":"INFO","msg":"handler: closed","stream_id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:53.82728+01:00","level":"INFO","msg":"sender: closed","stream_id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:53.827274+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"mftoa9ev"}
+{"time":"2024-12-06T13:56:53.827721+01:00","level":"INFO","msg":"stream: closed","id":"mftoa9ev"}
