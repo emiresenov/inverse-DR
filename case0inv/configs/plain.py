@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 demo with noise"
-    wandb.name = "Gaussian, N(0.5)"
+    wandb.project = "Case 0 noise + predIC"
+    wandb.name = "Gaussian, N(0.25)"
     wandb.tag = None
 
     # Arch
