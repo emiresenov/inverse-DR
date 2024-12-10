@@ -7,12 +7,12 @@ def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "eval"
+    config.mode = "train"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "noise improvement"
-    wandb.name = "baseline for eval"
+    wandb.name = "ticks for 80k"
     wandb.tag = None
 
     # Arch
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 40000
+    training.max_steps = 80000
     training.batch_size_per_device = 4096
 
     # Weighting

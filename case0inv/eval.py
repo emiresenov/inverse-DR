@@ -116,16 +116,16 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     axes[1].legend(loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
     axes[1].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
-    # x_ticks = steps/log_every
 
-    # Update x-axis ticks for both plots
+    '''Doing this manually because dynamic handling is a headache'''
+    '''# Update x-axis ticks for both plots
     x_ticks = [0, 100, 200, 300, 400]  # Original tick positions
     x_labels = ['0', '10k', '20k', '30k', '40k']  # New labels
 
     axes[0].set_xticks(x_ticks)
     axes[0].set_xticklabels(x_labels)
     axes[1].set_xticks(x_ticks)
-    axes[1].set_xticklabels(x_labels)
+    axes[1].set_xticklabels(x_labels)'''
 
     for ax in axes:
         for spine in ax.spines.values():
