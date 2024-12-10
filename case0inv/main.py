@@ -23,7 +23,7 @@ flags.DEFINE_string("workdir", ".", "Directory to store model data.")
 
 config_flags.DEFINE_config_file(
     "config",
-    "./configs/plain.py",
+    "./configs/default.py",
     "File path to the training hyperparameter configuration.",
     lock_config=True,
 )

@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "check wandb"
-    wandb.name = "no reg, init_w=1,0.75,0.75"
+    wandb.project = "noise improvement"
+    wandb.name = "baseline"
     wandb.tag = None
 
     # Arch
@@ -45,7 +45,7 @@ def get_config():
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
     weighting.scheme = "grad_norm"
-    weighting.init_weights = ml_collections.ConfigDict({"data": 1.0, "ics": 0.75, "res": 0.75})
+    weighting.init_weights = ml_collections.ConfigDict({"data": 1.0, "ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 
