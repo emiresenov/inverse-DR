@@ -55,7 +55,7 @@ def get_config():
 
     # Saving
     config.saving = saving = ml_collections.ConfigDict()
-    saving.save_every_steps = 10000
+    saving.save_every_steps = None
     saving.num_keep_ckpts = 50
 
     # Logging
