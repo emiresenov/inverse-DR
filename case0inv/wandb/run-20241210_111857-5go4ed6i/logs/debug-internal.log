@@ -1,0 +1,16 @@
+{"time":"2024-12-10T11:18:57.621305+01:00","level":"INFO","msg":"using version","core version":"0.18.7"}
+{"time":"2024-12-10T11:18:57.621338+01:00","level":"INFO","msg":"created symlink","path":"/Users/esenov/Documents/GitHub/jaxrc/case0inv/wandb/run-20241210_111857-5go4ed6i/logs/debug-core.log"}
+{"time":"2024-12-10T11:18:57.735484+01:00","level":"INFO","msg":"created new stream","id":"5go4ed6i"}
+{"time":"2024-12-10T11:18:57.735729+01:00","level":"INFO","msg":"stream: started","id":"5go4ed6i"}
+{"time":"2024-12-10T11:18:57.735782+01:00","level":"INFO","msg":"sender: started","stream_id":"5go4ed6i"}
+{"time":"2024-12-10T11:18:57.735928+01:00","level":"INFO","msg":"handler: started","stream_id":"5go4ed6i"}
+{"time":"2024-12-10T11:18:57.735928+01:00","level":"INFO","msg":"writer: Do: started","stream_id":"5go4ed6i"}
+{"time":"2024-12-10T11:18:58.029805+01:00","level":"INFO","msg":"Starting system monitor"}
+{"time":"2024-12-10T11:19:40.258209+01:00","level":"INFO","msg":"stream: closing","id":"5go4ed6i"}
+{"time":"2024-12-10T11:19:40.258463+01:00","level":"INFO","msg":"Stopping system monitor"}
+{"time":"2024-12-10T11:19:40.258799+01:00","level":"INFO","msg":"Stopped system monitor"}
+{"time":"2024-12-10T11:19:42.931052+01:00","level":"INFO","msg":"fileTransfer: Close: file transfer manager closed"}
+{"time":"2024-12-10T11:19:43.227927+01:00","level":"INFO","msg":"handler: closed","stream_id":"5go4ed6i"}
+{"time":"2024-12-10T11:19:43.227963+01:00","level":"INFO","msg":"sender: closed","stream_id":"5go4ed6i"}
+{"time":"2024-12-10T11:19:43.227956+01:00","level":"INFO","msg":"writer: Close: closed","stream_id":"5go4ed6i"}
+{"time":"2024-12-10T11:19:43.228318+01:00","level":"INFO","msg":"stream: closed","id":"5go4ed6i"}

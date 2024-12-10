@@ -22,9 +22,31 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     u_pred = model.u_pred_fn(params, model.t_star)
 
-    fig = plt.figure(figsize=(6, 5))
-    plt.plot(model.t_star, u_pred)
-    plt.scatter(model.t_star, model.u_ref, s=50, c='purple')
+    fig = plt.figure(figsize=(8, 6), dpi=300)
+    plt.rc('font', family='serif')
+    line_color = "#1f77b4"  # Professional blue
+    scatter_color = "#ff7f0e"  # Rich orange    
+    plt.plot(model.t_star, u_pred, label='Prediction', color=line_color, linewidth=2.5, linestyle='-')
+    plt.scatter(model.t_star, model.u_ref, label='Measurement', color=scatter_color, edgecolor="black",
+            alpha=0.8, s=60, marker='o')
+    
+    plt.xlabel('Time (s)', fontsize=16, labelpad=10)
+    plt.ylabel('Current (A)', fontsize=16, labelpad=10)
+    plt.title('PINN Solution', fontsize=18, weight='bold', pad=15)
+
+    plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=13)
+
+    # Legend
+    plt.legend(fontsize=14, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
+
+    # Remove unnecessary spines
+    for spine in ['top', 'right']:
+        plt.gca().spines[spine].set_visible(False)
+
+    # Tight layout
+    plt.tight_layout()
 
     # Save the figure
     save_dir = os.path.join(workdir, "figures", config.wandb.name)
