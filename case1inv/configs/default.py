@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "check wandb local"
-    wandb.name = "lr=1e-1"
+    wandb.project = "case 1 varying sampling,t=50"
+    wandb.name = "N(0,1), n=500"
     wandb.tag = None
 
     # Arch
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 40000
+    training.max_steps = 80000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -55,7 +55,7 @@ def get_config():
 
     # Saving
     config.saving = saving = ml_collections.ConfigDict()
-    saving.save_every_steps = 10000
+    saving.save_every_steps = None
     saving.num_keep_ckpts = 50
 
     # Logging
@@ -63,7 +63,7 @@ def get_config():
     logging.log_every_steps = 100
     logging.log_errors = True
     logging.log_losses = False
-    logging.log_weights = True
+    logging.log_weights = False
     logging.log_grads = False
     logging.log_ntk = False
     logging.log_preds = True
