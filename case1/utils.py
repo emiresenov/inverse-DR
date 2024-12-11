@@ -9,8 +9,8 @@ R_0 = 25.0
 R_1 = 0.5
 C_1 = 8.0
 
-t_end = 100.0
-n_samples = 50
+t_end = 50.0
+n_samples = 40
 
 
 def solution(t):
@@ -18,6 +18,6 @@ def solution(t):
 
 def get_dataset():
     t = jnp.linspace(0.0, t_end, n_samples)
-    noise = np.random.normal(0, 0.25, len(t))
+    noise = np.random.normal(0, 2, len(t))
     u = solution(t) + noise
     return u, t

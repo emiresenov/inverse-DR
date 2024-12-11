@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "case 1 varying time,n=50"
-    wandb.name = "N(0,0.25), t=100"
+    wandb.project = "N(0,2) overfitting"
+    wandb.name = "l1 pen"
     wandb.tag = None
 
     # Arch
