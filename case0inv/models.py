@@ -99,8 +99,15 @@ class CaseZeroEvaluator(BaseEvaluator):
         plt.close()
     
     def log_inv_params(self, params):
-        self.log_dict["R"] = params['params']['R'][0]
-        self.log_dict["C"] = params['params']['C'][0]
+        R = params['params']['R'][0]
+        C = params['params']['C'][0]
+        self.log_dict["R"] = R
+        self.log_dict["C"] = C
+
+        '''R_true = self.config.constants.R_true
+        C_true = self.config.constants.C_true
+        self.log_dict["R_error"] = (R - R_true)**2
+        self.log_dict["C_error"] = (C - C_true)**2'''
         
 
     def __call__(self, state, batch, u_ref):

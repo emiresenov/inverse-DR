@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "noise improvement"
-    wandb.name = "baseline"
+    wandb.project = "Wednesday"
+    wandb.name = "N(0,1)"
     wandb.tag = None
 
     # Arch
@@ -79,6 +79,8 @@ def get_config():
     # Constants
     config.constants = constants = ml_collections.ConfigDict()
     constants.U_dc = 1.0
+    constants.R_true = 100.0
+    constants.C_true = 0.1
 
     # Input shape for initializing Flax models
     config.input_dim = 1
