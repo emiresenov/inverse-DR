@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "case 1 varying sampling,t=50"
-    wandb.name = "N(0,1), n=500"
+    wandb.project = "case 1 varying time,n=50"
+    wandb.name = "N(0,0.25), t=100"
     wandb.tag = None
 
     # Arch
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 80000
+    training.max_steps = 60000
     training.batch_size_per_device = 4096
 
     # Weighting
