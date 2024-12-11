@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Wednesday"
-    wandb.name = "N(0,1)"
+    wandb.project = "Varying samples, N(0,0.3)"
+    wandb.name = "n=10"
     wandb.tag = None
 
     # Arch
