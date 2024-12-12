@@ -83,9 +83,11 @@ class CaseOne(InverseIVP):
         u_pred = self.u_pred_fn(params, self.t_star)
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 
-        l1_penalty = 1e-1 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
+        #l1_penalty = 1e-1 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
+        #loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}
+        
+        loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
 
-        loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}
         return loss_dict
 
 
