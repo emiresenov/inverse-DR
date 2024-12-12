@@ -5,15 +5,15 @@ import numpy as np
 np.random.seed(42)
 
 U = 5.0
-R_0 = 30.0
-R_1 = 4.5
-C_1 = 7 #TODO: Sanity check: kolla på miniräknaren att I(t=0) uppfyller begynnelsevillkoret
+R_0 = 25.0
+R_1 = 3.0
+C_1 = 0.05 #TODO: Sanity check: kolla på miniräknaren att I(t=0) uppfyller begynnelsevillkoret
 
-R_2 = 0.1
-C_2 = 0.6
+R_2 = 5.0
+C_2 = 0.45
 
-t_end = 50.0
-n_samples = 40
+t_end = 10.0
+n_samples = 50
 
 
 def solution(t):
