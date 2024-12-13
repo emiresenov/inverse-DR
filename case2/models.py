@@ -1,7 +1,7 @@
 from functools import partial
 
 import jax.numpy as jnp
-from jax import lax, jit, grad, vmap, jacrev, tree_leaves
+from jax import lax, jit, grad, vmap, jacrev, tree_leaves, jacobian
 
 from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
@@ -30,15 +30,16 @@ class CaseTwo(InverseIVP):
 
     # Calculate gradients
     def grad_net(self, params, t):
-        u1_t = grad(self.u_net, argnums=1)(params, t)
-        u2_t = grad(self.u_net, argnums=2)(params, t)
+        grads = jacobian(self.u_net, argnums=1)(params, t)
+        u1_t = grads[0]
+        u2_t = grads[1]
         return u1_t, u2_t
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
         V = self.config.constants.V
         u1, u2 = self.u_net(params, t)
-        u1_t, u2_t = grad(self.u_net, argnums=1)(params, t)
+        u1_t, u2_t = self.grad_net(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
