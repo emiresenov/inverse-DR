@@ -17,7 +17,6 @@ class CaseOne(InverseIVP):
         self.u_ref = u_ref
 
         self.t0 = t_star[0]
-        self.u0 = u_ref[0]
 
         # Vectorizing functions over multiple data points
         self.u_pred_fn = vmap(self.u_net, (None, 0))
@@ -26,23 +25,26 @@ class CaseOne(InverseIVP):
     # Prediction function for a given point in the domain
     def u_net(self, params, t):
         z = jnp.stack([t])
-        u = self.state.apply_fn(params, z)
-        return u[0] # Unpack array
+        u_1, u_2 = self.state.apply_fn(params, z)
+        return u_1[0], u_2[0] # Unpack arrays
 
     # Calculate gradients
     def grad_net(self, params, t):
-        u_t = grad(self.u_net, argnums=1)(params, t)
-        return u_t
+        u1_t = grad(self.u_net, argnums=1)(params, t)
+        u2_t = grad(self.u_net, argnums=2)(params, t)
+        return u1_t, u2_t
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
         U_dc = self.config.constants.U_dc
-        u = self.u_net(params, t)
-        u_t = grad(self.u_net, argnums=1)(params, t)
+        u1, u2 = self.u_net(params, t)
+        u1_t, u2_t = grad(self.u_net, argnums=1)(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return u_t + (1/(R1*C1))*(u-U_dc/R0)
+        R2 = params['params']['R2']
+        C2 = params['params']['C2']
+        return u1_t+(1/(R1*C1))*(u1-U_dc/R0), u2_t+u2/(R2*C2)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -67,9 +69,10 @@ class CaseOne(InverseIVP):
         U_dc = self.config.constants.U_dc
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        ic = U_dc/R0 + U_dc/R1
-        u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
-        ics_loss = jnp.mean((u0_pred - ic) ** 2)
+        R2 = params['params']['R2']
+        ic = U_dc/R0 + U_dc/R1 + U_dc/R2
+        u0_pred_1, u0_pred_2 = self.u_net(params, self.t0) # Alternative: use self.u0
+        ics_loss = jnp.mean(((u0_pred_1+u0_pred_2) - ic) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:
@@ -82,6 +85,12 @@ class CaseOne(InverseIVP):
         # Data loss
         u_pred = self.u_pred_fn(params, self.t_star)
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
+
+        # sum (self.u_ref - I_pred^01 - I_pred^2)
+        # Stresstest
+        # kan errortesta på case 1
+        # kan även testa på case 2 forward
+        # kan även titta på alternativ formulering (bildset 2)
 
         #l1_penalty = 1e-1 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
         #loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}

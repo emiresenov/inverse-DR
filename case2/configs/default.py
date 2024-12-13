@@ -20,7 +20,7 @@ def get_config():
     arch.arch_name = "Mlp"
     arch.num_layers = 1
     arch.hidden_dim = 15
-    arch.out_dim = 1
+    arch.out_dim = 2 # I_01 and I_2
     arch.activation = "tanh"
     arch.periodicity = None
     arch.fourier_emb = None
