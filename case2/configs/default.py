@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "N(0,2) overfitting"
-    wandb.name = "l1 pen"
+    wandb.project = "Case 2"
+    wandb.name = "baseline"
     wandb.tag = None
 
     # Arch
@@ -72,14 +72,16 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R0' : jnp.array([1.]), # true = 25
-        'R1' : jnp.array([1.]), # true = 0.1
-        'C1' : jnp.array([1.])  # true = 8 
+        'R0' : jnp.array([1.]),
+        'R1' : jnp.array([1.]),
+        'C1' : jnp.array([1.]),
+        'R2' : jnp.array([1.]),
+        'C2' : jnp.array([1.]) 
     }
 
     # Constants
     config.constants = constants = ml_collections.ConfigDict()
-    constants.U_dc = 10.0
+    constants.V = 5.0 # Voltage source
 
     # Input shape for initializing Flax models
     config.input_dim = 1
