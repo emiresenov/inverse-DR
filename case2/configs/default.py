@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 60000
+    training.max_steps = 80000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -67,11 +67,11 @@ def get_config():
 
     # Logging
     config.logging = logging = ml_collections.ConfigDict()
-    logging.log_every_steps = 100
+    logging.log_every_steps = 500
     logging.log_errors = True
-    logging.log_losses = False
-    logging.log_weights = False
-    logging.log_grads = False
+    logging.log_losses = True
+    logging.log_weights = True
+    logging.log_grads = True
     logging.log_ntk = False
     logging.log_preds = True
     logging.log_inv_params = True
@@ -79,11 +79,11 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R0' : jnp.array([1.]),
-        'R1' : jnp.array([1.]),
-        'C1' : jnp.array([1.]),
-        'R2' : jnp.array([1.]),
-        'C2' : jnp.array([1.]) 
+        'R0' : jnp.array([10.]),
+        'R1' : jnp.array([10.]),
+        'C1' : jnp.array([0.2]),
+        'R2' : jnp.array([10.]),
+        'C2' : jnp.array([0.2]) 
     }
 
     # Constants

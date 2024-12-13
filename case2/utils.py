@@ -13,7 +13,7 @@ R_2 = 5.0
 C_2 = 0.45
 
 t_end = 10.0
-n_samples = 50
+n_samples = 200
 
 
 def solution(t):
