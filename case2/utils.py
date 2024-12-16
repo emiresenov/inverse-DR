@@ -13,7 +13,7 @@ R_2 = 50.0
 C_2 = 10.0
 
 t_end = 5000.0
-n_samples = 10000
+n_samples = 20000
 
 
 def solution(t):
@@ -26,7 +26,5 @@ def get_dataset():
     #noise = np.random.normal(0, 2, len(t))
     #u = solution(t) + noise
     u = solution(t)
-    u_norm = normalize(u.reshape(-1,1), norm='max').flatten()
-    t_norm = normalize(t.reshape(-1,1), norm='max').flatten()
-    return u_norm, t_norm
+    return u, t
 
