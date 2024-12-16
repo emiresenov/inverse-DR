@@ -7,6 +7,8 @@ from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
 from jaxpi.utils import ntk_fn, flatten_pytree
 
+from utils import V
+
 from matplotlib import pyplot as plt
 
 
@@ -37,7 +39,6 @@ class CaseTwo(InverseIVP):
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
-        V = self.config.constants.V
         u1, u2 = self.u_net(params, t)
         u1_t, u2_t = self.grad_net(params, t)
         R0 = params['params']['R0']
@@ -45,12 +46,11 @@ class CaseTwo(InverseIVP):
         C1 = params['params']['C1']
         R2 = params['params']['R2']
         C2 = params['params']['C2']
-        return u1_t+(1/(R1*C1))*(u1-V/R0), u2_t+u2/(R2*C2)
+        return u1_t+((1/(R1*C1))*(u1-V/R0)), u2_t+(u2/(R2*C2))
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        V = self.config.constants.V
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         R2 = params['params']['R2']
@@ -96,7 +96,10 @@ class CaseTwoEvaluator(BaseEvaluator):
         u1_pred, u2_pred = self.model.u_pred_fn(params, self.model.t_star)
         u_pred = u1_pred + u2_pred
         fig = plt.figure(figsize=(6, 5))
-        plt.scatter(self.model.t_star, self.model.u_ref, s=50, c='red')
+        ax = plt.gca()
+        ax.scatter(self.model.t_star, self.model.u_ref, s=50, c='red')
+        ax.set_yscale('log')
+        ax.set_xscale('log')
         plt.loglog(self.model.t_star, u_pred, linewidth=4, c='black')
         self.log_dict["u_pred"] = fig
         plt.close()

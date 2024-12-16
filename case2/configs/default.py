@@ -2,7 +2,6 @@ import ml_collections
 
 import jax.numpy as jnp
 
-
 def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
@@ -18,7 +17,7 @@ def get_config():
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 2
+    arch.num_layers = 1
     arch.hidden_dim = 15
     arch.out_dim = 2 # I_01 and I_2
     arch.activation = "tanh"
@@ -79,16 +78,12 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R0' : jnp.array([1.]),
-        'R1' : jnp.array([1.]),
+        'R0' : jnp.array([80.]),
+        'R1' : jnp.array([7.]),
         'C1' : jnp.array([1.]),
-        'R2' : jnp.array([1.]),
-        'C2' : jnp.array([1.]) 
+        'R2' : jnp.array([40.]),
+        'C2' : jnp.array([7.]) 
     }
-
-    # Constants
-    config.constants = constants = ml_collections.ConfigDict()
-    constants.V = 5.0 # Voltage source
 
     # Input shape for initializing Flax models
     config.input_dim = 1
