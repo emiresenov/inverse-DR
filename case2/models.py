@@ -96,7 +96,7 @@ class CaseTwoEvaluator(BaseEvaluator):
         u1_pred, u2_pred = self.model.u_pred_fn(params, self.model.t_star)
         u_pred = u1_pred + u2_pred
         fig = plt.figure(figsize=(6, 5))
-        plt.scatter(self.model.t_star, self.model.u_ref, s=50, alpha=0.65, c='orange')
+        plt.scatter(self.model.t_star, self.model.u_ref, s=50, c='red')
         plt.plot(self.model.t_star, u_pred, linewidth=4, c='black')
         self.log_dict["u_pred"] = fig
         plt.close()

@@ -1,19 +1,19 @@
-import scipy.io
+from sklearn.preprocessing import normalize
 import jax.numpy as jnp
 import numpy as np
 
 #np.random.seed(42)
 
-V = 5.0
-R_0 = 25.0
-R_1 = 3.0
-C_1 = 0.05 #TODO: Sanity check: kolla på miniräknaren att I(t=0) uppfyller begynnelsevillkoret
+V = 100.0
+R_0 = 100.0
+R_1 = 10.0
+C_1 = 1.0
 
-R_2 = 5.0
-C_2 = 0.45
+R_2 = 50.0
+C_2 = 10.0
 
-t_end = 10.0
-n_samples = 200
+t_end = 5000.0
+n_samples = 10000
 
 
 def solution(t):
@@ -26,4 +26,7 @@ def get_dataset():
     #noise = np.random.normal(0, 2, len(t))
     #u = solution(t) + noise
     u = solution(t)
-    return u, t
+    u_norm = normalize(u.reshape(-1,1), norm='max').flatten()
+    t_norm = normalize(t.reshape(-1,1), norm='max').flatten()
+    return u_norm, t_norm
+
