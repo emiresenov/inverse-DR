@@ -47,7 +47,7 @@ class CaseOne(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return u_t + (1/self.normalize(R1*C1))*(u-self.normalize(V/R0))
+        return u_t + (1/R1*C1)*(u-V/R0)
     
     def normalize(self, term):
         return term/self.umax
@@ -74,7 +74,7 @@ class CaseOne(InverseIVP):
         # Initial condition loss
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        ic = self.normalize(V/R0 + V/R1)
+        ic = V/R0 + V/R1
         u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
