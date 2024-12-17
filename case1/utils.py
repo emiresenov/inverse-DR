@@ -17,14 +17,14 @@ R_1 = 15.0
 C_1 = 3000.0
 
 t_end = 1000000.0
-n_samples = 1000
+n_samples = 10000
 
 
 def solution(t):
     return V/R_0 + (V/R_1)*jnp.exp(-t/(R_1*C_1))
 
 def get_dataset():
-    t = jnp.linspace(0.0, t_end, n_samples)
+    t = jnp.linspace(0.1, t_end, n_samples)
     #noise = np.random.normal(0, 2, len(t))
     #u = solution(t) + noise
     u = solution(t)

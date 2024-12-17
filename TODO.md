@@ -30,3 +30,6 @@
 
 # Crazy idea
 What if we just transform everything to a log-log scale?
+**Problem:** inverse parameters are still on a massive scale, making us dependent on good starting guesses.
+
+I think figuring out good normalization method is the way to go.
