@@ -24,3 +24,9 @@
  **Issue: scaling is not proportional**
 - TODO: Verify by not scaling the variables and see if we get a perfect prediction function. 
 - Correction: even if we don't scale variables, proportionality issue still exists since the variables are scaled coming in. This means that the initial condition has the wrong scale, as well as the residual.
+
+
+
+
+# Crazy idea
+What if we just transform everything to a log-log scale?

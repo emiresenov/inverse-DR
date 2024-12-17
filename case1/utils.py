@@ -42,4 +42,8 @@ def get_umax():
     return jnp.max(solution(t))
 
 
-print(get_dataset())
+#print(get_dataset())
+
+
+#print(np.linspace(0.1, t_end, n_samples))
+print(np.log10(np.linspace(0.001, t_end, n_samples)))
