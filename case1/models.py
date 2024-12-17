@@ -9,6 +9,8 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 
 from matplotlib import pyplot as plt
 
+from utils import V
+
 
 class CaseOne(InverseIVP):
     def __init__(self, config, u_ref, t_star):
@@ -36,13 +38,12 @@ class CaseOne(InverseIVP):
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
-        U_dc = self.config.constants.U_dc
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return u_t + (1/(R1*C1))*(u-U_dc/R0)
+        return u_t + (1/(R1*C1))*(u-V/R0)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -64,10 +65,9 @@ class CaseOne(InverseIVP):
         2: model prediction at t0 - ic squared
         '''
         # Initial condition loss
-        U_dc = self.config.constants.U_dc
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        ic = U_dc/R0 + U_dc/R1
+        ic = V/R0 + V/R1
         u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 

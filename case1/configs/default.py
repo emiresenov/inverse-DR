@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "case 1 scale test"
-    wandb.name = "regular scale check"
+    wandb.name = "Refactor const V test"
     wandb.tag = None
 
     # Arch
@@ -76,10 +76,6 @@ def get_config():
         'R1' : jnp.array([1.]), # true = 0.1
         'C1' : jnp.array([1.])  # true = 8 
     }
-
-    # Constants
-    config.constants = constants = ml_collections.ConfigDict()
-    constants.U_dc = 10.0
 
     # Input shape for initializing Flax models
     config.input_dim = 1
