@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "N(0,2) overfitting"
-    wandb.name = "l1 pen"
+    wandb.project = "case 1 scale test"
+    wandb.name = "regular scale check"
     wandb.tag = None
 
     # Arch

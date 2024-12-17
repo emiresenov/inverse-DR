@@ -18,6 +18,7 @@ def solution(t):
 
 def get_dataset():
     t = jnp.linspace(0.0, t_end, n_samples)
-    noise = np.random.normal(0, 2, len(t))
-    u = solution(t) + noise
+    #noise = np.random.normal(0, 2, len(t))
+    #u = solution(t) + noise
+    u = solution(t)
     return u, t
