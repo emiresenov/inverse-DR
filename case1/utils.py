@@ -1,4 +1,3 @@
-import scipy.io
 import jax.numpy as jnp
 import numpy as np
 
@@ -21,4 +20,12 @@ def get_dataset():
     #noise = np.random.normal(0, 2, len(t))
     #u = solution(t) + noise
     u = solution(t)
-    return u, t
+
+    # Normalization
+    u_normalized = u / jnp.max(u)
+    t_normalized = t / jnp.max(t)
+    return u_normalized, t_normalized
+    
+    #return u, t
+
+print(get_dataset())

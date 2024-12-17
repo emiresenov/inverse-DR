@@ -16,5 +16,7 @@
 - Rescale solution by dividing each current value by the max current.
 - In models.py, store max current as a val, use this to rescale PDE loss.
 
-
-## TODO next, try rescaling solution on Case 1
+### TODO, try rescaling solution on Case 1
+**How do we rescale the PDE? **
+ - Idea rescale all non-scaled terms (everything not including \hat{u}) by u_max.
+- TRY AFTER LUNCH
