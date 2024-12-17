@@ -34,7 +34,7 @@ def get_dataset():
     t_normalized = t / jnp.max(t)
     return u_normalized, t_normalized'''
     
-    return u, t
+    return jnp.log10(u), jnp.log10(t)
 
 
 

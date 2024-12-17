@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "case 1 normalization"
-    wandb.name = "No normalizing variables"
+    wandb.name = "log 10"
     wandb.tag = None
 
     # Arch
