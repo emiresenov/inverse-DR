@@ -7,12 +7,12 @@ def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "train"
+    config.mode = "eval"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Varying samples, N(0,0.3)"
-    wandb.name = "n=10"
+    wandb.project = "Case 0 refactor const"
+    wandb.name = "test"
     wandb.tag = None
 
     # Arch
@@ -75,12 +75,6 @@ def get_config():
         'R' : jnp.array([1.]), # true value = 100
         'C' : jnp.array([1.])  # true value = 0.01
     }
-
-    # Constants
-    config.constants = constants = ml_collections.ConfigDict()
-    constants.U_dc = 1.0
-    constants.R_true = 100.0
-    constants.C_true = 0.1
 
     # Input shape for initializing Flax models
     config.input_dim = 1

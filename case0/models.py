@@ -9,6 +9,8 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 
 from matplotlib import pyplot as plt
 
+from utils import V
+
 
 class CaseZero(InverseIVP):
     def __init__(self, config, u_ref, t_star):
@@ -52,9 +54,8 @@ class CaseZero(InverseIVP):
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        U_dc = self.config.constants.U_dc
         R = params['params']['R']
-        ic = jnp.log(U_dc/R)
+        ic = jnp.log(V/R)
         u0_pred = self.u_net(params, self.t0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
@@ -106,11 +107,6 @@ class CaseZeroEvaluator(BaseEvaluator):
         C = params['params']['C'][0]
         self.log_dict["R"] = R
         self.log_dict["C"] = C
-
-        '''R_true = self.config.constants.R_true
-        C_true = self.config.constants.C_true
-        self.log_dict["R_error"] = (R - R_true)**2
-        self.log_dict["C_error"] = (C - C_true)**2'''
         
 
     def __call__(self, state, batch, u_ref):
