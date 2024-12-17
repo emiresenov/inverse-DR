@@ -15,3 +15,6 @@
 - Rescale time values by dividing each time value by t_max.
 - Rescale solution by dividing each current value by the max current.
 - In models.py, store max current as a val, use this to rescale PDE loss.
+
+
+## TODO next, try rescaling solution on Case 1
