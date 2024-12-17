@@ -20,3 +20,6 @@
 **How do we rescale the PDE?**
  - Idea rescale all non-scaled terms (everything not including \hat{u}) by u_max.
  - TRY AFTER LUNCH
+
+ **Issue: scaling is not proportional**
+- TODO: Verify by not scaling the variables and see if we get a perfect prediction function. 

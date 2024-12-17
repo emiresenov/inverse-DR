@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "case 1 scale test"
-    wandb.name = "Refactor const V test"
+    wandb.project = "case 1 normalization"
+    wandb.name = "test2"
     wandb.tag = None
 
     # Arch
