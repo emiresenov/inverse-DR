@@ -48,9 +48,6 @@ class CaseOne(InverseIVP):
         R1 = params['params']['R1']
         C1 = params['params']['C1']
         return u_t + (1/R1*C1)*(u-V/R0)
-    
-    def normalize(self, term):
-        return term/self.umax
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):

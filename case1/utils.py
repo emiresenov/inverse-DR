@@ -29,21 +29,19 @@ def get_dataset():
     #u = solution(t) + noise
     u = solution(t)
 
-    # Normalization
+    '''# Normalization
     u_normalized = u / jnp.max(u)
     t_normalized = t / jnp.max(t)
-    return u_normalized, t_normalized
+    return u_normalized, t_normalized'''
     
-    #return u, t
+    return u, t
 
 
-def get_umax():
-    t = jnp.linspace(0.0, t_end, n_samples)
-    return jnp.max(solution(t))
+
 
 
 #print(get_dataset())
 
 
 #print(np.linspace(0.1, t_end, n_samples))
-print(np.log10(np.linspace(0.001, t_end, n_samples)))
+#print(np.log10(np.linspace(0.001, t_end, n_samples)))
