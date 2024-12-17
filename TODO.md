@@ -9,6 +9,9 @@
 
 
 
+# Conclusion from experiments 17-12
+- We have to nondimenzionalize / normalize the entire system to get the parameters on a sensible scale (meaning not in the thousands), and then convert them back after training to obtain their original value. Any scaling/rescaling ideas will suffer from the same problem. Revise all suggestions below based on this insight.
+
 
 
 ## Idea for rescaling
@@ -19,7 +22,7 @@
 ### TODO, try rescaling solution on Case 1
 **How do we rescale the PDE?**
  - Idea rescale all non-scaled terms (everything not including \hat{u}) by u_max.
- - TRY AFTER LUNCH
+ - try after lunch
 
  **Issue: scaling is not proportional**
 - TODO: Verify by not scaling the variables and see if we get a perfect prediction function. 
