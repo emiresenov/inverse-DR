@@ -43,7 +43,7 @@ class CaseOne(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return jnp.nan_to_num(jnp.log10(jnp.power(u_t,10) + (1/R1*C1)*(jnp.power(u,10)-V/R0)), nan=-1, neginf=-1)
+        return u_t + (1/(R1*C1))*(u-V/R0)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -67,7 +67,7 @@ class CaseOne(InverseIVP):
         # Initial condition loss
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        ic = jnp.log10(V/R0 + V/R1)
+        ic = V/R0 + V/R1
         #u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         #ics_loss = jnp.mean((u0_pred - ic) ** 2)
         ics_loss = jnp.mean((self.u0 - ic) ** 2)

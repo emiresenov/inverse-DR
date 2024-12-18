@@ -17,7 +17,7 @@ R_1 = 15.0
 C_1 = 3000.0
 
 t_end = 1000000.0
-n_samples = 10000
+n_samples = 50000
 
 
 def solution(t):

@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "case 1 normalization"
-    wandb.name = "log 10"
+    wandb.project = "case 1 logscale"
+    wandb.name = "uniform t attempt 2"
     wandb.tag = None
 
     # Arch
@@ -72,9 +72,9 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R0' : jnp.array([4950.]),
+        'R0' : jnp.array([1.]),
         'R1' : jnp.array([1.]),
-        'C1' : jnp.array([2950.])
+        'C1' : jnp.array([1.])
     }
 
     # Input shape for initializing Flax models
