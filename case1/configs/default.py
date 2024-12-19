@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "case 1 logscale"
-    wandb.name = "uniform t attempt 2"
+    wandb.project = "case 1 loglog"
+    wandb.name = "first"
     wandb.tag = None
 
     # Arch
@@ -60,7 +60,7 @@ def get_config():
 
     # Logging
     config.logging = logging = ml_collections.ConfigDict()
-    logging.log_every_steps = 100
+    logging.log_every_steps = 1000
     logging.log_errors = True
     logging.log_losses = False
     logging.log_weights = False

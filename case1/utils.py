@@ -3,21 +3,13 @@ import numpy as np
 
 np.random.seed(42)
 
-'''V = 10.0
+V = 10.0
 R_0 = 25.0
 R_1 = 0.5
 C_1 = 8.0
 
-t_end = 50.0
-n_samples = 40'''
-
-V = 1000.0
-R_0 = 5000.0
-R_1 = 15.0
-C_1 = 3000.0
-
-t_end = 1000000.0
-n_samples = 50000
+t_end = 100.0
+n_samples = 80
 
 
 def solution(t):
