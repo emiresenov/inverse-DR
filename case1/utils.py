@@ -14,8 +14,7 @@ n_samples = 80
 
 
 def solution(t):
-    expr = V/R0 + (V/R1)*jnp.exp(-jnp.power(10,t)/(R1*C1))
-    return jnp.log10(expr)
+    return jnp.log10(V/R0 + (V/R1)*jnp.exp(-jnp.power(10,t)/(R1*C1)))
 
 def get_dataset():
     t = jnp.linspace(jnp.log10(t_start), jnp.log10(t_end), n_samples)
