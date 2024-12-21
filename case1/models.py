@@ -38,14 +38,12 @@ class CaseOne(InverseIVP):
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
-        u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        tau = R1*C1
-        capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / tau, a_min=None, a_max=50))
-        return u_t + (R0*jnp.power(10,t))/(tau * (R1*capped_exp+R0))
+        capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / R1*C1, a_min=None, a_max=50))
+        return u_t + (R0*jnp.power(10,t))/(R1*C1*(R1*capped_exp+R0))
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):

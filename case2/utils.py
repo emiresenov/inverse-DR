@@ -18,7 +18,7 @@ n_samples = 50
 
 def solution(t):
     I_01 = V/R_0 + (V/R_1)*jnp.exp(-jnp.power(10,t)/(R_1*C_1))
-    I_2 = V/R_2*jnp.exp(-jnp.power(10,t)/(R_2*C_2))
+    I_2 = (V/R_2)*jnp.exp(-jnp.power(10,t)/(R_2*C_2))
     return jnp.log10(I_01+I_2)
 
 def get_dataset():

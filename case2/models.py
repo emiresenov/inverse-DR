@@ -39,14 +39,14 @@ class CaseTwo(InverseIVP):
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
-        u1, u2 = self.u_net(params, t)
         u1_t, u2_t = self.grad_net(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
         R2 = params['params']['R2']
         C2 = params['params']['C2']
-        return u1_t+((1/(R1*C1))*(u1-V/R0)), u2_t+(u2/(R2*C2))
+        capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / R1*C1, a_min=None, a_max=50))
+        return u1_t+(R0*jnp.power(10,t))/(R1*C1*(R1*capped_exp+R0)), u2_t+(jnp.power(10,t)/(R2*C2))
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
@@ -54,10 +54,11 @@ class CaseTwo(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         R2 = params['params']['R2']
-        ic = V/R0 + V/R1 + V/R2
-        u0_pred_1, u0_pred_2 = self.u_net(params, self.t0) # Alternative: use self.u0
-        u0_pred = u0_pred_1 + u0_pred_2
-        ics_loss = jnp.mean((u0_pred - ic) ** 2)
+        ic1 = jnp.log10(V/R0 + V/R1)
+        ic2 = jnp.log10(V/R2)
+        u0_pred_1, u0_pred_2 = self.u_net(params, self.t0)
+        ic1_loss = jnp.mean((u0_pred_1 - ic1) ** 2)
+        ic2_loss = jnp.mean((u0_pred_2 - ic2) ** 2)
 
         # Residual loss
         r1_pred, r2_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
@@ -72,7 +73,7 @@ class CaseTwo(InverseIVP):
         #l1_penalty = 1e-1 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
         #loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}
 
-        loss_dict = {"data": data_loss, "ics": ics_loss, "res1": res1_loss, "res2": res2_loss}
+        loss_dict = {"data": data_loss, "ic1": ic1_loss, "ic2": ic2_loss, "res1": res1_loss, "res2": res2_loss}
         return loss_dict
 
 
@@ -93,14 +94,10 @@ class CaseTwoEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u1_pred, u2_pred = self.model.u_pred_fn(params, self.model.t_star)
-        u_pred = u1_pred + u2_pred
+        u_pred_1, u_pred_2 = self.model.u_pred_fn(params, self.model.t_star)
         fig = plt.figure(figsize=(6, 5))
-        ax = plt.gca()
-        ax.scatter(self.model.t_star, self.model.u_ref, s=50, c='red')
-        ax.set_yscale('log')
-        ax.set_xscale('log')
-        plt.loglog(self.model.t_star, u_pred, linewidth=4, c='black')
+        plt.scatter(self.model.t_star, self.model.u_ref, s=50, alpha=0.9, c='orange')
+        plt.plot(self.model.t_star, u_pred_1 + u_pred_2, linewidth=8, c='black')
         self.log_dict["u_pred"] = fig
         plt.close()
     

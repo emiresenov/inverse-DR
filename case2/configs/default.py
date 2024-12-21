@@ -10,8 +10,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 2 - log"
-    wandb.name = "3layer15"
+    wandb.project = "Case 2 loglog"
+    wandb.name = "test2"
     wandb.tag = None
 
     # Arch
@@ -47,7 +47,8 @@ def get_config():
     weighting.init_weights = ml_collections.ConfigDict(
         {
         "data": 1.0, 
-        "ics": 1.0, 
+        "ic1": 1.0, 
+        "ic2": 1.0,
         "res1": 1.0,
         "res2": 1.0
         }
@@ -70,7 +71,7 @@ def get_config():
     logging.log_errors = True
     logging.log_losses = True
     logging.log_weights = True
-    logging.log_grads = True
+    logging.log_grads = False
     logging.log_ntk = False
     logging.log_preds = True
     logging.log_inv_params = True
@@ -78,11 +79,11 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R0' : jnp.array([80.]),
-        'R1' : jnp.array([7.]),
+        'R0' : jnp.array([1.]),
+        'R1' : jnp.array([1.]),
         'C1' : jnp.array([1.]),
-        'R2' : jnp.array([40.]),
-        'C2' : jnp.array([7.]) 
+        'R2' : jnp.array([1.]),
+        'C2' : jnp.array([1.]) 
     }
 
     # Input shape for initializing Flax models
