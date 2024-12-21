@@ -18,8 +18,8 @@ def get_config():
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 2
-    arch.hidden_dim = 30
+    arch.num_layers = 1
+    arch.hidden_dim = 15
     arch.out_dim = 1
     arch.activation = "tanh"
     arch.periodicity = None
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 80000
+    training.max_steps = 30000
     training.batch_size_per_device = 4096
 
     # Weighting
