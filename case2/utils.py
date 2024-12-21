@@ -5,19 +5,19 @@ import numpy as np
 
 V = 5.0
 R_0 = 25.0
-R_1 = 5.0
-C_1 = 0.05
+R_1 = 3.5
+C_1 = 0.1
 
 R_2 = 8.0
-C_2 = 0.45
+C_2 = 0.5
 
 '''t_start = 0.0001
 t_end = 10000.0
 n_samples = 50'''
 
 t_start = 0
-t_end = 6.0
-n_samples = 100
+t_end = 10.0
+n_samples = 500
 
 
 '''def solution(t):
