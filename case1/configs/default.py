@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "case 1 loglog"
-    wandb.name = "first"
+    wandb.name = "first attempt"
     wandb.tag = None
 
     # Arch

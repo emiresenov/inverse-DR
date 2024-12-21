@@ -39,11 +39,11 @@ class CaseOne(InverseIVP):
     # Diff eq prediction (residual)
     def r_net(self, params, t):
         u = self.u_net(params, t)
-        #u_t = grad(self.u_net, argnums=1)(params, t)
+        u_t = grad(self.u_net, argnums=1)(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return 1/(u*jnp.log(10)) + (1/(R1*C1))*(u-V/R0)
+        return jnp.log(10)*u_t + (1/(R1*C1))*(1-V/R0/jnp.power(u,10))
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -67,7 +67,7 @@ class CaseOne(InverseIVP):
         # Initial condition loss
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        ic = V/R0 + V/R1
+        ic = jnp.log10(V/R0 + V/R1)
         #u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         #ics_loss = jnp.mean((u0_pred - ic) ** 2)
         ics_loss = jnp.mean((self.u0 - ic) ** 2)
