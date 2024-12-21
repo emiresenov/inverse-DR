@@ -8,8 +8,8 @@ R0 = 25.0
 R1 = 0.5
 C1 = 8.0
 
-t_start = 0.01
-t_end = 100.0
+t_start = 0.0001
+t_end = 10000.0
 n_samples = 80
 
 

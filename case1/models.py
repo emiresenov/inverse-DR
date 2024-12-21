@@ -43,7 +43,9 @@ class CaseOne(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return jnp.log(10)*u_t + (1/(R1*C1))*(1-(V/R0/jnp.power(10,u)))
+        tau = R1*C1
+        capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / tau, a_min=None, a_max=50))
+        return u_t + (R0*jnp.power(10,t))/(tau * (R1*capped_exp) + R0)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
