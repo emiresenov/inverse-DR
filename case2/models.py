@@ -39,14 +39,16 @@ class CaseTwo(InverseIVP):
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
+        u1, u2 = self.u_net(params, t)
         u1_t, u2_t = self.grad_net(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
         R2 = params['params']['R2']
         C2 = params['params']['C2']
-        capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / R1*C1, a_min=None, a_max=50))
-        return u1_t+(R0*jnp.power(10,t))/(R1*C1*(R1*capped_exp+R0)), u2_t+(jnp.power(10,t)/(R2*C2))
+        #capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / R1*C1, a_min=None, a_max=50))
+        #return u1_t+(R0*jnp.power(10,t))/(R1*C1*(R1*capped_exp+R0)), u2_t+(jnp.power(10,t)/(R2*C2))
+        return u1_t + (1/(R1*C1))*(u1-(V/R0)), u2_t + (1/(R2*C2))*u2
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
@@ -54,8 +56,10 @@ class CaseTwo(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         R2 = params['params']['R2']
-        ic1 = jnp.log10(V/R0 + V/R1)
-        ic2 = jnp.log10(V/R2)
+        '''ic1 = jnp.log10(V/R0 + V/R1)
+        ic2 = jnp.log10(V/R2)'''
+        ic1 = V/R0 + V/R1
+        ic2 = V/R2
         u0_pred_1, u0_pred_2 = self.u_net(params, self.t0)
         ic1_loss = jnp.mean((u0_pred_1 - ic1) ** 2)
         ic2_loss = jnp.mean((u0_pred_2 - ic2) ** 2)
