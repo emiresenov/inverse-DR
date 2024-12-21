@@ -13,20 +13,15 @@ n_samples = 80
 
 
 def solution(t):
-    return V/R_0 + (V/R_1)*jnp.exp(-t/(R_1*C_1))
+    return jnp.log10(V/R_0+(V/R_1)*jnp.exp(-jnp.power(t,10)/(R_1*C_1)))
 
 def get_dataset():
     t = jnp.linspace(0.1, t_end, n_samples)
     #noise = np.random.normal(0, 2, len(t))
     #u = solution(t) + noise
     u = solution(t)
-
-    '''# Normalization
-    u_normalized = u / jnp.max(u)
-    t_normalized = t / jnp.max(t)
-    return u_normalized, t_normalized'''
     
-    return jnp.log10(u), jnp.log10(t)
+    return u, jnp.linspace(0.1, jnp.log10(t_end), n_samples)
 
 
 
