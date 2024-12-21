@@ -16,8 +16,8 @@ t_end = 10000.0
 n_samples = 50'''
 
 t_start = 0
-t_end = 7.0
-n_samples = 800
+t_end = 6.0
+n_samples = 100
 
 
 '''def solution(t):
