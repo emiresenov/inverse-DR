@@ -17,3 +17,4 @@
 - The problem becomes more sensitive in loglog for all cases. 
 
 ## Perhaps going loglog is a bad idea.
+- Proof: Case 1 starting weights. Change to [1,1,1] and it completely fails. Perhaps an argument against going loglog scale.
