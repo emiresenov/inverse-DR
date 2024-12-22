@@ -10,7 +10,7 @@ C1 = 8.0
 
 t_start = 0.0001
 t_end = 10000.0
-n_samples = 50
+n_samples = 80
 
 
 def solution(t):
