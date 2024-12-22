@@ -14,3 +14,6 @@
 
 # Note
 - Weighting was crucial for Case 1 loglog. It completely fails without it.
+- The problem becomes more sensitive in loglog for all cases. 
+
+## Perhaps going loglog is a bad idea.
