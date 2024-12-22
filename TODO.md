@@ -1,7 +1,7 @@
 # TODO
 
 ## Prio 1
-- Make loglog versions for all cases
+- Make loglog versions case 2, build from case 1 loglog 
 
 ## Prio 2
 - Come up with official reference solutions for all cases (?). Alternatively, propose a scaling method
