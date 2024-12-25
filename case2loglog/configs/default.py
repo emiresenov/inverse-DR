@@ -20,7 +20,7 @@ def get_config():
     arch.arch_name = "Mlp"
     arch.num_layers = 2
     arch.hidden_dim = 15
-    arch.out_dim = 2
+    arch.out_dim = 1
     arch.activation = "tanh"
     arch.periodicity = None
     arch.fourier_emb = None
@@ -45,13 +45,7 @@ def get_config():
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
     weighting.scheme = "grad_norm"
-    weighting.init_weights = ml_collections.ConfigDict({
-        "data": 1.0, 
-        "ic1": 1.0, 
-        "ic2": 1.0, 
-        "res1": 1.0,
-        "res2": 1.0
-    })
+    weighting.init_weights = ml_collections.ConfigDict({"data": 1.0, "ic": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 

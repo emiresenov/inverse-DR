@@ -3,12 +3,12 @@ import numpy as np
 
 np.random.seed(42)
 
-V = 10.0
+V = 5.0
 R0 = 25.0
 R1 = 10.0
 C1 = 6.0
 
-R2 = 1
+R2 = 1.0
 C2 = 0.5
 
 t_start = 0.001
