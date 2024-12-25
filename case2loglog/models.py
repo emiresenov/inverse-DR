@@ -1,7 +1,7 @@
 from functools import partial
 
 import jax.numpy as jnp
-from jax import lax, jit, grad, vmap, jacrev, tree_leaves
+from jax import lax, jit, grad, vmap, jacrev, tree_leaves, jacobian
 
 from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
@@ -29,23 +29,27 @@ class CaseOne(InverseIVP):
     def u_net(self, params, t):
         z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
-        return u[0] # Unpack array
+        return u[0], u[1]
 
     # Calculate gradients
     def grad_net(self, params, t):
-        u_t = grad(self.u_net, argnums=1)(params, t)
-        return u_t
+        grads = jacobian(self.u_net, argnums=1)(params, t)
+        u1_t = grads[0]
+        u2_t = grads[1]
+        return u1_t, u2_t
 
     # Diff eq prediction (residual)
     def r_net(self, params, t):
-        u = self.u_net(params, t)
-        u_t = grad(self.u_net, argnums=1)(params, t)
+        #u1, u2 = self.u_net(params, t)
+        u1_t, u2_t = self.grad_net(params, t)
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
+        R2 = params['params']['R2']
+        C2 = params['params']['C2']
         tau = R1*C1
         capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / tau, a_min=None, a_max=50))
-        return u_t + (R0*jnp.power(10,t))/(tau * (R1*capped_exp+R0))
+        return u1_t + (R0*jnp.power(10,t))/(tau * (R1*capped_exp+R0)), u2_t + jnp.power(10,t)/(R2*C2)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -69,34 +73,35 @@ class CaseOne(InverseIVP):
         # Initial condition loss
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        ic = jnp.log10(V/R0 + V/R1)
-        u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
-        ics_loss = jnp.mean((u0_pred - ic) ** 2)
-        #ics_loss = jnp.mean((self.u0 - ic) ** 2)
+        R2 = params['params']['R2']
+        ic1 = jnp.log10(V/R0 + V/R1)
+        ic2 = jnp.log10(V/R2)
+        u0_pred_1, u0_pred_2 = self.u_net(params, self.t0)
+        ic1_loss = jnp.mean((u0_pred_1 - ic1) ** 2)
+        ic2_loss = jnp.mean((u0_pred_2 - ic2) ** 2)
 
         # Residual loss
-        if self.config.weighting.use_causal == True:
-            l, w = self.res_and_w(params, batch)
-            res_loss = jnp.mean(l * w)
-        else:
-            r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
-            res_loss = jnp.mean((r_pred) ** 2)
+        r1_pred, r2_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
+        res1_loss = jnp.mean((r1_pred) ** 2)
+        res2_loss = jnp.mean((r2_pred) ** 2)
 
         # Data loss
-        u_pred = self.u_pred_fn(params, self.t_star)
+        u1_pred, u2_pred = self.u_pred_fn(params, self.t_star)
+        u_pred = u1_pred + u2_pred
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 
         #l1_penalty = 1e-1 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
         #loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}
         
-        loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
+        loss_dict = {"data": data_loss, "ic1": ic1_loss, "ic2": ic2_loss, "res1": res1_loss, "res2": res2_loss}
 
         return loss_dict
 
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):
-        u_pred = self.u_pred_fn(params, self.t_star)
+        u1_pred, u2_pred = self.u_pred_fn(params, self.t_star)
+        u_pred = u1_pred + u2_pred
         error = jnp.linalg.norm(u_pred - u_test) / jnp.linalg.norm(u_test)
         return error
 
@@ -121,6 +126,8 @@ class CaseOneEvaluator(BaseEvaluator):
         self.log_dict["R0"] = params['params']['R0'][0]
         self.log_dict["R1"] = params['params']['R1'][0]
         self.log_dict["C1"] = params['params']['C1'][0]
+        self.log_dict["R2"] = params['params']['R2'][0]
+        self.log_dict["C2"] = params['params']['C2'][0]
         
 
     def __call__(self, state, batch, u_ref):
