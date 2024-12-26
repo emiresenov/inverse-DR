@@ -7,12 +7,12 @@ def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "eval"
+    config.mode = "train"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 0 refactor const"
-    wandb.name = "test"
+    wandb.project = "Solution, Case 0"
+    wandb.name = "baseline"
     wandb.tag = None
 
     # Arch
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 40000
+    training.max_steps = 20000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -62,9 +62,9 @@ def get_config():
     config.logging = logging = ml_collections.ConfigDict()
     logging.log_every_steps = 100
     logging.log_errors = True
-    logging.log_losses = True
-    logging.log_weights = True
-    logging.log_grads = True
+    logging.log_losses = False
+    logging.log_weights = False
+    logging.log_grads = False
     logging.log_ntk = False
     logging.log_preds = True
     logging.log_inv_params = True
