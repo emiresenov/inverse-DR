@@ -10,8 +10,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 2 linear"
-    wandb.name = "2 layers"
+    wandb.project = "Solution, Case 2"
+    wandb.name = "baseline"
     wandb.tag = None
 
     # Arch
@@ -38,7 +38,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 80000
+    training.max_steps = 40000
     training.batch_size_per_device = 4096
 
     # Weighting
