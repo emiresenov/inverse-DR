@@ -2,17 +2,17 @@ import scipy.io
 import jax.numpy as jnp
 import numpy as np
 
-np.random.seed(42)
+#np.random.seed(42)
 
-V = 1.0
-R = 100.0
+V = 10.0
+R = 10.0
 C = 0.1
 
-t_end = 50.0
+t_end = 7.0
 n_samples = 10
 
 def solution(t):
-    return - t/(R*C)+jnp.log(V/R)
+    return (V/R)*jnp.exp(-t/(R*C))
 
 def get_dataset():
     t = jnp.linspace(0.0, t_end, n_samples)

@@ -1,8 +1,8 @@
 # TODO
 - Come up with official reference solutions for all cases (?). Alternatively, propose a general scaling method.
-- Case 3.
 - Build eval for all cases.
 - Write a comprehensive report on the entire project.
+- Case 3.
 
 
 
