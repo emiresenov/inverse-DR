@@ -7,7 +7,7 @@ def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "train"
+    config.mode = "eval"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
@@ -55,7 +55,7 @@ def get_config():
 
     # Saving
     config.saving = saving = ml_collections.ConfigDict()
-    saving.save_every_steps = None
+    saving.save_every_steps = 20000
     saving.num_keep_ckpts = 50
 
     # Logging
@@ -72,7 +72,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R' : jnp.array([1.]), # true value = 100
+        'R' : jnp.array([1.]), # true value = 10
         'C' : jnp.array([1.])  # true value = 0.01
     }
 

@@ -9,7 +9,7 @@ import wandb
 import pandas as pd
 import seaborn as sns
 
-
+from utils import R, C
 
 def evaluate(config: ml_collections.ConfigDict, workdir: str):
     u_ref, t_star = get_dataset()
@@ -103,14 +103,14 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharex=True)
 
     sns.lineplot(data=df, x=df.index, y='R', label='Estimated $R$', ax=axes[0], linewidth=2.5, color='#1f77b4')
-    axes[0].axhline(100, color='magenta', linestyle='--', label='True $R$', linewidth=2.5)
+    axes[0].axhline(R, color='magenta', linestyle='--', label='True $R$', linewidth=2.5)
     axes[0].set_xlabel('Training step')
     axes[0].set_ylabel('Resistance $R$ ($\Omega$)')
     axes[0].legend(loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
     axes[0].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     sns.lineplot(data=df, x=df.index, y='C', label='Estimated $C$', ax=axes[1], linewidth=2.5, color='#1f77b4')
-    axes[1].axhline(0.1, color='magenta', linestyle='--', label='True $C$', linewidth=2.5)
+    axes[1].axhline(C, color='magenta', linestyle='--', label='True $C$', linewidth=2.5)
     axes[1].set_xlabel('Training step')
     axes[1].set_ylabel('Capacitance $C$ (farad)')
     axes[1].legend(loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
