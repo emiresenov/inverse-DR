@@ -43,9 +43,7 @@ class CaseOne(InverseIVP):
         R0 = params['params']['R0']
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        tau = R1*C1
-        capped_exp = jnp.exp(jnp.clip(jnp.power(10, t) / tau, a_min=None, a_max=50))
-        return u_t + (R0*jnp.power(10,t))/(tau * (R1*capped_exp+R0))
+        return u_t + (u - V/R0)/(R1*C1)
 
     @partial(jit, static_argnums=(0,))
     def res_and_w(self, params, batch):
@@ -69,7 +67,7 @@ class CaseOne(InverseIVP):
         # Initial condition loss
         R0 = params['params']['R0']
         R1 = params['params']['R1']
-        ic = jnp.log10(V/R0 + V/R1)
+        ic = V/R0 + V/R1
         u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
         #ics_loss = jnp.mean((self.u0 - ic) ** 2)

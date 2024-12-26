@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "case 1 loglog"
-    wandb.name = "Even weighting"
+    wandb.project = "Solution, Case 1"
+    wandb.name = "baseline"
     wandb.tag = None
 
     # Arch
@@ -62,7 +62,7 @@ def get_config():
     config.logging = logging = ml_collections.ConfigDict()
     logging.log_every_steps = 1000
     logging.log_errors = True
-    logging.log_losses = True
+    logging.log_losses = False
     logging.log_weights = False
     logging.log_grads = False
     logging.log_ntk = False
