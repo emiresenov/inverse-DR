@@ -1,4 +1,5 @@
 # TODO
+- Change plot y-axis. Remove R,C letters and use (ohm) instead of (\Omega).
 - Test different solutions with different parameter values to see how stable convergence is.
 - Write a comprehensive report on the entire project.
 - Case 3.
