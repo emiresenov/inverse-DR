@@ -129,14 +129,14 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
 
     '''Doing this manually because dynamic handling is messy'''
-    '''# Update x-axis ticks for both plots
-    x_ticks = [0, 100, 200, 300, 400]  # Original tick positions
-    x_labels = ['0', '10k', '20k', '30k', '40k']  # New labels
+    # Update x-axis ticks for both plots
+    x_ticks = [0, 50, 100, 150, 200]  # Original tick positions
+    x_labels = ['0', '50k', '10k', '15k', '20k']  # New labels
 
     axes[0].set_xticks(x_ticks)
     axes[0].set_xticklabels(x_labels)
     axes[1].set_xticks(x_ticks)
-    axes[1].set_xticklabels(x_labels)'''
+    axes[1].set_xticklabels(x_labels)
 
     for ax in axes:
         for spine in ax.spines.values():
