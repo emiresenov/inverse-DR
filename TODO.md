@@ -16,5 +16,7 @@
 
 
 ~~- Come up with official reference solutions for all cases (?). Alternatively, propose a general scaling method.~~
+
 ~~- Build eval for all cases.~~
+
 ~~- Make loglog versions case 2, build from case 1 loglog~~
