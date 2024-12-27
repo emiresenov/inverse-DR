@@ -10,7 +10,7 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.lines as mlines
 
-from utils import R, C
+from utils import R0, R1, C1
 
 def evaluate(config: ml_collections.ConfigDict, workdir: str):
     u_ref, t_star = get_dataset()
@@ -20,7 +20,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     '''
 
     # Restore model
-    model = models.CaseZero(config, u_ref, t_star)
+    model = models.CaseOne(config, u_ref, t_star)
     ckpt_path = os.path.join(workdir, config.wandb.name, "ckpt")
     ckpt_path = os.path.abspath(ckpt_path)
     model.state = restore_checkpoint(model.state, ckpt_path)
@@ -58,7 +58,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
 
-    fig_path = os.path.join(save_dir, "case0.pdf")
+    fig_path = os.path.join(save_dir, "case1.pdf")
     fig.savefig(fig_path, bbox_inches="tight", dpi=300)
 
 
@@ -89,7 +89,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     print(df['R'])'''
 
 
-    fig = plt.figure(figsize=(8, 6), dpi=300)
+    fig = plt.figure(figsize=(11, 4), dpi=300)
 
     plt.rc('font', family='serif')
     plt.rc('font', size=14)
@@ -100,38 +100,47 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     plt.rc('legend', fontsize=12)
     plt.rc('figure', titlesize=16)
 
-    fig, axes = plt.subplots(1, 2, figsize=(8, 4), sharex=True)
+    fig, axes = plt.subplots(1, 3, figsize=(11, 4), sharex=True)
 
     linecol = 'deepskyblue'
     dashcolor = '#BB00BB'
 
-    sns.lineplot(data=df, x=df.index, y='R', label='Estimated $R$', ax=axes[0], linewidth=3, color=linecol)
-    axes[0].axhline(R, color=dashcolor, linestyle='--', label='True $R$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
+    sns.lineplot(data=df, x=df.index, y='R0', label='Estimated $R0$', ax=axes[0], linewidth=3, color=linecol)
+    axes[0].axhline(R0, color=dashcolor, linestyle='--', label='True $R0$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
     axes[0].set_xlabel('Training step')
     axes[0].set_ylabel('Resistance $R$ ($\Omega$)')
     axes[0].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
-    sns.lineplot(data=df, x=df.index, y='C', label='Estimated $C$', ax=axes[1], linewidth=3, color=linecol)
-    axes[1].axhline(C, color=dashcolor, linestyle='--', label='True $C$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
+    sns.lineplot(data=df, x=df.index, y='C1', label='Estimated $C1$', ax=axes[1], linewidth=3, color=linecol)
+    axes[1].axhline(C1, color=dashcolor, linestyle='--', label='True $C1$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
     axes[1].set_xlabel('Training step')
     axes[1].set_ylabel('Capacitance $C$ (farad)')
     axes[1].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
+    sns.lineplot(data=df, x=df.index, y='R1', label='Estimated $R1$', ax=axes[2], linewidth=3, color=linecol)
+    axes[2].axhline(R1, color=dashcolor, linestyle='--', label='True $R1$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
+    axes[2].set_xlabel('Training step')
+    axes[2].set_ylabel('Resistance $R$ ($\Omega$)')
+    axes[2].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
+
 
     # Custom Legend
-    true_r = mlines.Line2D([], [], color=dashcolor, linestyle=(0, (3.5, 2)), linewidth=2.5, label='True $R$')  # Custom dashed line for legend
-    true_c = mlines.Line2D([], [], color=dashcolor, linestyle=(0, (3.5, 2)), linewidth=2.5, label='True $C$')  # Custom dashed line for legend
-    estimated_r = mlines.Line2D([], [], color=linecol, linewidth=2.5, label='Estimated $R$')
-    estimated_c = mlines.Line2D([], [], color=linecol, linewidth=2.5, label='Estimated $C$')
+    true_r0 = mlines.Line2D([], [], color=dashcolor, linestyle=(0, (3.5, 2)), linewidth=2.5, label='True $R0$')  # Custom dashed line for legend
+    true_c1 = mlines.Line2D([], [], color=dashcolor, linestyle=(0, (3.5, 2)), linewidth=2.5, label='True $C1$')  # Custom dashed line for legend
+    true_r1 = mlines.Line2D([], [], color=dashcolor, linestyle=(0, (3.5, 2)), linewidth=2.5, label='True $R1$')  # Custom dashed line for legend
+    estimated_r0 = mlines.Line2D([], [], color=linecol, linewidth=2.5, label='Estimated $R0$')
+    estimated_c1 = mlines.Line2D([], [], color=linecol, linewidth=2.5, label='Estimated $C1$')
+    estimated_r1 = mlines.Line2D([], [], color=linecol, linewidth=2.5, label='Estimated $R1$')
 
-    axes[0].legend(handles=[estimated_r, true_r], loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
-    axes[1].legend(handles=[estimated_c, true_c], loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
+    axes[0].legend(handles=[estimated_r0, true_r0], loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
+    axes[1].legend(handles=[estimated_c1, true_c1], loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
+    axes[2].legend(handles=[estimated_r1, true_r1], loc='upper center', bbox_to_anchor=(0.5, 1.25), frameon=False)
 
 
     '''Doing this manually because dynamic handling is messy'''
     # Update x-axis ticks for both plots
-    x_ticks = [0, 50, 100, 150, 200]  # Original tick positions
-    x_labels = ['0', '50k', '10k', '15k', '20k']  # New labels
+    x_ticks = [0, 10, 20, 30]  # Original tick positions
+    x_labels = ['0', '10k', '20k', '30k']  # New labels
 
     axes[0].set_xticks(x_ticks)
     axes[0].set_xticklabels(x_labels)
@@ -150,5 +159,5 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
 
-    fig_path = os.path.join(save_dir, "case0params.pdf")
+    fig_path = os.path.join(save_dir, "case1params.pdf")
     fig.savefig(fig_path, bbox_inches="tight", dpi=300)
