@@ -31,9 +31,8 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     plt.rc('font', family='serif')
     line_color = "#1f77b4"  # Professional blue
     scatter_color = "#ff7f0e"  # Rich orange    
-    plt.plot(model.t_star, u_pred, label='Prediction', color=line_color, linewidth=2.5, linestyle='-')
-    plt.scatter(model.t_star, model.u_ref, label='Measurement', color=scatter_color, edgecolor="black",
-            alpha=0.8, s=60, marker='o')
+    plt.plot(model.t_star, u_pred, label='Prediction', color=line_color, linewidth=2.5, linestyle='-', zorder=1)
+    plt.scatter(model.t_star, model.u_ref, label='Measurement', color=scatter_color, edgecolor="black", s=80, marker='o', zorder=2)
     
     plt.xlabel('Time (s)', fontsize=16, labelpad=10)
     plt.ylabel('Current (A)', fontsize=16, labelpad=10)
