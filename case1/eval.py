@@ -108,19 +108,19 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     sns.lineplot(data=df, x=df.index, y='R0', label='Estimated $R0$', ax=axes[0], linewidth=3, color=linecol)
     axes[0].axhline(R0, color=dashcolor, linestyle='--', label='True $R0$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
     axes[0].set_xlabel('Training step')
-    axes[0].set_ylabel('Resistance $R$ ($\Omega$)')
+    axes[0].set_ylabel('Resistance (ohm)')
     axes[0].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     sns.lineplot(data=df, x=df.index, y='C1', label='Estimated $C1$', ax=axes[1], linewidth=3, color=linecol)
     axes[1].axhline(C1, color=dashcolor, linestyle='--', label='True $C1$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
     axes[1].set_xlabel('Training step')
-    axes[1].set_ylabel('Capacitance $C$ (farad)')
+    axes[1].set_ylabel('Capacitance (farad)')
     axes[1].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     sns.lineplot(data=df, x=df.index, y='R1', label='Estimated $R1$', ax=axes[2], linewidth=3, color=linecol)
     axes[2].axhline(R1, color=dashcolor, linestyle='--', label='True $R1$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
     axes[2].set_xlabel('Training step')
-    axes[2].set_ylabel('Resistance $R$ ($\Omega$)')
+    axes[2].set_ylabel('Resistance (ohm)')
     axes[2].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
 

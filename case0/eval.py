@@ -108,13 +108,13 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     sns.lineplot(data=df, x=df.index, y='R', label='Estimated $R$', ax=axes[0], linewidth=3, color=linecol)
     axes[0].axhline(R, color=dashcolor, linestyle='--', label='True $R$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
     axes[0].set_xlabel('Training step')
-    axes[0].set_ylabel('Resistance $R$ ($\Omega$)')
+    axes[0].set_ylabel('Resistance (ohm)')
     axes[0].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     sns.lineplot(data=df, x=df.index, y='C', label='Estimated $C$', ax=axes[1], linewidth=3, color=linecol)
     axes[1].axhline(C, color=dashcolor, linestyle='--', label='True $C$', linewidth=3, dashes=(5, 6))  # Adjust dashes here
     axes[1].set_xlabel('Training step')
-    axes[1].set_ylabel('Capacitance $C$ (farad)')
+    axes[1].set_ylabel('Capacitance (farad)')
     axes[1].grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
 

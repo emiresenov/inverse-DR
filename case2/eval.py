@@ -111,21 +111,21 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     sns.lineplot(data=df, x=df.index, y='R0', label='Estimated $R0$', ax=ax0, linewidth=3, color=linecol)
     ax0.axhline(R0, color=dashcolor, linestyle='--', label='True $R0$', linewidth=3, dashes=(5, 6))
     ax0.set_xlabel('Training step')
-    ax0.set_ylabel('Resistance $R$ ($\Omega$)')
+    ax0.set_ylabel('Resistance (ohm)')
     ax0.grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     ax1 = fig.add_subplot(gs[0, 2:4])
     sns.lineplot(data=df, x=df.index, y='C1', label='Estimated $C1$', ax=ax1, linewidth=3, color=linecol)
     ax1.axhline(C1, color=dashcolor, linestyle='--', label='True $C1$', linewidth=3, dashes=(5, 6))
     ax1.set_xlabel('Training step')
-    ax1.set_ylabel('Capacitance $C$ (farad)')
+    ax1.set_ylabel('Capacitance (farad)')
     ax1.grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     ax2 = fig.add_subplot(gs[0, 4:6])
     sns.lineplot(data=df, x=df.index, y='R1', label='Estimated $R1$', ax=ax2, linewidth=3, color=linecol)
     ax2.axhline(R1, color=dashcolor, linestyle='--', label='True $R1$', linewidth=3, dashes=(5, 6))
     ax2.set_xlabel('Training step')
-    ax2.set_ylabel('Resistance $R$ ($\Omega$)')
+    ax2.set_ylabel('Resistance (ohm)')
     ax2.grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     # Bottom row (centered plots)
@@ -133,14 +133,14 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     sns.lineplot(data=df, x=df.index, y='R2', label='Estimated $R2$', ax=ax3, linewidth=3, color=linecol)
     ax3.axhline(R2, color=dashcolor, linestyle='--', label='True $R2$', linewidth=3, dashes=(5, 6))
     ax3.set_xlabel('Training step')
-    ax3.set_ylabel('Resistance $R$ ($\Omega$)')
+    ax3.set_ylabel('Resistance (ohm)')
     ax3.grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     ax4 = fig.add_subplot(gs[1, 3:5])
     sns.lineplot(data=df, x=df.index, y='C2', label='Estimated $C2$', ax=ax4, linewidth=3, color=linecol)
     ax4.axhline(C2, color=dashcolor, linestyle='--', label='True $C2$', linewidth=3, dashes=(5, 6))
     ax4.set_xlabel('Training step')
-    ax4.set_ylabel('Capacitance $C$ (farad)')
+    ax4.set_ylabel('Capacitance (farad)')
     ax4.grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
 
     # Custom Legend
