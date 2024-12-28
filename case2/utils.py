@@ -13,7 +13,7 @@ C2 = 0.5
 
 t_start = 0
 t_end = 10.0
-n_samples = 25
+n_samples = 20
 
 
 def solution(t):
