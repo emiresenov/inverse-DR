@@ -1,7 +1,7 @@
 # TODO
 
-
-- Write a comprehensive report on the entire project.
+- Figure out scaling mechanism for very large R and very small C.
+- Write abstract.
 - Case 3.
 
 
@@ -18,6 +18,7 @@
 
 ~~- Change n-samples for Case 2 and fig size to match Case 0 and 1.~~
 
+~~- Write a comprehensive report on the entire project.~~
 
 ## Summary of problems with Case 2 loglog
 
