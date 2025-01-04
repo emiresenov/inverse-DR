@@ -1,5 +1,13 @@
 # TODO
 
+- See if we can prevent getting stuck on local optima
+ for the general case.
+    - Weight initialization strategy (use a good weight initialization strategy (e.g., Xavier or He initialization) to start with a more favorable position in the parameter space.)
+    - Learning rate scheduler
+    - Regularization
+    - L-BFGS optimizer
+    - Sequential Training: Train the network for the forward problem first (if applicable) to provide a better initialization for the inverse problem.
+
 - Figure out scaling mechanism for very large R and very small C.
 - Write abstract.
 - Case 3.
