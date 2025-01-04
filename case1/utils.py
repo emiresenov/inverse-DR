@@ -4,9 +4,9 @@ import numpy as np
 np.random.seed(42)
 
 V = 10.0
-R0 = 2.0
-R1 = 4.0
-C1 = 0.5
+R0 = 10.0
+R1 = 40.0
+C1 = 0.1
 
 t_start = 0.0
 t_end = 10.0

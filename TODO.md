@@ -5,7 +5,7 @@
     - Weight initialization strategy (use a good weight initialization strategy (e.g., Xavier or He initialization) to start with a more favorable position in the parameter space.)
     - Learning rate scheduler
     - Regularization
-    - L-BFGS optimizer
+    - L-BFGS optimizer (ugh)
     - Sequential Training: Train the network for the forward problem first (if applicable) to provide a better initialization for the inverse problem.
 
 - Figure out scaling mechanism for very large R and very small C.

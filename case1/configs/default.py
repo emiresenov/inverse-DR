@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Solution, Case 1"
+    wandb.project = "Local optima tests"
     wandb.name = "baseline"
     wandb.tag = None
 
