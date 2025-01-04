@@ -1,5 +1,11 @@
 # TODO
 
+## LFBGS
+- LFBGS uses GradientTransformationExtraArgs
+- Flax TrainState in jaxpi/models.py assumes GradientTransformation
+- TrainState calls tx.update() with too few args, causing error
+- **Solution:**Override apply_gradients in TrainState
+
 - See if we can prevent getting stuck on local optima
  for the general case.
     - Weight initialization strategy (use a good weight initialization strategy (e.g., Xavier or He initialization) to start with a more favorable position in the parameter space.)
