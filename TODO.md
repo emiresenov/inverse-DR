@@ -1,19 +1,7 @@
 # TODO
 ---
-## LFBGS
-- LFBGS uses GradientTransformationExtraArgs
-- Flax TrainState in jaxpi/models.py assumes GradientTransformation
-- TrainState calls tx.update() with too few args, causing error
-- **Solution:**Override apply_gradients in TrainState
- --- 
-- See if we can prevent getting stuck on local optima
- for the general case.
-    - ~~Weight initialization strategy (use a good weight initialization strategy (e.g., Xavier or He initialization) to start with a more favorable position in the parameter space.)~~ Already using Xavier, another name for Glorot Normal
-    - ~~Learning rate scheduler~~ Doesn't generalize, I don't think 
-    - ~~Regularization~~ Seems to only give worse results
-    - L-BFGS optimizer (ugh)
-    - ~~Sequential Training: Train the network for the forward problem first (if applicable) to provide a better initialization for the inverse problem.~~ Forward problem assumes that we know the solution already, not sure how this could be done
 
+- Experiment with LBFGS
 - Figure out scaling mechanism for very large R and very small C.
 - Write abstract.
 - Case 3.

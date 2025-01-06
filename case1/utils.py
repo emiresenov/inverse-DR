@@ -9,8 +9,8 @@ R1 = 40.0
 C1 = 0.1
 
 t_start = 0.0
-t_end = 10.0
-n_samples = 15
+t_end = 15.0
+n_samples = 25
 
 
 def solution(t):
