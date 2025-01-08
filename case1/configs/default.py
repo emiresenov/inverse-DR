@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "Local optima tests"
-    wandb.name = "baseline"
+    wandb.name = "flax update test"
     wandb.tag = None
 
     # Arch
