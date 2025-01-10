@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Local optima tests"
-    wandb.name = "flax update test"
+    wandb.project = "Nondim test"
+    wandb.name = "test"
     wandb.tag = None
 
     # Arch
@@ -28,7 +28,7 @@ def get_config():
 
     # Optim
     config.optim = optim = ml_collections.ConfigDict()
-    optim.optimizer = "LBFGS"
+    optim.optimizer = "Adam"
     optim.beta1 = 0.9
     optim.beta2 = 0.999
     optim.eps = 1e-8
@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 60000
+    training.max_steps = 30000
     training.batch_size_per_device = 4096
 
     # Weighting

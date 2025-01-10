@@ -5,11 +5,11 @@ np.random.seed(42)
 
 V = 10.0
 R0 = 10.0
-R1 = 40.0
-C1 = 0.1
+R1 = 30.0
+C1 = 0.007
 
 t_start = 0.0
-t_end = 15.0
+t_end = 2.0
 n_samples = 25
 
 

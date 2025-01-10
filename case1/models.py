@@ -40,9 +40,9 @@ class CaseOne(InverseIVP):
     def r_net(self, params, t):
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
-        R0 = params['params']['R0']
-        R1 = params['params']['R1']
-        C1 = params['params']['C1']
+        R0 = params['params']['R0'] * 30
+        R1 = params['params']['R1'] * 30
+        C1 = params['params']['C1'] * 0.01
         return u_t + (u - V/R0)/(R1*C1)
 
     @partial(jit, static_argnums=(0,))
@@ -65,8 +65,8 @@ class CaseOne(InverseIVP):
         2: model prediction at t0 - ic squared
         '''
         # Initial condition loss
-        R0 = params['params']['R0']
-        R1 = params['params']['R1']
+        R0 = params['params']['R0'] * 30
+        R1 = params['params']['R1'] * 30
         ic = V/R0 + V/R1
         u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
