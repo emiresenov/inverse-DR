@@ -38,4 +38,4 @@
 ## Stability for different parameter values
 - Previous TODO: Test different solutions with different parameter values to see how stable convergence is.
 
-Summary: if the problem is well-conditioned (sufficient curvature for each polarization mechanism), we sample enough data (everything except highly sparse sampling), and the numbers are in an appropriate range (R_i, C_i, t ~ [0.1,100]), then we can expect to converge to a good approximation of the true parameter values.
+Summary: if the problem is well-conditioned (sufficient curvature for each polarization mechanism), we sample enough data (everything except highly sparse sampling), and the numbers are in an appropriate range, R_i, C_i, t ~ [0.1,100] (solved with nondimensionalization), then we can expect to converge to a good approximation of the true parameter values.
