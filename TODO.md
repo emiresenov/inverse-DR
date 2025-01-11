@@ -9,6 +9,7 @@
 
 # Completed
 
+---
 ~~- Experiment with LBFGS~~
 
 ~~- Figure out scaling mechanism for very large R and very small C.~~
@@ -27,6 +28,7 @@
 
 ~~- Write a comprehensive report on the entire project.~~
 
+---
 ## Summary of problems with Case 2 loglog
 
 ### More importantly, since I is the only input in a real experiment, we can't do this function transformation since we don't have enough information
