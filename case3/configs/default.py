@@ -6,20 +6,20 @@ def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "eval"
+    config.mode = "train"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Solution, Case 2"
-    wandb.name = "baseline"
+    wandb.project = "Solution, Case 3"
+    wandb.name = "3 layers more data"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 2
+    arch.num_layers = 3
     arch.hidden_dim = 15
-    arch.out_dim = 2 # I_01 and I_2
+    arch.out_dim = 3 # I_01, I_2 and I_3
     arch.activation = "tanh"
     arch.periodicity = None
     arch.fourier_emb = None
@@ -38,7 +38,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 50000
+    training.max_steps = 80000
     training.batch_size_per_device = 4096
 
     # Weighting
@@ -49,8 +49,10 @@ def get_config():
         "data": 1.0, 
         "ic1": 1.0, 
         "ic2": 1.0,
+        "ic3": 1.0,
         "res1": 1.0,
-        "res2": 1.0
+        "res2": 1.0,
+        "res3": 1.0
         }
     )
     weighting.momentum = 0.9
@@ -62,7 +64,7 @@ def get_config():
 
     # Saving
     config.saving = saving = ml_collections.ConfigDict()
-    saving.save_every_steps = 50000
+    saving.save_every_steps = None
     saving.num_keep_ckpts = 50
 
     # Logging
@@ -83,7 +85,9 @@ def get_config():
         'R1' : jnp.array([1.]),
         'C1' : jnp.array([1.]),
         'R2' : jnp.array([1.]),
-        'C2' : jnp.array([1.]) 
+        'C2' : jnp.array([1.]),
+        'R3' : jnp.array([1.]),
+        'C3' : jnp.array([1.])
     }
 
     # Input shape for initializing Flax models

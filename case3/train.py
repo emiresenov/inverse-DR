@@ -37,10 +37,10 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.CaseTwo(config, u_ref, t_star)
+    model = models.CaseThree(config, u_ref, t_star)
 
     # Initialize evaluator
-    evaluator = models.CaseTwoEvaluator(config, model)
+    evaluator = models.CaseThreeEvaluator(config, model)
 
     print("Waiting for JIT...")
     start_time = time.time()

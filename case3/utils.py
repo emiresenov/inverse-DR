@@ -16,7 +16,7 @@ C3 = 8.5
 
 t_start = 0
 t_end = 80.0
-n_samples = 200
+n_samples = 400
 
 
 def solution(t):
