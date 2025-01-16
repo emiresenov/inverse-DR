@@ -5,18 +5,18 @@ import numpy as np
 
 V = 10.0
 R0 = 25.0
-R1 = 3.5
+R1 = 1.0
 C1 = 0.1
 
-R2 = 8.0
-C2 = 0.5
+R2 = 4.5
+C2 = 1.0
 
-R3 = 2.5
-C3 = 8.5
+R3 = 25.0
+C3 = 25.0
 
 t_start = 0
-t_end = 80.0
-n_samples = 400
+t_end = 4000.0
+n_samples = 4000
 
 
 def solution(t):

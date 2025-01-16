@@ -2,24 +2,25 @@ import ml_collections
 
 import jax.numpy as jnp
 
+
 def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "train"
+    config.mode = "eval"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Solution, Case 3"
-    wandb.name = "3 loglog bumps"
+    wandb.project = "Solution, Case 0"
+    wandb.name = "baseline"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 2
+    arch.num_layers = 1
     arch.hidden_dim = 15
-    arch.out_dim = 3 # I_01, I_2 and I_3
+    arch.out_dim = 1
     arch.activation = "tanh"
     arch.periodicity = None
     arch.fourier_emb = None
@@ -38,23 +39,13 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 80000
+    training.max_steps = 20000
     training.batch_size_per_device = 4096
 
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
     weighting.scheme = "grad_norm"
-    weighting.init_weights = ml_collections.ConfigDict(
-        {
-        "data": 1.0, 
-        "ic1": 1.0, 
-        "ic2": 1.0,
-        "ic3": 1.0,
-        "res1": 1.0,
-        "res2": 1.0,
-        "res3": 1.0
-        }
-    )
+    weighting.init_weights = ml_collections.ConfigDict({"data": 1.0, "ics": 1.0, "res": 1.0})
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
 
@@ -64,12 +55,12 @@ def get_config():
 
     # Saving
     config.saving = saving = ml_collections.ConfigDict()
-    saving.save_every_steps = None
+    saving.save_every_steps = 20000
     saving.num_keep_ckpts = 50
 
     # Logging
     config.logging = logging = ml_collections.ConfigDict()
-    logging.log_every_steps = 500
+    logging.log_every_steps = 100
     logging.log_errors = True
     logging.log_losses = False
     logging.log_weights = False
@@ -81,13 +72,8 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R0' : jnp.array([1.]),
-        'R1' : jnp.array([1.]),
-        'C1' : jnp.array([1.]),
-        'R2' : jnp.array([1.]),
-        'C2' : jnp.array([1.]),
-        'R3' : jnp.array([1.]),
-        'C3' : jnp.array([1.])
+        'R' : jnp.array([1.]), # true value = 10
+        'C' : jnp.array([1.])  # true value = 0.01
     }
 
     # Input shape for initializing Flax models
