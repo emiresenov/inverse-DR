@@ -11,22 +11,24 @@ from matplotlib import pyplot as plt
 
 from utils import V
 
-from subnets import Resistance, Capacitance
+from subnets import ResistanceNet
 
 
 class CaseZeroField(InverseIVP):
     def __init__(self, config, u_ref, t_star):
-        self.R_nn = Resistance.init(random.PRNGKey(1234), t_star)
-        self.C_nn = Capacitance.init(random.PRNGKey(1234), t_star)
-        # Extract params and put them into config (might have to unlock config) in main
+
+        self.subnet_R = ResistanceNet()
+        subnet_R_params = self.subnet_R.init(random.PRNGKey(1234), t_star)
+        config.inverse.params['R_params'] = subnet_R_params
+
         super().__init__(config)
+
         self.t_star = t_star
         self.u_ref = u_ref
 
         self.t0 = t_star[0]
 
-        
-
+        self.subnet_R_fn = vmap(self.subnet_R.apply, (None, 0))
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
 
@@ -43,26 +45,16 @@ class CaseZeroField(InverseIVP):
     def r_net(self, params, t):
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
-        R = params['params']['R']
+        R_params = params['params']['R_params']
+        R = self.subnet_R.apply(R_params, t)
         C = params['params']['C']
         return u_t + u/(R*C)
 
     @partial(jit, static_argnums=(0,))
-    def res_and_w(self, params, batch):
-        "Compute residuals and weights for causal training"
-        # Sort time coordinates
-        t_sorted = batch[:, 0].sort()
-        r_pred = vmap(self.r_net, (None, 0))(params, t_sorted)
-        # Split residuals into chunks
-        r_pred = r_pred.reshape(self.num_chunks, -1)
-        l = jnp.mean(r_pred**2, axis=1)
-        w = lax.stop_gradient(jnp.exp(-self.tol * (self.M @ l)))
-        return l, w
-
-    @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        R = params['params']['R']
+        R_params = params['params']['R_params']
+        R = self.subnet_R.apply(R_params, self.t0)
         ic = V/R
         u0_pred = self.u_net(params, self.t0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)

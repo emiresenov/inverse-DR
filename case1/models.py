@@ -14,6 +14,7 @@ from utils import V
 
 class CaseOne(InverseIVP):
     def __init__(self, config, u_ref, t_star):
+        print(f'{config=}')
         super().__init__(config)
         self.t_star = t_star
         self.u_ref = u_ref

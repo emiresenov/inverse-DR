@@ -7,11 +7,11 @@ def get_config():
     """Get the default hyperparameter configuration."""
     config = ml_collections.ConfigDict()
 
-    config.mode = "eval"
+    config.mode = "train"
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Solution, Case 0"
+    wandb.project = "Test, Case 0 field dependence"
     wandb.name = "baseline"
     wandb.tag = None
 
@@ -72,8 +72,7 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R' : jnp.array([1.]), # true value = 10
-        'C' : jnp.array([1.])  # true value = 0.01
+        'C' : jnp.array([1.])
     }
 
     # Input shape for initializing Flax models
