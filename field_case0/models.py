@@ -28,7 +28,6 @@ class CaseZeroField(InverseIVP):
 
         self.t0 = t_star[0]
 
-        self.subnet_R_fn = vmap(self.subnet_R.apply, (None, 0))
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
 
@@ -60,12 +59,8 @@ class CaseZeroField(InverseIVP):
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
         # Residual loss
-        if self.config.weighting.use_causal == True:
-            l, w = self.res_and_w(params, batch)
-            res_loss = jnp.mean(l * w)
-        else:
-            r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
-            res_loss = jnp.mean((r_pred) ** 2)
+        r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
+        res_loss = jnp.mean((r_pred) ** 2)
 
         # Data loss
         u_pred = self.u_pred_fn(params, self.t_star)

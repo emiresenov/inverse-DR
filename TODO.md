@@ -1,12 +1,14 @@
 # TODO
 
-
-- Write abstract.
-
+## Case 0 field dependence
+- Change analytical solution because it is different now
+- Update evals where R is constant, figure out how to log this
 
 
 
 # Completed
+
+~~- Write abstract.~~
 
 ~~- Experiment with LBFGS~~
 
