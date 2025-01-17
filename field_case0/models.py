@@ -1,7 +1,7 @@
 from functools import partial
 
 import jax.numpy as jnp
-from jax import lax, jit, grad, vmap, jacrev, tree_leaves
+from jax import lax, jit, grad, vmap, jacrev, tree_leaves, random
 
 from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
@@ -11,14 +11,21 @@ from matplotlib import pyplot as plt
 
 from utils import V
 
+from subnets import Resistance, Capacitance
 
-class CaseZero(InverseIVP):
+
+class CaseZeroField(InverseIVP):
     def __init__(self, config, u_ref, t_star):
+        self.R_nn = Resistance.init(random.PRNGKey(1234), t_star)
+        self.C_nn = Capacitance.init(random.PRNGKey(1234), t_star)
+        # Extract params and put them into config (might have to unlock config) in main
         super().__init__(config)
         self.t_star = t_star
         self.u_ref = u_ref
 
         self.t0 = t_star[0]
+
+        
 
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))

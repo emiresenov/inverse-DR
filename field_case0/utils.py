@@ -16,10 +16,10 @@ def r(t):
     return -0.5*t + R
 
 def c(t):
-    pass
+    return t/100 + C
 
 def solution(t):
-    return (V/R)*jnp.exp(-t/(R*C))
+    return (V/r(t))*jnp.exp(-t/(r(t)*c(t)))
 
 def get_dataset():
     t = jnp.linspace(0.0, t_end, n_samples)
@@ -27,5 +27,4 @@ def get_dataset():
     #u = solution(t) + noise
     u = solution(t)
     return u, t
-
 
