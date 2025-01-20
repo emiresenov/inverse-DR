@@ -81,7 +81,7 @@ class CaseZeroField(InverseIVP):
         return error
 
 
-class CaseZeroEvaluator(BaseEvaluator):
+class CaseZeroFieldEvaluator(BaseEvaluator):
     def __init__(self, config, model):
         super().__init__(config, model)
 
@@ -98,9 +98,7 @@ class CaseZeroEvaluator(BaseEvaluator):
         plt.close()
     
     def log_inv_params(self, params):
-        R = params['params']['R'][0]
         C = params['params']['C'][0]
-        self.log_dict["R"] = R
         self.log_dict["C"] = C
         
 
