@@ -1,6 +1,8 @@
 import scipy.io
 import jax.numpy as jnp
 import numpy as np
+from jax import tree_flatten, tree_unflatten
+
 
 #np.random.seed(42)
 
@@ -28,3 +30,9 @@ def get_dataset():
     u = solution(t)
     return u, t
 
+
+def update_subnet(params: dict, weights: list):
+    leaves, structure = tree_flatten(params)
+    assert len(leaves) == len(weights)
+    updated_params = tree_unflatten(structure, weights)
+    return updated_params
