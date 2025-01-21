@@ -9,22 +9,26 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 
 from matplotlib import pyplot as plt
 
-from utils import V
+from utils import V, update_subnet
+
+from subnets import R0Net
 
 
 class CaseOneField(InverseIVP):
-    def __init__(self, config, u_ref, t_star):
+    def __init__(self, config, u_ref, t_star, T_star):
 
-        self.subnet_R0 = ResistanceNet()
-        self.R0_params = self.subnet_R.init(random.PRNGKey(1234), t_star)
-        config.inverse.params['R_params'] = tree_leaves(self.R0_params)
-        
+        self.R0_net = R0Net()
+        self.R0_params = self.R0_net.init(random.PRNGKey(1234), T_star)
+        config.inverse.params['R0_params'] = tree_leaves(self.R0_params)
+
         super().__init__(config)
+
         self.t_star = t_star
         self.u_ref = u_ref
+        self.T_star = T_star
 
-        self.t0 = t_star[0]
-        self.u0 = u_ref[0]
+        self.t0 = t_star[0] # arrayify  
+        self.u0 = u_ref[0] # arrayify
 
         # Vectorizing functions over multiple data points
         self.u_pred_fn = vmap(self.u_net, (None, 0))
@@ -42,48 +46,34 @@ class CaseOneField(InverseIVP):
         return u_t
 
     # Diff eq prediction (residual)
-    def r_net(self, params, t):
+    def r_net(self, params, t, T):
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
-        R0 = params['params']['R0'] * 30
-        R1 = params['params']['R1'] * 30
-        C1 = params['params']['C1'] * 0.01
+        R0 = self.R0_pred(params, T)
+        R1 = params['params']['R1']
+        C1 = params['params']['C1']
         return u_t + (u - V/R0)/(R1*C1)
+    
 
-    @partial(jit, static_argnums=(0,))
-    def res_and_w(self, params, batch):
-        "Compute residuals and weights for causal training"
-        # Sort time coordinates
-        t_sorted = batch[:, 0].sort()
-        r_pred = vmap(self.r_net, (None, 0))(params, t_sorted)
-        # Split residuals into chunks
-        r_pred = r_pred.reshape(self.num_chunks, -1)
-        l = jnp.mean(r_pred**2, axis=1)
-        w = lax.stop_gradient(jnp.exp(-self.tol * (self.M @ l)))
-        return l, w
+    def R0_pred(self, params, T):
+        R0_params = params['params']['R0_params']
+        self.R0_params = update_subnet(self.R0_params, R0_params)
+        R0 = self.R0_net.apply(self.R0_params, T)
+        return R0
+
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-        '''
-        Question: which initial condition loss do we use?
-        1: data measurement at t0 - ic squared
-        2: model prediction at t0 - ic squared
-        '''
         # Initial condition loss
-        R0 = params['params']['R0'] * 30
-        R1 = params['params']['R1'] * 30
+        R0 = params['params']['R0'] # arrayify over all t0 preds
+        R1 = params['params']['R1']
         ic = V/R0 + V/R1
         u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
         #ics_loss = jnp.mean((self.u0 - ic) ** 2)
 
-        # Residual loss
-        if self.config.weighting.use_causal == True:
-            l, w = self.res_and_w(params, batch)
-            res_loss = jnp.mean(l * w)
-        else:
-            r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
-            res_loss = jnp.mean((r_pred) ** 2)
+        r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
+        res_loss = jnp.mean((r_pred) ** 2)
 
         # Data loss
         u_pred = self.u_pred_fn(params, self.t_star)
@@ -121,7 +111,6 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         plt.close()
     
     def log_inv_params(self, params):
-        self.log_dict["R0"] = params['params']['R0'][0]
         self.log_dict["R1"] = params['params']['R1'][0]
         self.log_dict["C1"] = params['params']['C1'][0]
         
