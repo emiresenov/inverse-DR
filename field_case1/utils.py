@@ -21,31 +21,28 @@ L = 1
 a = 0.5
 A = 1
 
+Ts = [293.0, 313.0, 333.0]
+
+def get_domain():
+    return jnp.array([[t_start, t_end], [min(Ts), max(Ts)]])
 
 def calc_R0(T):
     return L / (a * A * jnp.exp(-(e * W) / (k * T)))
 
-
 def solution(t, T):
     return V / calc_R0(T) + (V / R1) * jnp.exp(-t / (R1 * C1))
 
-
-def get_dataset(T):
+def get_dataset():
+    t_all = []
+    u_all = []
+    Ts_all = []
     t = jnp.linspace(t_start, t_end, n_samples)
-    u = solution(t, T)
-    Ts = jnp.ones((n_samples,)) * T
-    return jnp.array([u, t, Ts])
+    for T in Ts:
+        u = solution(t, T)
+        Ts_arr = jnp.ones_like(t) * T
+        t_all.append(t), u_all.append(u), Ts_all.append(Ts_arr)
 
-datasets = []
+    return jnp.array([jnp.concatenate(t_all), jnp.concatenate(u_all), jnp.concatenate(Ts_all)])
 
-Temperatures = [293.0, 313.0, 333.0]
 
-for T in Temperatures:
-    dataset = get_dataset(T)
-    datasets.append(dataset)
-
-arr = jnp.stack(datasets, axis=0)
-
-print(arr)
-
-print(f'{arr[1][0]=}')
+print(get_dataset())

@@ -14,7 +14,7 @@ from jaxpi.logging import Logger
 from jaxpi.utils import save_checkpoint
 
 import models
-from utils import get_dataset
+from utils import get_dataset, get_domain
 
 
 def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
@@ -28,10 +28,8 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     # Get dataset
     u_ref, t_star = get_dataset()
 
-    # Define domain
-    t0 = t_star[0]
-    t1 = t_star[-1]
-    dom = jnp.array([[t0, t1]])
+    # Get domain
+    dom = get_domain()
 
     # Define residual sampler
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
