@@ -42,7 +42,7 @@ def get_dataset():
         Ts_arr = jnp.ones_like(t) * T
         t_all.append(t), u_all.append(u), Ts_all.append(Ts_arr)
 
-    return jnp.array([jnp.concatenate(t_all), jnp.concatenate(u_all), jnp.concatenate(Ts_all)])
+    return jnp.concatenate(t_all), jnp.concatenate(u_all), jnp.concatenate(Ts_all)
 
 
 print(get_dataset())

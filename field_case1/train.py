@@ -26,7 +26,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     logger = Logger()
 
     # Get dataset
-    u_ref, t_star = get_dataset()
+    u_ref, t_star, T_star = get_dataset()
 
     # Get domain
     dom = get_domain()
@@ -35,7 +35,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.CaseOneField(config, u_ref, t_star)
+    model = models.CaseOneField(config, u_ref, t_star, T_star)
 
     # Initialize evaluator
     evaluator = models.CaseOneFieldEvaluator(config, model)
