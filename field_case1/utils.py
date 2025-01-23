@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 import numpy as np
-import jax.tree_util as tree
+from jax import tree_flatten, tree_unflatten
 
 np.random.seed(42)
 
@@ -33,7 +33,8 @@ def solution(t, T):
     return V / calc_R0(T) + (V / R1) * jnp.exp(-t / (R1 * C1))
 
 def get_init():
-    return jnp.zeros(len(Ts)), jnp.array(Ts)
+    arr = jnp.array(Ts)
+    return jnp.ones_like(arr) * t_start, arr
 
 def get_dataset():
     t_all = []
@@ -48,6 +49,12 @@ def get_dataset():
         t_all.append(t), u_all.append(u), Ts_all.append(Ts_arr)
 
     return jnp.concatenate(t_all), jnp.concatenate(u_all), jnp.concatenate(Ts_all)
+
+def update_subnet(params: dict, weights: list):
+    leaves, structure = tree_flatten(params)
+    assert len(leaves) == len(weights)
+    updated_params = tree_unflatten(structure, weights)
+    return updated_params
 
 
 print(get_dataset())

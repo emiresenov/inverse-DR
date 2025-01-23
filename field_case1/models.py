@@ -9,7 +9,7 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 
 from matplotlib import pyplot as plt
 
-from utils import V, update_subnet
+from utils import V, update_subnet, get_init
 
 from subnets import R0Net
 
@@ -27,8 +27,8 @@ class CaseOneField(InverseIVP):
         self.u_ref = u_ref
         self.T_star = T_star
 
-        self.t0 = t_star[0] # arrayify  
-        self.u0 = u_ref[0] # arrayify
+        self.t0, self.T0 = get_init() 
+
 
         # Vectorizing functions over multiple data points
         self.u_pred_fn = vmap(self.u_net, (None, 0))
