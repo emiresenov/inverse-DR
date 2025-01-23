@@ -32,11 +32,16 @@ def calc_R0(T):
 def solution(t, T):
     return V / calc_R0(T) + (V / R1) * jnp.exp(-t / (R1 * C1))
 
+def get_init():
+    return jnp.zeros(len(Ts)), jnp.array(Ts)
+
 def get_dataset():
     t_all = []
     u_all = []
     Ts_all = []
+    
     t = jnp.linspace(t_start, t_end, n_samples)
+
     for T in Ts:
         u = solution(t, T)
         Ts_arr = jnp.ones_like(t) * T
@@ -46,3 +51,4 @@ def get_dataset():
 
 
 print(get_dataset())
+print(get_init())
