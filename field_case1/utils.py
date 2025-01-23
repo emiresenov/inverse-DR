@@ -1,6 +1,6 @@
 import jax.numpy as jnp
 import numpy as np
-from jax import tree_flatten, tree_unflatten
+from jax.tree_util import tree_flatten, tree_unflatten
 
 np.random.seed(42)
 
@@ -32,7 +32,7 @@ def calc_R0(T):
 def solution(t, T):
     return V / calc_R0(T) + (V / R1) * jnp.exp(-t / (R1 * C1))
 
-def get_init():
+def get_initial_values():
     arr = jnp.array(Ts)
     return jnp.ones_like(arr) * t_start, arr
 
@@ -58,4 +58,4 @@ def update_subnet(params: dict, weights: list):
 
 
 print(get_dataset())
-print(get_init())
+print(get_domain())

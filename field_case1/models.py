@@ -9,7 +9,7 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 
 from matplotlib import pyplot as plt
 
-from utils import V, update_subnet, get_init
+from utils import V, update_subnet, get_initial_values
 
 from subnets import R0Net
 
@@ -27,25 +27,21 @@ class CaseOneField(InverseIVP):
         self.u_ref = u_ref
         self.T_star = T_star
 
-        self.t0, self.T0 = get_init() 
+        self.t0, self.T0 = get_initial_values() 
 
-
-        # Vectorizing functions over multiple data points
         self.u_pred_fn = vmap(self.u_net, (None, 0))
-        self.r_pred_fn = vmap(self.r_net, (None, 0))
+        self.r_pred_fn = vmap(self.r_net, (None, 0, None))
 
-    # Prediction function for a given point in the domain
+
     def u_net(self, params, t):
         z = jnp.stack([t])
         u = self.state.apply_fn(params, z)
-        return u[0] # Unpack array
+        return u[0]
 
-    # Calculate gradients
     def grad_net(self, params, t):
         u_t = grad(self.u_net, argnums=1)(params, t)
         return u_t
 
-    # Diff eq prediction (residual)
     def r_net(self, params, t, T):
         u = self.u_net(params, t)
         u_t = grad(self.u_net, argnums=1)(params, t)
@@ -54,25 +50,23 @@ class CaseOneField(InverseIVP):
         C1 = params['params']['C1']
         return u_t + (u - V/R0)/(R1*C1)
     
-
     def R0_pred(self, params, T):
         R0_params = params['params']['R0_params']
         self.R0_params = update_subnet(self.R0_params, R0_params)
         R0 = self.R0_net.apply(self.R0_params, T)
         return R0
 
-
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
-        R0 = params['params']['R0'] # arrayify over all t0 preds
         R1 = params['params']['R1']
         ic = V/R0 + V/R1
-        u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
+        
+        u0_pred = self.u_pred_fn(params, self.t0)
+        R0 = vmap(self.R0_pred, (None, 0))(params, self.T0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
-        #ics_loss = jnp.mean((self.u0 - ic) ** 2)
 
-        r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
+        r_pred = vmap(self.r_net, (None, 0, None))(params, batch[:, 0], self.T0)
         res_loss = jnp.mean((r_pred) ** 2)
 
         # Data loss
