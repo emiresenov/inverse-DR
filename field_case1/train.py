@@ -44,6 +44,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     start_time = time.time()
     for step in range(config.training.max_steps):
         batch = next(res_sampler)
+        print(batch)
         model.state = model.step(model.state, batch)
 
         if config.weighting.scheme in ["grad_norm", "ntk"]:

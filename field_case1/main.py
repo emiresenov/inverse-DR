@@ -14,7 +14,6 @@ import jax
 jax.config.update("jax_default_matmul_precision", "highest")
 
 import train
-import eval
 
 
 FLAGS = flags.FLAGS
@@ -25,7 +24,7 @@ config_flags.DEFINE_config_file(
     "config",
     "./configs/default.py",
     "File path to the training hyperparameter configuration.",
-    lock_config=True,
+    lock_config=False,
 )
 
 

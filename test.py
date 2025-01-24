@@ -14,10 +14,11 @@ class MLP(nn.Module):
 
 model = MLP(out_dims=1)
 
-x = jnp.empty((1,10))
+x = jnp.array([1.])
 params = model.init(random.key(42), x)
-
-param_values = jtu.tree_leaves(params)
+print(f'{x=}')
+print(model.apply(params, jnp.array([1.])))
+'''param_values = jtu.tree_leaves(params)
 
 print(type(params))
 print(type(param_values))
@@ -32,4 +33,4 @@ assert len(leaves) == len(param_values)
 
 params = jtu.tree_unflatten(structure, param_values)
 
-print(params)
+print(params)'''
