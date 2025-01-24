@@ -30,7 +30,7 @@ class CaseOneField(InverseIVP):
         self.t0, self.T0 = get_initial_values() 
 
         self.u_pred_fn = vmap(self.u_net, (None, 0))
-        self.r_pred_fn = vmap(self.r_net, (None, 0, None))
+        self.r_pred_fn = vmap(self.r_net, (None, 0, 0))
 
 
     def u_net(self, params, t):
@@ -66,7 +66,7 @@ class CaseOneField(InverseIVP):
         R0 = vmap(self.R0_pred, (None, 0))(params, self.T0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
-        r_pred = vmap(self.r_net, (None, 0, None))(params, batch[:, 0], self.T0)
+        r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1]) # Unsure
         res_loss = jnp.mean((r_pred) ** 2)
 
         # Data loss

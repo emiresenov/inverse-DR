@@ -58,4 +58,4 @@ def update_subnet(params: dict, weights: list):
 
 
 print(get_dataset())
-print(get_domain())
+print(get_domain()[:, 0])
