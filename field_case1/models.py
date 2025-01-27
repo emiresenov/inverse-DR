@@ -52,6 +52,7 @@ class CaseOneField(InverseIVP):
     
     def R0_pred(self, params, T):
         R0_params = params['params']['R0_params']
+        print(f'{R0_params=}')
         self.R0_params = update_subnet(self.R0_params, R0_params)
         R0 = self.R0_net.apply(self.R0_params, T)
         return R0

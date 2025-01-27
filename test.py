@@ -19,6 +19,8 @@ y = jnp.array([1., 2., 3.])
 #y = jnp.array([[1.], [2.], [3.]])  # Ensure y has shape (batch, features)
 print(vmap(model.apply, (None, 0))(params, y))
 
+print(params)
+
 #print(jnp.stack(jnp.array([[1., 2., 3.]])))
 
 

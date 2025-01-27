@@ -40,14 +40,11 @@ def get_dataset():
     t_all = []
     u_all = []
     Ts_all = []
-    
     t = jnp.linspace(t_start, t_end, n_samples)
-
     for T in Ts:
         u = solution(t, T)
         Ts_arr = jnp.ones_like(t) * T
         t_all.append(t), u_all.append(u), Ts_all.append(Ts_arr)
-
     return jnp.concatenate(t_all), jnp.concatenate(u_all), jnp.concatenate(Ts_all)
 
 def update_subnet(params: dict, weights: list):
@@ -59,3 +56,5 @@ def update_subnet(params: dict, weights: list):
 
 #print(get_dataset())
 #print(get_domain()[:, 0])
+for T in Ts:
+    print(calc_R0(T))
