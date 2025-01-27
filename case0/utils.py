@@ -22,3 +22,5 @@ def get_dataset():
     return u, t
 
 
+u, t = get_dataset()
+print(t[0])

@@ -1,6 +1,6 @@
 from flax import linen as nn
 from jax import random, vmap
-import jax.numpy as jnp
+import jax.numpy as jnp                                   
 
 
 class MLP(nn.Module):
@@ -8,17 +8,18 @@ class MLP(nn.Module):
 
   @nn.compact
   def __call__(self, x):
-    return nn.Dense(1)(x)
+    return nn.Dense(1)(jnp.stack([x]))
 
 model = MLP(out_dims=1)
 
-#x = jnp.array([1.])
+x = jnp.array([1.])
 params = model.init(random.key(42), x)
 
-#y = jnp.array([1., 2., 3.])
-y = jnp.array([[1.], [2.], [3.]])  # Ensure y has shape (batch, features)
+y = jnp.array([1., 2., 3.])
+#y = jnp.array([[1.], [2.], [3.]])  # Ensure y has shape (batch, features)
 print(vmap(model.apply, (None, 0))(params, y))
 
+#print(jnp.stack(jnp.array([[1., 2., 3.]])))
 
 
 #from flax.traverse_util import flatten_dict

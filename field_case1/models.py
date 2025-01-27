@@ -17,8 +17,7 @@ from subnets import R0Net
 class CaseOneField(InverseIVP):
     def __init__(self, config, u_ref, t_star, T_star):
 
-        self.R0_net = R0Net(out_dims=1)
-        print(f'{T_star[0]=}')
+        self.R0_net = R0Net()
         self.R0_params = self.R0_net.init(random.PRNGKey(1234), jnp.array([1.]))
         config.inverse.params['R0_params'] = tree_leaves(self.R0_params)
 
@@ -53,8 +52,6 @@ class CaseOneField(InverseIVP):
     
     def R0_pred(self, params, T):
         R0_params = params['params']['R0_params']
-        print("HERE")
-        print(f'{T=}')
         self.R0_params = update_subnet(self.R0_params, R0_params)
         R0 = self.R0_net.apply(self.R0_params, T)
         return R0

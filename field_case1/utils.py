@@ -57,5 +57,5 @@ def update_subnet(params: dict, weights: list):
     return updated_params
 
 
-print(get_dataset())
+#print(get_dataset())
 #print(get_domain()[:, 0])
