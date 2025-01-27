@@ -1,23 +1,29 @@
 from flax import linen as nn
 from jax import random, vmap
 import jax.numpy as jnp
-from flax.traverse_util import flatten_dict
-import jax.tree_util as jtu
+
 
 class MLP(nn.Module):
   out_dims: int
 
   @nn.compact
   def __call__(self, x):
-    x = nn.Dense(1)(x)
-    return x
+    return nn.Dense(1)(x)
 
 model = MLP(out_dims=1)
 
-x = jnp.array([1.])
+#x = jnp.array([1.])
 params = model.init(random.key(42), x)
-print(f'{x=}')
-print(model.apply(params, jnp.array([1.])))
+
+#y = jnp.array([1., 2., 3.])
+y = jnp.array([[1.], [2.], [3.]])  # Ensure y has shape (batch, features)
+print(vmap(model.apply, (None, 0))(params, y))
+
+
+
+#from flax.traverse_util import flatten_dict
+#import jax.tree_util as jtu
+
 '''param_values = jtu.tree_leaves(params)
 
 print(type(params))
