@@ -21,7 +21,7 @@ L = 1
 a = 0.5
 A = 1
 
-Ts = [293.0, 313.0, 333.0]
+Ts = [293.0, 313.0, 333.0] # 4-10 serier, 20-100 grader
 
 def get_domain():
     return jnp.array([[t_start, t_end], [min(Ts), max(Ts)]])
@@ -54,7 +54,8 @@ def update_subnet(params: dict, weights: list):
     return updated_params
 
 
-#print(get_dataset())
+print(get_dataset())
 #print(get_domain()[:, 0])
-for T in Ts:
-    print(calc_R0(T))
+#for T in Ts:
+    #print(calc_R0(T))
+
