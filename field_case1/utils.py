@@ -13,13 +13,12 @@ t_start = 0.0
 t_end = 2.0
 n_samples = 5
 
-e = 1.602e-19
 k = 8.617e-5
 W = 0.75
 b = 0.01
-L = 1
-a = 0.5
-A = 1
+L = 1e-6
+a = 2000
+A = 200
 
 Ts = [293.0, 313.0, 333.0] # 4-10 serier, 20-100 grader
 
@@ -27,7 +26,7 @@ def get_domain():
     return jnp.array([[t_start, t_end], [min(Ts), max(Ts)]])
 
 def calc_R0(T):
-    return L / (a * A * jnp.exp(-(e * W) / (k * T)))
+    return L / (a * A * jnp.exp(-(W) / (k * T)))
 
 def solution(t, T):
     return V / calc_R0(T) + (V / R1) * jnp.exp(-t / (R1 * C1))
@@ -54,8 +53,8 @@ def update_subnet(params: dict, weights: list):
     return updated_params
 
 
-print(get_dataset())
+#print(get_dataset())
 #print(get_domain()[:, 0])
-#for T in Ts:
-    #print(calc_R0(T))
+for T in Ts:
+    print(calc_R0(T))
 
