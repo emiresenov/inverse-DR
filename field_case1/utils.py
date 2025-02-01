@@ -28,8 +28,8 @@ def get_domain():
 def calc_R0(T):
     return L / (a * A * jnp.exp(-(W) / (k * T)))
 
-def solution(t, T):
-    return V / calc_R0(T) + (V / R1) * jnp.exp(-t / (R1 * C1))
+def solution(t, R0):
+    return V / R0 + (V / R1) * jnp.exp(-t / (R1 * C1))
 
 def get_initial_values():
     arr = jnp.array(Ts)
@@ -39,12 +39,14 @@ def get_dataset():
     t_all = []
     u_all = []
     Ts_all = []
+    R0_all = []
     t = jnp.linspace(t_start, t_end, n_samples)
     for T in Ts:
-        u = solution(t, T)
+        R0 = calc_R0(T)
+        u = solution(t, R0)
         Ts_arr = jnp.ones_like(t) * T
-        t_all.append(t), u_all.append(u), Ts_all.append(Ts_arr)
-    return jnp.concatenate(t_all), jnp.concatenate(u_all), jnp.concatenate(Ts_all)
+        t_all.append(t), u_all.append(u), Ts_all.append(Ts_arr), R0_all.append(R0)
+    return jnp.concatenate(u_all), jnp.array(R0_all), jnp.concatenate(t_all) , jnp.concatenate(Ts_all)
 
 def update_subnet(params: dict, weights: list):
     leaves, structure = tree_flatten(params)

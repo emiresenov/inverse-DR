@@ -15,7 +15,7 @@ from subnets import R0Net
 
 
 class CaseOneField(InverseIVP):
-    def __init__(self, config, u_ref, t_star, T_star):
+    def __init__(self, config, u_ref, R0_ref, t_star, T_star):
 
         self.R0_net = R0Net()
         self.R0_params = self.R0_net.init(random.PRNGKey(1234), jnp.array([1.]))
@@ -23,8 +23,9 @@ class CaseOneField(InverseIVP):
 
         super().__init__(config)
 
-        self.t_star = t_star
         self.u_ref = u_ref
+        self.R0_ref = R0_ref
+        self.t_star = t_star
         self.T_star = T_star
 
         self.t0, self.T0 = get_initial_values() 
@@ -74,10 +75,13 @@ class CaseOneField(InverseIVP):
         u_pred = self.u_pred_fn(params, self.t_star)
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 
+        # Subnet loss
+        subnet_loss = jnp.mean((self.R0_ref - R0) ** 2)
+
         #l1_penalty = 1e-2 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
         #loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}
         
-        loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
+        loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss, "subnet": subnet_loss}
 
         return loss_dict
 
