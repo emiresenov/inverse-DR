@@ -62,7 +62,6 @@ class CaseOneField(InverseIVP):
         # Initial condition loss
         R1 = params['params']['R1']
         R0 = vmap(self.R0_pred, (None, 0))(params, self.T0)
-        print(f'{R0=}')
         ic = V/R0 + V/R1
         u0_pred = self.u_pred_fn(params, self.t0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
