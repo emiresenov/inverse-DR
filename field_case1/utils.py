@@ -5,7 +5,6 @@ from jax.tree_util import tree_flatten, tree_unflatten
 np.random.seed(42)
 
 V = 10.0
-R0 = 10.0
 R1 = 30.0
 C1 = 0.007
 
@@ -38,15 +37,15 @@ def get_initial_values():
 def get_dataset():
     t_all = []
     u_all = []
-    Ts_all = []
+    T_all = []
     R0_all = []
     t = jnp.linspace(t_start, t_end, n_samples)
     for T in Ts:
         R0 = calc_R0(T)
         u = solution(t, R0)
         Ts_arr = jnp.ones_like(t) * T
-        t_all.append(t), u_all.append(u), Ts_all.append(Ts_arr), R0_all.append(R0)
-    return jnp.concatenate(u_all), jnp.array(R0_all), jnp.concatenate(t_all) , jnp.concatenate(Ts_all)
+        t_all.append(t), u_all.append(u), T_all.append(Ts_arr), R0_all.append(R0)
+    return jnp.concatenate(u_all), jnp.array(R0_all), jnp.concatenate(t_all) , jnp.concatenate(T_all)
 
 def update_subnet(params: dict, weights: list):
     leaves, structure = tree_flatten(params)
@@ -55,8 +54,8 @@ def update_subnet(params: dict, weights: list):
     return updated_params
 
 
-#print(get_dataset())
+print(get_dataset())
 #print(get_domain()[:, 0])
-for T in Ts:
-    print(calc_R0(T))
+#for T in Ts:
+    #print(calc_R0(T))
 
