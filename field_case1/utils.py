@@ -5,12 +5,12 @@ from jax.tree_util import tree_flatten, tree_unflatten
 np.random.seed(42)
 
 V = 10.0
-R1 = 30.0
-C1 = 0.007
+R1 = 4.0
+C1 = 0.5
 
 t_start = 0.0
-t_end = 2.0
-n_samples = 5
+t_end = 10.0
+n_samples = 25
 
 k = 8.617e-5
 W = 0.75
@@ -53,9 +53,13 @@ def update_subnet(params: dict, weights: list):
     updated_params = tree_unflatten(structure, weights)
     return updated_params
 
-
-print(get_dataset())
+dataset = get_dataset()
+print(dataset[0])
+print(dataset[1])
+print(dataset[2])
+print(dataset[3])
 #print(get_domain()[:, 0])
 #for T in Ts:
     #print(calc_R0(T))
+
 
