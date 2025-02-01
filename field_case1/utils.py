@@ -53,13 +53,12 @@ def update_subnet(params: dict, weights: list):
     updated_params = tree_unflatten(structure, weights)
     return updated_params
 
-dataset = get_dataset()
+
+'''dataset = get_dataset()
 print(dataset[0])
 print(dataset[1])
 print(dataset[2])
-print(dataset[3])
-#print(get_domain()[:, 0])
-#for T in Ts:
-    #print(calc_R0(T))
+print(dataset[3])'''
+
 
 

@@ -4,4 +4,7 @@ import jax.numpy as jnp
 class R0Net(nn.Module):
   @nn.compact
   def __call__(self, x):
-    return nn.Dense(1)(jnp.stack([x]))
+    x = jnp.stack([x])
+    x = nn.relu(x)
+    x = nn.Dense(1)(x)
+    return x

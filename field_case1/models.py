@@ -53,7 +53,6 @@ class CaseOneField(InverseIVP):
     
     def R0_pred(self, params, T):
         R0_params = params['params']['R0_params']
-        print(f'{R0_params=}')
         self.R0_params = update_subnet(self.R0_params, R0_params)
         R0 = self.R0_net.apply(self.R0_params, T)
         return R0
@@ -63,9 +62,12 @@ class CaseOneField(InverseIVP):
         # Initial condition loss
         R1 = params['params']['R1']
         R0 = vmap(self.R0_pred, (None, 0))(params, self.T0)
+        print(f'{R0=}')
         ic = V/R0 + V/R1
         u0_pred = self.u_pred_fn(params, self.t0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
+
+        print(f'{batch[:, 0]=}')
 
         # Residual loss
         r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1]) # Unsure
