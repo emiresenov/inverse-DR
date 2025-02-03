@@ -114,6 +114,13 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["R1"] = params['params']['R1'][0]
         self.log_dict["C1"] = params['params']['C1'][0]
         
+    def log_subnet(self, params):
+        R0_pred = self.model.R0_pred(params, self.model.T0)
+        fig = plt.figure(figsize=(6, 5))
+        plt.scatter(self.model.T0, self.model.R0_ref, s=50, alpha=0.9, c='orange')
+        plt.plot(self.model.T0, R0_pred, linewidth=8, c='black')
+        self.log_dict["R0_pred"] = fig
+        plt.close()
 
     def __call__(self, state, batch, u_ref):
         self.log_dict = super().__call__(state, batch)
@@ -130,6 +137,9 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         
         if self.config.logging.log_inv_params:
             self.log_inv_params(state.params)
+
+        if self.config.logging.log_subnet:
+            self.log_subnet(state.params)
 
         return self.log_dict
     
