@@ -20,6 +20,7 @@ class CaseOneField(InverseIVP):
         self.R0_net = R0Net()
         self.R0_params = self.R0_net.init(random.PRNGKey(1234), jnp.array([1.]))
         config.inverse.params['R0_params'] = tree_leaves(self.R0_params)
+        print(f'{config=}')
 
         super().__init__(config)
 

@@ -1,19 +1,72 @@
 from flax import linen as nn
-from jax import random, vmap, tree_flatten, tree_unflatten, tree_leaves
-import jax.numpy as jnp                                   
+from flax.training import train_state
+from jax import random, jit, value_and_grad
+import jax.numpy as jnp
+import optax
+import jax
 
 
+# Define the MLP model.
 class MLP(nn.Module):
-  out_dims: int
+    @nn.compact
+    def __call__(self, x):
+        x = nn.Dense(features=5)(x)
+        x = nn.relu(x)
+        x = nn.Dense(features=1)(x)
+        return x
 
-  @nn.compact
-  def __call__(self, x):
-    return nn.Dense(1)(jnp.stack([x]))
 
-model = MLP(out_dims=1)
+# Extend the train state (no extra fields needed).
+class TrainState(train_state.TrainState):
+    pass
 
-x = jnp.array([1.])
-params = model.init(random.key(42), x)
+
+# Use 'apply_fn' as the argument name instead of 'model'
+def mse_loss(params, apply_fn, batch_x, batch_y):
+    preds = apply_fn(params, batch_x)
+    loss = jnp.mean((preds - batch_y) ** 2)
+    return loss
+
+
+# Jitted training step.
+@jax.jit
+def train_step(state, x, y):
+    loss_fn = lambda params: mse_loss(params, state.apply_fn, x, y)
+    loss, grads = value_and_grad(loss_fn)(state.params)
+    new_state = state.apply_gradients(grads=grads)
+    return new_state, loss
+
+
+# Training loop.
+def train_model(model, x, y, num_epochs=100, learning_rate=0.01):
+    key = random.PRNGKey(0)
+    # Dummy input to initialize the model.
+    dummy_input = jnp.ones((1, x.shape[1]))
+    params = model.init(key, dummy_input)
+    tx = optax.adam(learning_rate)
+    state = TrainState.create(apply_fn=model.apply, params=params, tx=tx)
+
+    for epoch in range(num_epochs):
+        state, loss = train_step(state, x, y)
+        if (epoch + 1) % 10 == 0:
+            print(f"Epoch {epoch+1}, Loss: {loss:.4f}")
+
+    return state
+
+
+# Instantiate the model.
+model = MLP()
+
+# Prepare data: three samples, each with one feature.
+x = jnp.array([[0.], [5.], [10.]])
+y = jnp.array([[20.5], [3.5], [0.4]])
+
+# Train the model.
+state = train_model(model, x, y, num_epochs=15000, learning_rate=0.01)
+
+# Apply the trained model.
+output = model.apply(state.params, x)
+print("Output:\n", output)
 
 
 
@@ -26,6 +79,20 @@ params = model.init(random.key(42), x)
 
 #from flax.traverse_util import flatten_dict
 #import jax.tree_util as jtu
+
+
+
+
+
+
+
+
+
+
+
+# -----------------------------
+#  UPDATE PARAMS TEST
+# -----------------------------
 
 '''param_values = tree_leaves(params)
 
