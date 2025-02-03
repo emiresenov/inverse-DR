@@ -62,15 +62,13 @@ class CaseOneField(InverseIVP):
     def losses(self, params, batch):
         # Initial condition loss
         R1 = params['params']['R1']
-        R0 = vmap(self.R0_pred, (None, 0))(params, self.T0)
+        R0 = self.R0_pred_fn(params, self.T0)
         ic = V/R0 + V/R1
         u0_pred = self.u_pred_fn(params, self.t0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
-        print(f'{batch[:, 0]=}')
-
         # Residual loss
-        r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1]) # Unsure
+        r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1]) # TODO: Confirm
         res_loss = jnp.mean((r_pred) ** 2)
 
         # Data loss
