@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "Case 1 field dependence"
-    wandb.name = "test"
+    wandb.name = "log subnet"
     wandb.tag = None
 
     # Arch

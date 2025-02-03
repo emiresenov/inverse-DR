@@ -32,6 +32,7 @@ class CaseOneField(InverseIVP):
 
         self.u_pred_fn = vmap(self.u_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0, 0))
+        self.R0_pred_fn = vmap(self.R0_pred, (None, 0))
 
 
     def u_net(self, params, t):
@@ -115,7 +116,7 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["C1"] = params['params']['C1'][0]
         
     def log_subnet(self, params):
-        R0_pred = self.model.R0_pred(params, self.model.T0)
+        R0_pred = self.model.R0_pred_fn(params, self.model.T0)
         fig = plt.figure(figsize=(6, 5))
         plt.scatter(self.model.T0, self.model.R0_ref, s=50, alpha=0.9, c='orange')
         plt.plot(self.model.T0, R0_pred, linewidth=8, c='black')
