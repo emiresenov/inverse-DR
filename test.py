@@ -39,10 +39,7 @@ def train_step(state, x, y):
 
 # Training loop.
 def train_model(model, x, y, num_epochs=100, learning_rate=0.01):
-    key = random.PRNGKey(0)
-    # Use a dummy input that matches what the model expects for a single example.
-    dummy_input = jnp.ones((1,))   # shape (1,)
-    params = model.init(key, dummy_input)
+    params = model.init(random.PRNGKey(0), jnp.array([1.]))
     tx = optax.adam(learning_rate)
     state = TrainState.create(apply_fn=model.apply, params=params, tx=tx)
 
