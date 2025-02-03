@@ -5,7 +5,7 @@ import jax.numpy as jnp
 import optax
 import jax
 
-# Define an MLP that expects an input of shape (1,) and returns an output of shape (1,).
+
 class MLP(nn.Module):
     @nn.compact
     def __call__(self, x):
@@ -15,21 +15,16 @@ class MLP(nn.Module):
         x = nn.Dense(features=1)(x)
         return x[0]
 
-# Extend the training state (no extra fields needed here).
 class TrainState(train_state.TrainState):
     pass
 
-# Mean squared error loss.
-# Here, we assume that batch_x and batch_y have shapes (batch,) — i.e. each element is a scalar.
-# We use vmap to apply the model to each scalar by wrapping it in a (1,) array.
 def mse_loss(params, apply_fn, batch_x, batch_y):
     # For each scalar x in batch_x, wrap it as an array of shape (1,) before passing it to the model.
-    preds = vmap(lambda x: apply_fn(params, x))(batch_x)  # shape (batch, 1)
+    preds = vmap(lambda x: apply_fn(params, x))(batch_x)  
     print(preds)
     loss = jnp.mean((preds - batch_y) ** 2)
     return loss
 
-# A single training step (jitted).
 @jit
 def train_step(state, x, y):
     loss_fn = lambda params: mse_loss(params, state.apply_fn, x, y)
@@ -37,7 +32,6 @@ def train_step(state, x, y):
     new_state = state.apply_gradients(grads=grads)
     return new_state, loss
 
-# Training loop.
 def train_model(model, x, y, num_epochs=100, learning_rate=0.01):
     params = model.init(random.PRNGKey(0), jnp.array([1.]))
     tx = optax.adam(learning_rate)
@@ -49,27 +43,16 @@ def train_model(model, x, y, num_epochs=100, learning_rate=0.01):
             print(f"Epoch {epoch+1}, Loss: {loss:.4f}")
     return state
 
-# ===== Training Phase =====
-# Now the training data are one-dimensional arrays (shape (3,)) rather than two-dimensional arrays.
-x_train = jnp.array([0., 5., 10.])
-y_train = jnp.array([20.5, 3.5, 0.4])
 
-# Instantiate and train the model.
+x = jnp.array([0., 5., 10.])
+y = jnp.array([20.5, 3.5, 0.4])
+
+
 model = MLP()
-state = train_model(model, x_train, y_train, num_epochs=4000, learning_rate=0.01)
+state = train_model(model, x, y, num_epochs=4000, learning_rate=0.01)
 
-# ===== Inference with vmap =====
-# Define a helper function that applies the model to a single scalar input.
-def apply_single(params, x_scalar):
-    # Wrap the scalar into an array of shape (1,)
-    x_wrapped = jnp.array([x_scalar])
-    # Apply the model; output will be an array of shape (1,)
-    y_out = model.apply(params, x_wrapped)
-    return y_out[0]  # Return the scalar value
-
-# Use vmap to vectorize our single-input function.
-vectorized_apply = vmap(lambda x: apply_single(state.params, x), in_axes=0)
-outputs = vectorized_apply(jnp.array([0., 5., 10.]))
+vectorized_apply = vmap(model.apply, (None, 0))
+outputs = vectorized_apply(state.params, x)
 
 print("Vectorized outputs:\n", outputs)
 
