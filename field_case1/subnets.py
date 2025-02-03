@@ -8,4 +8,4 @@ class R0Net(nn.Module):
     x = nn.Dense(5)(x)
     x = nn.relu(x)
     x = nn.Dense(1)(x)
-    return x
+    return x[0]

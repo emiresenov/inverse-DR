@@ -9,11 +9,11 @@ import jax
 class MLP(nn.Module):
     @nn.compact
     def __call__(self, x):
-        # x is assumed to be an array of shape (1,)
+        x = jnp.stack([x])
         x = nn.Dense(features=5)(x)
         x = nn.relu(x)
         x = nn.Dense(features=1)(x)
-        return x
+        return x[0]
 
 # Extend the training state (no extra fields needed here).
 class TrainState(train_state.TrainState):
@@ -24,8 +24,8 @@ class TrainState(train_state.TrainState):
 # We use vmap to apply the model to each scalar by wrapping it in a (1,) array.
 def mse_loss(params, apply_fn, batch_x, batch_y):
     # For each scalar x in batch_x, wrap it as an array of shape (1,) before passing it to the model.
-    preds = vmap(lambda x: apply_fn(params, jnp.array([x])))(batch_x)  # shape (batch, 1)
-    preds = preds.squeeze(-1)  # convert to shape (batch,)
+    preds = vmap(lambda x: apply_fn(params, x))(batch_x)  # shape (batch, 1)
+    print(preds)
     loss = jnp.mean((preds - batch_y) ** 2)
     return loss
 
