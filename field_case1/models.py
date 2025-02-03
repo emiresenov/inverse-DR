@@ -18,12 +18,6 @@ from subnets import R0Net
 class CaseOneField(InverseIVP):
     def __init__(self, config, u_ref, R0_ref, t_star, T_star):
 
-        self.R0_net = R0Net()
-        R0_params = self.R0_net.init(random.PRNGKey(1234), jnp.array([1.]))
-        leaves, structure = tree_flatten(R0_params)
-        config.inverse.params['R0_params'] = leaves
-        self.R0_struct = structure # Save struct for apply calls with updated leaves
-
         super().__init__(config)
 
         self.u_ref = u_ref
@@ -31,44 +25,31 @@ class CaseOneField(InverseIVP):
         self.t_star = t_star
         self.T_star = T_star
 
-        self.t0, self.T0 = get_initial_values() 
+        self.t0, self.T0 = get_initial_values()
 
-        self.u_pred_fn = vmap(self.u_net, (None, 0))
+        self.u_pred_fn = vmap(self.u_net, (None, 0, None))
+        self.R0_pred_fn = vmap(self.u_net, (None, None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0, 0))
-        self.R0_pred_fn = vmap(self.R0_pred, (None, 0))
 
-
-    def u_net(self, params, t):
-        z = jnp.stack([t])
-        u = self.state.apply_fn(params, z)
-        return u[0]
-
-    def grad_net(self, params, t):
-        u_t = grad(self.u_net, argnums=1)(params, t)
-        return u_t
+    def u_net(self, params, t, T):
+        u, r0 = self.state.apply_fn(params, jnp.stack([t]), jnp.stack([T]))
+        return u[0], r0[0]
 
     def r_net(self, params, t, T):
-        u = self.u_net(params, t)
-        u_t = grad(self.u_net, argnums=1)(params, t)
-        R0 = self.R0_pred(params, T)
+        u, R0 = self.u_net(params, t, T)
+        u_t = grad(lambda p, t, T: self.u_net(p, t, T)[0], argnums=1)(params, t, T)
         R1 = params['params']['R1']
         C1 = params['params']['C1']
         return u_t + (u - V/R0)/(R1*C1)
     
-    def R0_pred(self, params, T):
-        leaves = params['params']['R0_params']
-        debug.print(f'{leaves=}')
-        R0_params = tree_unflatten(self.R0_struct, leaves)
-        R0 = self.R0_net.apply(R0_params, T)
-        return R0
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
         # Initial condition loss
         R1 = params['params']['R1']
-        R0 = self.R0_pred_fn(params, self.T0)
+        R0 = self.R0_pred_fn(params, self.t0, self.T0)
         ic = V/R0 + V/R1
-        u0_pred = self.u_pred_fn(params, self.t0)
+        u0_pred = self.u_pred_fn(params, self.t0, self.T0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
         # Residual loss
@@ -76,7 +57,7 @@ class CaseOneField(InverseIVP):
         res_loss = jnp.mean((r_pred) ** 2)
 
         # Data loss
-        u_pred = self.u_pred_fn(params, self.t_star)
+        u_pred = self.u_pred_fn(params, self.t_star, self.T_star)
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 
         # Subnet loss
