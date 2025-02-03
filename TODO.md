@@ -1,7 +1,2 @@
 
-# Potential issue (investiage): updated config is not sent to the evaluator
-
-- Plot all the predictions to see what is going wrong. Look at the results first and then troubleshoot.
-
-- Learn JAX logging
-
+# Subnet needs to updated via state in the same way that `u_net` is updates. I don't think I can do it separately in models

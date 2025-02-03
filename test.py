@@ -3,7 +3,6 @@ from flax.training import train_state
 from jax import random, jit, value_and_grad, vmap
 import jax.numpy as jnp
 import optax
-import jax
 
 
 class MLP(nn.Module):
@@ -20,8 +19,7 @@ class TrainState(train_state.TrainState):
 
 def mse_loss(params, apply_fn, x, y):
     preds = vmap(lambda x: apply_fn(params, x))(x)
-    loss = jnp.mean((preds - y) ** 2)
-    return loss
+    return jnp.mean((preds - y) ** 2)
 
 @jit
 def train_step(state, x, y):
@@ -52,6 +50,10 @@ vectorized_apply = vmap(model.apply, (None, 0))
 outputs = vectorized_apply(state.params, x)
 
 print("Vectorized outputs:\n", outputs)
+
+
+
+
 
 
 
