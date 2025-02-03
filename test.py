@@ -18,11 +18,9 @@ class MLP(nn.Module):
 class TrainState(train_state.TrainState):
     pass
 
-def mse_loss(params, apply_fn, batch_x, batch_y):
-    # For each scalar x in batch_x, wrap it as an array of shape (1,) before passing it to the model.
-    preds = vmap(lambda x: apply_fn(params, x))(batch_x)  
-    print(preds)
-    loss = jnp.mean((preds - batch_y) ** 2)
+def mse_loss(params, apply_fn, x, y):
+    preds = vmap(lambda x: apply_fn(params, x))(x)
+    loss = jnp.mean((preds - y) ** 2)
     return loss
 
 @jit
@@ -46,7 +44,6 @@ def train_model(model, x, y, num_epochs=100, learning_rate=0.01):
 
 x = jnp.array([0., 5., 10.])
 y = jnp.array([20.5, 3.5, 0.4])
-
 
 model = MLP()
 state = train_model(model, x, y, num_epochs=4000, learning_rate=0.01)
