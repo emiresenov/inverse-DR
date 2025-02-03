@@ -6,10 +6,11 @@ from jax import lax, jit, grad, vmap, jacrev, tree_leaves, random
 from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
 from jaxpi.utils import ntk_fn, flatten_pytree
+from jax.tree_util import tree_flatten, tree_unflatten
 
 from matplotlib import pyplot as plt
 
-from utils import V, update_subnet, get_initial_values
+from utils import V, get_initial_values
 
 from subnets import R0Net
 
@@ -18,8 +19,10 @@ class CaseOneField(InverseIVP):
     def __init__(self, config, u_ref, R0_ref, t_star, T_star):
 
         self.R0_net = R0Net()
-        self.R0_params = self.R0_net.init(random.PRNGKey(1234), jnp.array([1.]))
-        config.inverse.params['R0_params'] = tree_leaves(self.R0_params)
+        R0_params = self.R0_net.init(random.PRNGKey(1234), jnp.array([1.]))
+        leaves, structure = tree_flatten(R0_params)
+        config.inverse.params['R0_params'] = leaves
+        self.R0_struct = structure # Save struct for apply calls with updated leaves
 
         super().__init__(config)
 
@@ -53,9 +56,9 @@ class CaseOneField(InverseIVP):
         return u_t + (u - V/R0)/(R1*C1)
     
     def R0_pred(self, params, T):
-        R0_params = params['params']['R0_params']
-        self.R0_params = update_subnet(self.R0_params, R0_params)
-        R0 = self.R0_net.apply(self.R0_params, T)
+        leaves = params['params']['R0_params']
+        R0_params = tree_unflatten(self.R0_struct, leaves)
+        R0 = self.R0_net.apply(R0_params, T)
         return R0
 
     @partial(jit, static_argnums=(0,))

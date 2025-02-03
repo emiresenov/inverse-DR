@@ -47,11 +47,6 @@ def get_dataset():
         t_all.append(t), u_all.append(u), T_all.append(Ts_arr), R0_all.append(R0)
     return jnp.concatenate(u_all), jnp.array(R0_all), jnp.concatenate(t_all) , jnp.concatenate(T_all)
 
-def update_subnet(params: dict, weights: list):
-    leaves, structure = tree_flatten(params)
-    assert len(leaves) == len(weights)
-    updated_params = tree_unflatten(structure, weights)
-    return updated_params
 
 
 '''dataset = get_dataset()
