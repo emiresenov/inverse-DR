@@ -1,7 +1,7 @@
 from functools import partial
 
 import jax.numpy as jnp
-from jax import lax, jit, grad, vmap, jacrev, tree_leaves, random
+from jax import lax, jit, grad, vmap, jacrev, tree_leaves, random, debug
 
 from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
@@ -57,6 +57,7 @@ class CaseOneField(InverseIVP):
     
     def R0_pred(self, params, T):
         leaves = params['params']['R0_params']
+        debug.print(f'{leaves=}')
         R0_params = tree_unflatten(self.R0_struct, leaves)
         R0 = self.R0_net.apply(R0_params, T)
         return R0
