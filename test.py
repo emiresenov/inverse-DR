@@ -71,7 +71,7 @@ print("Vectorized outputs:\n", outputs)
 
 
 
-
+print(jnp.stack([1,2]))
 
 
 
