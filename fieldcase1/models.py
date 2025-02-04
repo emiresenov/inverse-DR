@@ -21,6 +21,8 @@ class CaseOneField(InverseIVP):
 
         self.t0 = t_star[0]
 
+        self.u_pred_fn = vmap(vmap(self.u_net, (None, None, 0)), (None, 0, None))
+
 
     def u_net(self, params, t, T):
         z = jnp.stack([t, T])
@@ -49,8 +51,8 @@ class CaseOneField(InverseIVP):
         r_pred = vmap(self.r_net, (None, 0, 0))(params, batch[:, 0], batch[:, 1])
         res_loss = jnp.mean((r_pred) ** 2)
 
-        u_pred, _ = vmap(self.u_net, (None, 0, 0))(params, self.t_star, self.T_star)
-        data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
+        u_pred, _ = self.u_pred_fn(params, self.t_star, self.T_star)
+        data_loss = jnp.mean((self.u_ref - jnp.ravel(u_pred)) ** 2)
 
         loss_dict = {"data": data_loss, "ic": ic_loss, "res": res_loss}
         return loss_dict
@@ -58,8 +60,8 @@ class CaseOneField(InverseIVP):
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u_test):
-        u_pred, _ = vmap(self.u_net, (None, 0, 0))(params, self.t_star, self.T_star)
-        error = jnp.linalg.norm(u_pred - u_test) / jnp.linalg.norm(u_test)
+        u_pred, _ = self.u_pred_fn(params, self.t_star, self.T_star)
+        error = jnp.linalg.norm(jnp.ravel(u_pred) - u_test) / jnp.linalg.norm(u_test)
         return error
 
 
@@ -72,14 +74,14 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u_pred, r0_pred = vmap(self.u_net, (None, 0, 0))(params, self.t_star, self.T_star)
+        u_pred, _ = self.model.u_pred_fn(params, self.model.t_star, self.model.T_star)
         fig = plt.figure(figsize=(6, 5))
         plt.scatter(self.model.t_star, self.model.u_ref, s=50, alpha=0.9, c='orange')
-        plt.plot(self.model.t_star, u_pred, linewidth=8, c='black')
+        plt.plot(self.model.t_star, jnp.ravel(u_pred), linewidth=8, c='black')
         self.log_dict["u_pred"] = fig
         plt.close()
 
-        _, R0_pred = vmap(self.u_net, (None, None, 0))(params, self.t_star, self.T_star)
+        _, R0_pred = vmap(self.u_net, (None, None, 0))(params, self.model.t_star, self.model.T_star)
         fig = plt.figure(figsize=(6, 5))
         plt.plot(self.model.T_star, R0_pred, linewidth=8, c='black')
         self.log_dict["R0_pred"] = fig

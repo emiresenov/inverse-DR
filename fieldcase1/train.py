@@ -14,7 +14,7 @@ from jaxpi.logging import Logger
 from jaxpi.utils import save_checkpoint
 
 import models
-from utils import get_dataset, get_domain, get_initial_values
+from utils import get_dataset, get_domain
 
 
 def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
