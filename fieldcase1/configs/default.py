@@ -11,7 +11,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "Remodeled Case1Field"
-    wandb.name = "2"
+    wandb.name = "first test"
     wandb.tag = None
 
     # Arch

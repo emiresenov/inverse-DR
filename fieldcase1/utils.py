@@ -21,8 +21,6 @@ A = 200
 
 Ts = [293.0, 313.0, 333.0, 353.0] # 4-10 serier, 293-373 Kelvin
 
-def get_domain():
-    return jnp.array([[t_start, t_end], [min(Ts), max(Ts)]])
 
 def activation_R0(T):
     return L/(a*A*jnp.exp(-(W)/(k * T)))
@@ -30,21 +28,24 @@ def activation_R0(T):
 def solution(t, T):
     return V/activation_R0(T) + (V/R1) * jnp.exp(-t/(R1*C1))
 
+def get_domain():
+    return jnp.array([[t_start, t_end], [min(Ts), max(Ts)]])
+
+def get_initial_values():
+    times = jnp.full(len(Ts), t_start)
+    temperatures = jnp.array(Ts)
+    return jnp.column_stack((times, temperatures))
+
 def get_dataset():
     t = jnp.linspace(t_start, t_end, n_samples)
-    u_all = []
-    for T in Ts:
-        u = solution(t, T)
-        u_all.append(u)
-    return jnp.concatenate(u_all), t, jnp.array(Ts)
+    times = jnp.tile(t, len(Ts))
+    T_array = jnp.array(Ts)
+    temperatures = jnp.repeat(T_array, n_samples)
+    x = jnp.column_stack((times, temperatures))
+    y = solution(times, temperatures)
+    return x, y
 
 
+#print(get_dataset())
 
-'''dataset = get_dataset()
-print(dataset[0])
-print(dataset[1])
-print(dataset[2])'''
-#print(get_domain())
-#print(get_initial_values())
-
-
+print(get_initial_values())

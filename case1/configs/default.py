@@ -11,7 +11,7 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Nondim test"
+    wandb.project = "Sanity check on case 1"
     wandb.name = "test"
     wandb.tag = None
 

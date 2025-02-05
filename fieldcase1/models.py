@@ -7,7 +7,7 @@ from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
 from jaxpi.utils import ntk_fn, flatten_pytree
 
-from utils import V
+from utils import V, get_initial_values
 
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -15,55 +15,55 @@ from mpl_toolkits.mplot3d import Axes3D
 import wandb
 
 class CaseOneField(InverseIVP):
-    def __init__(self, config, u_ref, t_star, T_star):
+    def __init__(self, config, x_ref, y1_ref):
         super().__init__(config)
-        self.u_ref = u_ref
-        self.t_star = t_star
-        self.T_star = T_star
-
-        self.t0 = t_star[0]
-
-        self.u_pred_fn = vmap(vmap(self.u_net, (None, None, 0)), (None, 0, None))
+        self.x_ref = x_ref
+        self.y1_ref = y1_ref
+        self.x0 = get_initial_values()
+        self.y_pred_fn = vmap(self.y_net, (None, 0))
+        self.r_pred_fn = vmap(self.r_net, (None, 0))
 
 
-    def u_net(self, params, t, T):
-        z = jnp.stack([t, T])
-        u = self.state.apply_fn(params, z)
-        return u[0], u[1]
+    def y_net(self, params, x):
+        return self.state.apply_fn(params, x)
+    
+    def y1_net(self, params, x):
+        return self.y_net(params, x)[0]
 
-    def grad_net(self, params, t, T):
-        grads = jacobian(self.u_net, argnums=1)(params, t, T)
-        u1_t = grads[0]
-        return u1_t
+    def grad_net(self, params, x):
+        grad_val = grad(self.y1_net, argnums=1)(params, x)
+        return grad_val[0]
 
-    def r_net(self, params, t, T):
-        u1, u2 = self.u_net(params, t, T)
-        u1_t = self.grad_net(params, t, T)
+    def r_net(self, params, x):
+        y1,y2 = self.y_net(params, x)
+        y1_t = self.grad_net(params, x)
         R1 = params['params']['R1']
         C1 = params['params']['C1']
-        return u1_t + (u1 - V/u2)/(R1*C1)
+        return y1_t + (y1-V/y2)/(R1*C1)
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-        u1_pred0, u2_pred0 = vmap(self.u_net, (None, None, 0))(params, self.t0, self.T_star)
+        y0 = self.y_pred_fn(params, self.x0)
+        y1_t0 = y0[:, 0] #I
+        y2_t0 = y0[:, 1] #R0
         R1 = params['params']['R1']
-        ic = V/u2_pred0 + V/R1
-        ic_loss = jnp.mean((u1_pred0 - ic) ** 2)
+        ic = V/y2_t0 + V/R1
+        ic_loss = jnp.mean((y1_t0 - ic) ** 2)
 
-        r_pred = vmap(self.r_net, (None, 0, 0))(params, batch[:, 0], batch[:, 1])
+        r_pred = self.r_pred_fn(params, batch)
         res_loss = jnp.mean((r_pred) ** 2)
 
-        u_pred, _ = self.u_pred_fn(params, self.t_star, self.T_star)
-        data_loss = jnp.mean((self.u_ref - jnp.ravel(u_pred)) ** 2)
+        y1_pred = self.y_pred_fn(params, self.x_ref)[:, 0]
+        data_loss = jnp.mean((y1_pred - self.y1_ref) ** 2)
 
         loss_dict = {"data": data_loss, "ic": ic_loss, "res": res_loss}
         return loss_dict
 
 
     @partial(jit, static_argnums=(0,))
-    def compute_l2_error(self, params, u_test):
-        u_pred, _ = self.u_pred_fn(params, self.t_star, self.T_star)
-        error = jnp.linalg.norm(jnp.ravel(u_pred) - u_test) / jnp.linalg.norm(u_test)
+    def compute_l2_error(self, params, y1_test):
+        y1_pred = self.y_pred_fn(params, self.x_ref)[:, 0]
+        error = jnp.linalg.norm(jnp.ravel(y1_pred) - y1_test) / jnp.linalg.norm(y1_test)
         return error
 
 
@@ -76,18 +76,12 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        t_star = self.model.t_star
-        T_star = self.model.T_star
-        u_ref = self.model.u_ref.reshape(T_star.size, t_star.size)
-        u_pred, _ = self.model.u_pred_fn(params, t_star, T_star)
-        T_mesh, t_mesh = jnp.meshgrid(T_star, t_star, indexing='ij')
-
+        x = self.model.x_ref
+        y_pred = self.model.y_pred_fn(params, self.model.x_ref)
         fig = plt.figure(figsize=(10, 7))
         ax = fig.add_subplot(111, projection='3d')
-
-        ax.scatter(t_mesh, T_mesh, u_ref, color='red', s=40)
-        surf = ax.plot_surface(t_mesh, T_mesh, u_pred.T, cmap='viridis', alpha=0.7, edgecolor='none')
-
+        ax.scatter(x[:, 0], x[:, 1], self.model.y1_ref, color='red', s=40)
+        surf = ax.plot_surface(jnp.vstack(x[:, 0]), jnp.vstack(x[:, 1]), y_pred, cmap='viridis', alpha=0.7, edgecolor='none')
         fig.colorbar(surf, shrink=0.5, aspect=5, label='u')
         self.log_dict["u_pred"] = wandb.Image(fig)
         plt.close()
