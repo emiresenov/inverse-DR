@@ -10,7 +10,9 @@ from jaxpi.utils import ntk_fn, flatten_pytree
 from utils import V
 
 from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 
+import wandb
 
 class CaseOneField(InverseIVP):
     def __init__(self, config, u_ref, t_star, T_star):
@@ -74,17 +76,20 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u_pred, _ = self.model.u_pred_fn(params, self.model.t_star, self.model.T_star)
-        fig = plt.figure(figsize=(6, 5))
-        plt.scatter(self.model.t_star, self.model.u_ref, s=50, alpha=0.9, c='orange')
-        plt.plot(self.model.t_star, jnp.ravel(u_pred), linewidth=8, c='black')
-        self.log_dict["u_pred"] = fig
-        plt.close()
+        t_star = self.model.t_star
+        T_star = self.model.T_star
+        u_ref = self.model.u_ref.reshape(T_star.size, t_star.size)
+        u_pred, _ = self.model.u_pred_fn(params, t_star, T_star)
+        T_mesh, t_mesh = jnp.meshgrid(T_star, t_star, indexing='ij')
 
-        _, R0_pred = vmap(self.u_net, (None, None, 0))(params, self.model.t_star, self.model.T_star)
-        fig = plt.figure(figsize=(6, 5))
-        plt.plot(self.model.T_star, R0_pred, linewidth=8, c='black')
-        self.log_dict["R0_pred"] = fig
+        fig = plt.figure(figsize=(10, 7))
+        ax = fig.add_subplot(111, projection='3d')
+
+        ax.scatter(t_mesh, T_mesh, u_ref, color='red', s=40)
+        surf = ax.plot_surface(t_mesh, T_mesh, u_pred.T, cmap='viridis', alpha=0.7, edgecolor='none')
+
+        fig.colorbar(surf, shrink=0.5, aspect=5, label='u')
+        self.log_dict["u_pred"] = wandb.Image(fig)
         plt.close()
     
     def log_inv_params(self, params):
@@ -94,10 +99,6 @@ class CaseOneFieldEvaluator(BaseEvaluator):
 
     def __call__(self, state, batch, u_ref):
         self.log_dict = super().__call__(state, batch)
-
-        if self.config.weighting.use_causal:
-            _, causal_weight = self.model.res_and_w(state.params, batch)
-            self.log_dict["cas_weight"] = causal_weight.min()
 
         if self.config.logging.log_errors:
             self.log_errors(state.params, u_ref)

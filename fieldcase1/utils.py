@@ -10,7 +10,7 @@ C1 = 0.5
 
 t_start = 0.0
 t_end = 10.0
-n_samples = 10
+n_samples = 25
 
 k = 8.617e-5
 W = 0.75
@@ -19,7 +19,7 @@ L = 1e-6
 a = 2000
 A = 200
 
-Ts = [293.0, 313.0, 333.0] # 4-10 serier, 293-373 Kelvin
+Ts = [293.0, 313.0, 333.0, 353.0] # 4-10 serier, 293-373 Kelvin
 
 def get_domain():
     return jnp.array([[t_start, t_end], [min(Ts), max(Ts)]])
