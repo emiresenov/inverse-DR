@@ -26,21 +26,21 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     logger = Logger()
 
     # Get dataset
-    u_ref, t_star = get_dataset()
+    x1, x2, y1, y2 = get_dataset()
 
     # Define domain
-    t0 = t_star[0]
-    t1 = t_star[-1]
-    dom = jnp.array([[t0, t1]])
+    x1_start = x1[0]
+    x1_end = x1[-1]
+    dom = jnp.array([[x1_start, x1_end]])
 
     # Define residual sampler
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.CaseOne(config, u_ref, t_star)
+    model = models.CaseOneField(config, x1, x2, y1, y2)
 
     # Initialize evaluator
-    evaluator = models.CaseOneEvaluator(config, model)
+    evaluator = models.CaseOneFieldEvaluator(config, model)
 
     print("Waiting for JIT...")
     start_time = time.time()
@@ -58,7 +58,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
                 # Get the first replica of the state and batch
                 state = jax.device_get(tree_map(lambda x: x[0], model.state))
                 batch = jax.device_get(tree_map(lambda x: x[0], batch))
-                log_dict = evaluator(state, batch, u_ref)
+                log_dict = evaluator(state, batch, y1, y2)
                 wandb.log(log_dict, step)
 
                 end_time = time.time()

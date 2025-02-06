@@ -3,22 +3,12 @@ import numpy as np
 
 np.random.seed(42)
 
-V = 10.0
-R0 = 2.0
-R1 = 4.0
-C1 = 0.5
 
-t_start = 0.0
-t_end = 10.0
-n_samples = 25
-
-
-def solution(t):
-    return V/R0 + (V/R1)*jnp.exp(-t/(R1*C1))
 
 def get_dataset():
-    t = jnp.linspace(t_start, t_end, n_samples)
-    #noise = np.random.normal(0, 2, len(t))
-    #u = solution(t) + noise
-    u = solution(t)
-    return u, t
+    x1 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
+    x2 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
+    y1 = jnp.array([13.,9.,6.,4.,3.,2.,1.])
+    y2 = jnp.array([1.,2.,3.,6.,10.,14.,18.])
+    return x1, x2, y1, y2
+
