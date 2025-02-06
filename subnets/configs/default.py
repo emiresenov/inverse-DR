@@ -17,7 +17,7 @@ def get_config():
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
-    arch.arch_name = "Mlp"
+    arch.arch_name = "TwoNetworkModel"
     arch.num_layers = 1
     arch.hidden_dim = 15
     arch.out_dim = 1
