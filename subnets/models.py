@@ -12,69 +12,35 @@ from matplotlib import pyplot as plt
 from utils import V
 
 
-class CaseOne(InverseIVP):
-    def __init__(self, config, u_ref, t_star):
+class CaseOneField(InverseIVP):
+    def __init__(self, config, x1, x2, y1, y2):
         print(f'{config=}')
         super().__init__(config)
-        self.t_star = t_star
-        self.u_ref = u_ref
+        self.x1 = x1
+        self.x2 = x2
+        self.y1 = y1
+        self.y2 = y2
 
-        self.t0 = t_star[0]
-        self.u0 = u_ref[0]
-
-        # Vectorizing functions over multiple data points
-        self.u_pred_fn = vmap(self.u_net, (None, 0))
-        self.r_pred_fn = vmap(self.r_net, (None, 0))
+        self.u_pred_fn = vmap(self.u_net, (None, 0, 0))
 
     # Prediction function for a given point in the domain
-    def u_net(self, params, t):
-        z = jnp.stack([t])
-        u = self.state.apply_fn(params, z)
-        return u[0] # Unpack array
+    def u_net(self, params, x1, x2):
+        z1 = jnp.stack([x1])
+        z2 = jnp.stack([x2])
+        u1, u2 = self.state.apply_fn(params, z1, z2)
+        return u1[0], u2[0]
 
-    # Calculate gradients
-    def grad_net(self, params, t):
-        u_t = grad(self.u_net, argnums=1)(params, t)
-        return u_t
 
-    # Diff eq prediction (residual)
-    def r_net(self, params, t):
-        u = self.u_net(params, t)
-        u_t = grad(self.u_net, argnums=1)(params, t)
-        R0 = params['params']['R0'] * 30
-        R1 = params['params']['R1'] * 30
-        C1 = params['params']['C1'] * 0.01
-        return u_t + (u - V/R0)/(R1*C1)
 
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-        '''
-        Question: which initial condition loss do we use?
-        1: data measurement at t0 - ic squared
-        2: model prediction at t0 - ic squared
-        '''
-        # Initial condition loss
-        R0 = params['params']['R0'] * 30
-        R1 = params['params']['R1'] * 30
-        ic = V/R0 + V/R1
-        u0_pred = self.u_net(params, self.t0)
-        ics_loss = jnp.mean((u0_pred - ic) ** 2)
 
-        # Residual loss
-        if self.config.weighting.use_causal == True:
-            l, w = self.res_and_w(params, batch)
-            res_loss = jnp.mean(l * w)
-        else:
-            r_pred = vmap(self.r_net, (None, 0))(params, batch[:, 0])
-            res_loss = jnp.mean((r_pred) ** 2)
+        u1_pred, u2_pred = self.u_pred_fn(params, self.x1, self.x2)
+        data1_loss = jnp.mean((self.y1 - u1_pred) ** 2)
+        data2_loss = jnp.mean((self.y1 - u2_pred) ** 2)
 
-        # Data loss
-        u_pred = self.u_pred_fn(params, self.t_star)
-        data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
-
-        
-        loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
+        loss_dict = {"data1": data1_loss, "data2": data2_loss}
 
         return loss_dict
 
@@ -86,7 +52,7 @@ class CaseOne(InverseIVP):
         return error
 
 
-class CaseOneEvaluator(BaseEvaluator):
+class CaseOneFieldEvaluator(BaseEvaluator):
     def __init__(self, config, model):
         super().__init__(config, model)
 

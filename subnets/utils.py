@@ -4,7 +4,6 @@ import numpy as np
 np.random.seed(42)
 
 
-
 def get_dataset():
     x1 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
     x2 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
