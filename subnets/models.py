@@ -19,20 +19,17 @@ class CaseOneField(InverseSubnetIVP):
         self.y1 = y1
         self.y2 = y2
 
-        self.u_pred_fn = vmap(self.u_net, (None, 0, 0)) # Suspect this may cause an error
 
-    # Prediction function for a given point in the domain
     def u_net(self, params, x1, x2):
-        z1 = jnp.stack([x1])
-        z2 = jnp.stack([x2])
+        z1 = x1.reshape(-1, 1)
+        z2 = x2.reshape(-1, 1)
         u1, u2 = self.state.apply_fn(params, z1, z2)
-        return u1[0], u2[0]
+        return u1[:, 0], u2[:, 0]
 
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-
-        u1_pred, u2_pred = self.u_pred_fn(params, self.x1, self.x2)
+        u1_pred, u2_pred = self.u_net(params, self.x1, self.x2)
         data1_loss = jnp.mean((self.y1 - u1_pred) ** 2)
         data2_loss = jnp.mean((self.y2 - u2_pred) ** 2)
 
@@ -43,7 +40,7 @@ class CaseOneField(InverseSubnetIVP):
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u1_test, u2_test):
-        u1_pred, u2_pred = self.u_pred_fn(params, self.x1, self.x2)
+        u1_pred, u2_pred = self.u_net(params, self.x1, self.x2)
         error1 = jnp.linalg.norm(u1_pred - u1_test) / jnp.linalg.norm(u1_test)
         error2 = jnp.linalg.norm(u2_pred - u2_test) / jnp.linalg.norm(u2_test)
         return error1 + error2
@@ -58,7 +55,7 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u1_pred, u2_pred = self.model.u_pred_fn(params, self.model.x1, self.model.x2)
+        u1_pred, u2_pred = self.model.u_net(params, self.model.x1, self.model.x2)
 
         fig = plt.figure(figsize=(6, 5))
         plt.scatter(self.model.x1, self.model.y1, s=50, alpha=0.9, c='orange')
