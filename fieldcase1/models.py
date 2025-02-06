@@ -26,7 +26,9 @@ class CaseOneField(InverseIVP):
 
 
     def y_net(self, params, x):
-        return self.state.apply_fn(params, x)
+        # Make sure x has shape (1,2) when feeding a single (t,T) point.
+        x_2d = x.reshape(1, 2)
+        return self.state.apply_fn(params, x_2d)[0]
     
     def y1_net(self, params, x):
         return self.y_net(params, x)[0]
@@ -44,7 +46,7 @@ class CaseOneField(InverseIVP):
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-        y0 = self.y_pred_fn(params, self.x0)
+        '''y0 = self.y_pred_fn(params, self.x0)
         y1_t0 = y0[:, 0] #I
         y2_t0 = y0[:, 1] #R0
         R1 = params['params']['R1']
@@ -52,7 +54,7 @@ class CaseOneField(InverseIVP):
         ic_loss = jnp.mean((y1_t0 - ic) ** 2)
 
         r_pred = self.r_pred_fn(params, batch)
-        res_loss = jnp.mean((r_pred) ** 2)
+        res_loss = jnp.mean((r_pred) ** 2)'''
 
         y_pred = self.y_pred_fn(params, self.x_ref)
         y1_pred = y_pred[:, 0]
@@ -61,7 +63,7 @@ class CaseOneField(InverseIVP):
         y2_pred = y_pred[:, 1]
         y2_loss = jnp.mean((y2_pred - self.y2_ref)**2)
 
-        loss_dict = {"data": data_loss, "ic": ic_loss, "res": res_loss, "y2": y2_loss}
+        loss_dict = {"data": data_loss, "ic": 0., "res": 0., "y2": y2_loss}
         return loss_dict
 
 
@@ -82,7 +84,7 @@ class CaseOneFieldEvaluator(BaseEvaluator):
 
     def log_preds(self, params):
         temperaturer = 11
-        samples = 50
+        samples = 25
         x = self.model.x_ref
         x1 = x[:,0].reshape(temperaturer, samples) # HARDCODED
         x2 = x[:,1].reshape(temperaturer, samples) # HARDCODED

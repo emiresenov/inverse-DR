@@ -14,7 +14,7 @@ from jaxpi.logging import Logger
 from jaxpi.utils import save_checkpoint
 
 import models
-from utils import get_dataset, get_domain
+from utils import get_dataset
 
 
 def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
@@ -26,24 +26,26 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     logger = Logger()
 
     # Get dataset
-    x, y = get_dataset()
-    dom = get_domain()
+    u_ref, t_star = get_dataset()
+
+    # Define domain
+    t0 = t_star[0]
+    t1 = t_star[-1]
+    dom = jnp.array([[t0, t1]])
 
     # Define residual sampler
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.CaseOneField(config, x, y)
+    model = models.CaseOne(config, u_ref, t_star)
 
     # Initialize evaluator
-    evaluator = models.CaseOneFieldEvaluator(config, model)
-
+    evaluator = models.CaseOneEvaluator(config, model)
 
     print("Waiting for JIT...")
     start_time = time.time()
     for step in range(config.training.max_steps):
-        #batch = next(res_sampler)
-        batch = jnp.stack([x])
+        batch = next(res_sampler)
         model.state = model.step(model.state, batch)
 
         if config.weighting.scheme in ["grad_norm", "ntk"]:
@@ -56,7 +58,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
                 # Get the first replica of the state and batch
                 state = jax.device_get(tree_map(lambda x: x[0], model.state))
                 batch = jax.device_get(tree_map(lambda x: x[0], batch))
-                log_dict = evaluator(state, batch, y)
+                log_dict = evaluator(state, batch, u_ref)
                 wandb.log(log_dict, step)
 
                 end_time = time.time()

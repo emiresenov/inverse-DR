@@ -9,8 +9,8 @@ R1 = 4.0
 C1 = 0.5
 
 t_start = 0.0
-t_end = 10.0
-n_samples = 1
+t_end = 1.0
+n_samples = 25
 
 k = 8.617e-5
 W = 0.75
@@ -20,6 +20,8 @@ a = 2000
 A = 200
 
 Ts = [293.0, 300.0, 305.0, 313.0, 315.0, 320.0, 333.0, 335.0, 340.0, 345.0, 353.0] # 4-10 serier, 293-373 Kelvin
+
+
 
 
 def activation_R0(T):
@@ -51,7 +53,12 @@ def y2_ref():
     R0 = activation_R0(temperatures)
     return R0
 
-#print(get_dataset())
+'''print(get_dataset())
+print(get_initial_values())
+print(y2_ref())'''
 
-#print(get_initial_values())
-#print(y2_ref())
+x, _ = get_dataset()
+
+print(f'{jnp.stack([x]).shape=}')
+
+print(x)
