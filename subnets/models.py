@@ -19,7 +19,7 @@ class CaseOneField(InverseSubnetIVP):
         self.y1 = y1
         self.y2 = y2
 
-        self.u_pred_fn = vmap(self.u_net, (None, 0, 0))
+        self.u_pred_fn = vmap(self.u_net, (None, 0, 0)) # Suspect this may cause an error
 
     # Prediction function for a given point in the domain
     def u_net(self, params, x1, x2):
@@ -27,7 +27,6 @@ class CaseOneField(InverseSubnetIVP):
         z2 = jnp.stack([x2])
         u1, u2 = self.state.apply_fn(params, z1, z2)
         return u1[0], u2[0]
-
 
 
     @partial(jit, static_argnums=(0,))

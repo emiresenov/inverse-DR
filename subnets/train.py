@@ -29,9 +29,12 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     x1, x2, y1, y2 = get_dataset()
 
     # Define domain
-    x1_start = x1[0]
-    x1_end = x1[-1]
-    dom = jnp.array([[x1_start, x1_end]])
+    x1_0 = x1[0]
+    x1_n = x1[-1]
+
+    x2_0 = x2[0]
+    x2_n = x2[-1]
+    dom = jnp.array([[x1_0, x1_n], [x2_0, x2_n]])
 
     # Define residual sampler
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
