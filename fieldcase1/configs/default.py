@@ -11,14 +11,14 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "Remodeled Case1Field"
-    wandb.name = "first test"
+    wandb.name = "test just 1 t"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "Mlp"
-    arch.num_layers = 2
-    arch.hidden_dim = 15
+    arch.num_layers = 1
+    arch.hidden_dim = 20
     arch.out_dim = 2
     arch.activation = "tanh"
     arch.periodicity = None
@@ -48,7 +48,8 @@ def get_config():
         {
         "data": 1.0, 
         "ic": 1.0, 
-        "res": 1.0
+        "res": 1.0,
+        "y2": 1.0
         }
     )
     weighting.momentum = 0.9

@@ -7,7 +7,7 @@ from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
 from jaxpi.utils import ntk_fn, flatten_pytree
 
-from utils import V, get_initial_values
+from utils import V, get_initial_values, y2_ref
 
 from matplotlib import pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -19,6 +19,7 @@ class CaseOneField(InverseIVP):
         super().__init__(config)
         self.x_ref = x_ref
         self.y1_ref = y1_ref
+        self.y2_ref = y2_ref()
         self.x0 = get_initial_values()
         self.y_pred_fn = vmap(self.y_net, (None, 0))
         self.r_pred_fn = vmap(self.r_net, (None, 0))
@@ -53,10 +54,14 @@ class CaseOneField(InverseIVP):
         r_pred = self.r_pred_fn(params, batch)
         res_loss = jnp.mean((r_pred) ** 2)
 
-        y1_pred = self.y_pred_fn(params, self.x_ref)[:, 0]
+        y_pred = self.y_pred_fn(params, self.x_ref)
+        y1_pred = y_pred[:, 0]
         data_loss = jnp.mean((y1_pred - self.y1_ref) ** 2)
 
-        loss_dict = {"data": data_loss, "ic": ic_loss, "res": res_loss}
+        y2_pred = y_pred[:, 1]
+        y2_loss = jnp.mean((y2_pred - self.y2_ref)**2)
+
+        loss_dict = {"data": data_loss, "ic": ic_loss, "res": res_loss, "y2": y2_loss}
         return loss_dict
 
 
@@ -76,12 +81,17 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
+        temperaturer = 11
+        samples = 50
         x = self.model.x_ref
-        y_pred = self.model.y_pred_fn(params, self.model.x_ref)
+        x1 = x[:,0].reshape(temperaturer, samples) # HARDCODED
+        x2 = x[:,1].reshape(temperaturer, samples) # HARDCODED
+        y1_pred = self.model.y_pred_fn(params, self.model.x_ref)[:,0]
+        y1_pred = y1_pred.reshape(temperaturer, samples) # HARDCODED
         fig = plt.figure(figsize=(10, 7))
         ax = fig.add_subplot(111, projection='3d')
         ax.scatter(x[:, 0], x[:, 1], self.model.y1_ref, color='red', s=40)
-        surf = ax.plot_surface(jnp.vstack(x[:, 0]), jnp.vstack(x[:, 1]), y_pred, cmap='viridis', alpha=0.7, edgecolor='none')
+        surf = ax.plot_surface(x1, x2, y1_pred, cmap='viridis', alpha=0.7, edgecolor='none')
         fig.colorbar(surf, shrink=0.5, aspect=5, label='u')
         self.log_dict["u_pred"] = wandb.Image(fig)
         plt.close()

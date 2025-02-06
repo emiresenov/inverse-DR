@@ -46,17 +46,6 @@ class CaseOne(InverseIVP):
         C1 = params['params']['C1'] * 0.01
         return u_t + (u - V/R0)/(R1*C1)
 
-    @partial(jit, static_argnums=(0,))
-    def res_and_w(self, params, batch):
-        "Compute residuals and weights for causal training"
-        # Sort time coordinates
-        t_sorted = batch[:, 0].sort()
-        r_pred = vmap(self.r_net, (None, 0))(params, t_sorted)
-        # Split residuals into chunks
-        r_pred = r_pred.reshape(self.num_chunks, -1)
-        l = jnp.mean(r_pred**2, axis=1)
-        w = lax.stop_gradient(jnp.exp(-self.tol * (self.M @ l)))
-        return l, w
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
@@ -69,9 +58,8 @@ class CaseOne(InverseIVP):
         R0 = params['params']['R0'] * 30
         R1 = params['params']['R1'] * 30
         ic = V/R0 + V/R1
-        u0_pred = self.u_net(params, self.t0) # Alternative: use self.u0
+        u0_pred = self.u_net(params, self.t0)
         ics_loss = jnp.mean((u0_pred - ic) ** 2)
-        #ics_loss = jnp.mean((self.u0 - ic) ** 2)
 
         # Residual loss
         if self.config.weighting.use_causal == True:
@@ -85,8 +73,6 @@ class CaseOne(InverseIVP):
         u_pred = self.u_pred_fn(params, self.t_star)
         data_loss = jnp.mean((self.u_ref - u_pred) ** 2)
 
-        #l1_penalty = 1e-2 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
-        #loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}
         
         loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
 
