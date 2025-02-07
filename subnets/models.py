@@ -18,7 +18,7 @@ class CaseOneField(InverseSubnetIVP):
         self.x2 = x2
         self.y1 = y1
         self.y2 = y2
-
+        
 
     def u_net(self, params, x1, x2):
         z1 = x1.reshape(-1, 1)
