@@ -12,26 +12,26 @@ from matplotlib import pyplot as plt
 
 
 class CaseOneField(InverseSubnetIVP):
-    def __init__(self, config, x1, x2, y1, y2):
+    def __init__(self, config, t_ref, T_ref, u1_ref, u2_dummy):
         super().__init__(config)
-        self.x1 = x1
-        self.x2 = x2
-        self.y1 = y1
-        self.y2 = y2
+        self.t_ref = t_ref
+        self.T_ref = T_ref
+        self.u1_ref = u1_ref
+        self.u2_dummy = u2_dummy
         
 
-    def u_net(self, params, x1, x2):
-        z1 = x1.reshape(-1, 1)
-        z2 = x2.reshape(-1, 1)
+    def u_net(self, params, t_ref, T_ref):
+        z1 = t_ref.reshape(-1, 1)
+        z2 = T_ref.reshape(-1, 1)
         u1, u2 = self.state.apply_fn(params, z1, z2)
         return u1[:, 0], u2[:, 0]
 
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-        u1_pred, u2_pred = self.u_net(params, self.x1, self.x2)
-        data1_loss = jnp.mean((self.y1 - u1_pred) ** 2)
-        data2_loss = jnp.mean((self.y2 - u2_pred) ** 2)
+        u1_pred, u2_pred = self.u_net(params, self.t_ref, self.T_ref)
+        data1_loss = jnp.mean((self.u1_ref - u1_pred) ** 2)
+        data2_loss = jnp.mean((self.u2_dummy - u2_pred) ** 2)
 
         loss_dict = {"data1": data1_loss, "data2": data2_loss}
 
@@ -40,7 +40,7 @@ class CaseOneField(InverseSubnetIVP):
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u1_test, u2_test):
-        u1_pred, u2_pred = self.u_net(params, self.x1, self.x2)
+        u1_pred, u2_pred = self.u_net(params, self.t_ref, self.T_ref)
         error1 = jnp.linalg.norm(u1_pred - u1_test) / jnp.linalg.norm(u1_test)
         error2 = jnp.linalg.norm(u2_pred - u2_test) / jnp.linalg.norm(u2_test)
         return error1 + error2
@@ -55,17 +55,17 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u1_pred, u2_pred = self.model.u_net(params, self.model.x1, self.model.x2)
+        u1_pred, u2_pred = self.model.u_net(params, self.model.t_ref, self.model.T_ref)
 
         fig = plt.figure(figsize=(6, 5))
-        plt.scatter(self.model.x1, self.model.y1, s=50, alpha=0.9, c='orange')
-        plt.plot(self.model.x1, u1_pred, linewidth=8, c='black')
+        plt.scatter(self.model.t_ref, self.model.u1_ref, s=50, alpha=0.9, c='orange')
+        plt.plot(self.model.t_ref, u1_pred, linewidth=8, c='black')
         self.log_dict["u1_pred"] = fig
         plt.close()
 
         fig = plt.figure(figsize=(6, 5))
-        plt.scatter(self.model.x2, self.model.y2, s=50, alpha=0.9, c='orange')
-        plt.plot(self.model.x2, u2_pred, linewidth=8, c='black')
+        plt.scatter(self.model.T_ref, self.model.u2_dummy, s=50, alpha=0.9, c='orange')
+        plt.plot(self.model.T_ref, u2_pred, linewidth=8, c='black')
         self.log_dict["u2_pred"] = fig
         plt.close()
     
@@ -74,11 +74,11 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["C1"] = params['params']['C1'][0]
         
 
-    def __call__(self, state, batch, y1, y2):
+    def __call__(self, state, batch, u1_ref, u2_dummy):
         self.log_dict = super().__call__(state, batch)
 
         if self.config.logging.log_errors:
-            self.log_errors(state.params, y1, y2)
+            self.log_errors(state.params, u1_ref, u2_dummy)
 
         if self.config.logging.log_preds:
             self.log_preds(state.params)
