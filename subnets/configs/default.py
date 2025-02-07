@@ -39,7 +39,7 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 20000
+    training.max_steps = 30000
     training.batch_size_per_device = 4096
 
     # Weighting
