@@ -27,7 +27,7 @@ A = 200
 #Ts = [100.,200.,300.,400.] # 4-10 serier, 293-373 Kelvin
 
 Ts = jnp.array([
-    293.0, 
+     293.0, 
      300.0, 
      305.0, 
      313.0, 
@@ -71,15 +71,3 @@ def get_dataset():
     y2_dummy_array = x2 * 3
 
     return x1, x2, jnp.concatenate(y1_all), y2_dummy_array
-
-'''def get_dataset2():
-    x1 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
-    x2 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
-    x2 = jnp.array([1.,2.,3.,4.])
-    y1 = jnp.array([13.,9.,6.,4.,3.,2.,1.])
-    y2 = jnp.array([1.,2.,3.,6.,10.,14.,18.])
-    y2 = jnp.array([1.,2.,3.,6.])
-    return x1, x2, y1, y2'''
-
-#print(get_dataset())
-#print(get_dataset2())
