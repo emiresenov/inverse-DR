@@ -62,5 +62,4 @@ def get_dataset():
     return t, T_scaled, u, T_scaled
 
 print(get_dataset())
-
 print(get_initial_values())
