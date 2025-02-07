@@ -35,8 +35,14 @@ Ts = jnp.array([
      353.0
 ]) # 4-10 series, 293-373 Kelvin
 
-# Normalize temperatures (important!)
-Ts = (Ts - jnp.min(Ts)) / (jnp.max(Ts) - jnp.min(Ts)) 
+T_min = jnp.min(Ts)
+T_max = jnp.max(Ts)
+
+def scale_T(T):
+    return (T - T_min) / (T_max - T_min) 
+
+def rescale_T(T):
+    return T * (T_max - T_min) + T_min
 
 def activation_R0(T):
     return L/(a*A*jnp.exp(-(W)/(k * T)))
@@ -53,17 +59,20 @@ def get_initial_values():
     return jnp.column_stack((times, temperatures))
 
 def get_dataset():
-    t_ref = jnp.linspace(t_start, t_end, n_samples)
-    '''t = jnp.linspace(t_start, t_end, n_samples)
-    t_ref = jnp.tile(t, len(Ts))'''
-    T_ref = jnp.array(Ts)
+    #t_ref = jnp.linspace(t_start, t_end, n_samples) # TODO: REMOVE
+    t = jnp.linspace(t_start, t_end, n_samples)
+    t_ref = jnp.tile(t, len(Ts))
+    T_ref = scale_T(Ts) # Important!
     u1_ref = []
-    u1_ref.append(solution(t_ref, Ts[0])) # TODO: REMOVE
-    '''for T in Ts:
+    #u1_ref.append(solution(t_ref, Ts[0])) # TODO: REMOVE
+    for T in Ts:
         u1 = solution(t, T)
-        u1_ref.append(u1)'''
+        u1_ref.append(u1)
 
      # TODO: Remove. Adding this just to make sure that subnet r0 is functioning properly
     u2_dummy_array = T_ref * 3
 
     return t_ref, T_ref, jnp.concatenate(u1_ref), u2_dummy_array
+
+
+#print(get_dataset())
