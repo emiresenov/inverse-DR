@@ -7,4 +7,4 @@ import optax
 
 x1 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
 
-print(jnp.stack([x1]))
+print(jnp.stack([x1, x1], axis=1))

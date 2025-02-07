@@ -3,7 +3,7 @@ from functools import partial
 import jax.numpy as jnp
 from jax import lax, jit, grad, vmap, jacrev, tree_leaves
 
-from jaxpi.models import InverseIVP, InverseSubnetIVP
+from jaxpi.models import InverseIVP
 from jaxpi.evaluator import BaseEvaluator
 from jaxpi.utils import ntk_fn, flatten_pytree
 
@@ -11,7 +11,7 @@ from matplotlib import pyplot as plt
 
 
 
-class CaseOneField(InverseSubnetIVP):
+class CaseOneField(InverseIVP):
     def __init__(self, config, t_ref, T_ref, u1_ref, u2_dummy):
         super().__init__(config)
         self.t_ref = t_ref
@@ -20,16 +20,16 @@ class CaseOneField(InverseSubnetIVP):
         self.u2_dummy = u2_dummy
         
 
-    def u_net(self, params, t_ref, T_ref):
-        z1 = t_ref.reshape(-1, 1)
-        z2 = T_ref.reshape(-1, 1)
-        u1, u2 = self.state.apply_fn(params, z1, z2)
-        return u1[:, 0], u2[:, 0]
+    def u_net(self, params, t, T):
+        z = jnp.stack([t, T])
+        u1, u2 = self.state.apply_fn(params, z)
+        return u1[0], u2[0]
 
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-        u1_pred, u2_pred = self.u_net(params, self.t_ref, self.T_ref)
+        # In the real case, we do this and only take the first pred for data loss and ignore the second
+        u1_pred, u2_pred = vmap(self.u_net, (None, 0, 0))(params, self.t_ref, self.T_ref)
         data1_loss = jnp.mean((self.u1_ref - u1_pred) ** 2)
         data2_loss = jnp.mean((self.u2_dummy - u2_pred) ** 2)
 
@@ -40,7 +40,7 @@ class CaseOneField(InverseSubnetIVP):
 
     @partial(jit, static_argnums=(0,))
     def compute_l2_error(self, params, u1_test, u2_test):
-        u1_pred, u2_pred = self.u_net(params, self.t_ref, self.T_ref)
+        u1_pred, u2_pred = vmap(self.u_net, (None, 0, 0))(params, self.t_ref, self.T_ref)
         error1 = jnp.linalg.norm(u1_pred - u1_test) / jnp.linalg.norm(u1_test)
         error2 = jnp.linalg.norm(u2_pred - u2_test) / jnp.linalg.norm(u2_test)
         return error1 + error2
@@ -55,7 +55,7 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["l2_error"] = l2_error
 
     def log_preds(self, params):
-        u1_pred, u2_pred = self.model.u_net(params, self.model.t_ref, self.model.T_ref)
+        u1_pred, u2_pred = vmap(self.model.u_net, (None, 0, 0))(params, self.model.t_ref, self.model.T_ref)
 
         fig = plt.figure(figsize=(6, 5))
         plt.scatter(self.model.t_ref, self.model.u1_ref, s=50, alpha=0.9, c='orange')

@@ -9,70 +9,13 @@ from jax.tree_util import tree_flatten, tree_unflatten
 
 np.random.seed(42)
 
-V = 10.0
-R1 = 4.0
-C1 = 0.5
 
-t_start = 0.0
-t_end = 10.0
-n_samples = 25
-
-k = 8.617e-5
-W = 0.75
-b = 0.01
-L = 1e-6
-a = 2000
-A = 200
-
-Ts = jnp.array([
-     293.0, 
-     305.0, 
-     313.0, 
-     315.0, 
-     333.0, 
-     335.0,
-     345.0, 
-     353.0
-]) # 4-10 series, 293-373 Kelvin
-
-T_min = jnp.min(Ts)
-T_max = jnp.max(Ts)
-
-def scale_T(T):
-    return (T - T_min) / (T_max - T_min) 
-
-def rescale_T(T):
-    return T * (T_max - T_min) + T_min
-
-def activation_R0(T):
-    return L/(a*A*jnp.exp(-(W)/(k * T)))
-
-def solution(t, T):
-    return V/activation_R0(T) + (V/R1) * jnp.exp(-t/(R1*C1))
-
-def get_domain():
-    return jnp.array([[t_start, t_end], [min(Ts), max(Ts)]])
-
-def get_initial_values():
-    times = jnp.full(len(Ts), t_start)
-    temperatures = jnp.array(Ts)
-    return jnp.column_stack((times, temperatures))
 
 def get_dataset():
-    #t_ref = jnp.linspace(t_start, t_end, n_samples) # TODO: REMOVE
-    t = jnp.linspace(t_start, t_end, n_samples)
-    t_ref = jnp.tile(t, len(Ts))
-    T_ref = scale_T(Ts) # Important!
-    u1_ref = []
-    #u1_ref.append(solution(t_ref, Ts[0])) # TODO: REMOVE
-    for T in Ts:
-        u1 = solution(t, T)
-        u1_ref.append(u1)
+    x1 = jnp.array([1,2,3,4,5])
+    x2 = jnp.array([1,2,3,4,5])
+    y1 = jnp.power(x1, 2)
+    y2 = jnp.sqrt(x2)
+    return x1, x2, y1, y2
 
-     # TODO: Remove. Adding this just to make sure that subnet r0 is functioning properly
-    u2_dummy_array = T_ref * 3
-
-    return t_ref, T_ref, jnp.concatenate(u1_ref), u2_dummy_array
-
-
-#print(get_dataset())
+print(get_dataset())

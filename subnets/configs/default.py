@@ -77,7 +77,7 @@ def get_config():
     }
 
     # Input shape for initializing Flax models
-    config.input_dim = 1
+    config.input_dim = 2
 
     # Integer for PRNG random seed.
     config.seed = 42
