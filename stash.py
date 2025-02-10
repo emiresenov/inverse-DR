@@ -1,4 +1,4 @@
-def get_dataset2():
+'''def get_dataset2():
     x1 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
     x2 = jnp.array([1.,2.,3.,4.,5.,6.,7.])
     x2 = jnp.array([1.,2.,3.,4.])
@@ -8,7 +8,7 @@ def get_dataset2():
     return x1, x2, y1, y2
 
 
-print(get_dataset())
+print(get_dataset())'''
 
 
 

@@ -34,7 +34,6 @@ def get_dataset():
     t = jnp.tile(jnp.linspace(t_start, t_end, n_samples), len(Ts))
     T = jnp.repeat(jnp.array(Ts), n_samples)
     u = solution(t, T)
-    #T_scaled = scale_T(T) # IMPORTANT
     return t, T, u, activation_R0(T)
 
 
