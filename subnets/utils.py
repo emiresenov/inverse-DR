@@ -10,7 +10,7 @@ C1 = 0.5
 
 t_start = 0.0
 t_end = 10.0
-n_samples = 25
+n_samples = 40
 
 Ts = jnp.array([0,0.5,1,2,3,4,5,6])
 
@@ -39,9 +39,3 @@ def get_dataset():
 #print(get_dataset())
 #print(get_initial_values())
 #print(activation_R0(Ts))
-
-
-#print(activation_R0(0))
-
-
-#print(get_dataset())

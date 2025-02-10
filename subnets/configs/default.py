@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "subnets impl"
-    wandb.name = "new placeholder, better numerics"
+    wandb.project = "Subnets placeholder"
+    wandb.name = "more samples?"
     wandb.tag = None
 
     # Arch
@@ -39,8 +39,8 @@ def get_config():
 
     # Training
     config.training = training = ml_collections.ConfigDict()
-    training.max_steps = 30000
-    training.batch_size_per_device = 32
+    training.max_steps = 50000
+    training.batch_size_per_device = 4096
 
     # Weighting
     config.weighting = weighting = ml_collections.ConfigDict()
@@ -48,7 +48,7 @@ def get_config():
     weighting.init_weights = ml_collections.ConfigDict({
         "data1": 1.0, 
         "data2": 1.0,
-        #"ics": 1.0
+        #"ics": 1.0,
         #"res": 1.0
         })
     weighting.momentum = 0.9
