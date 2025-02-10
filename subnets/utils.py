@@ -10,13 +10,15 @@ C1 = 0.5
 
 t_start = 0.0
 t_end = 10.0
-n_samples = 40
+n_samples = 50
+
 
 Ts = jnp.array([1,2,3,4,5,6,7,8])
 
 
 def activation_R0(T):
-    return -T + 10
+    #return -T + 10 # This works, but unstable training
+    return 10*jnp.exp(-0.2*T)
 
 def solution(t, T):
     return V/activation_R0(T) + (V/R1) * jnp.exp(-t/(R1*C1))
@@ -34,6 +36,7 @@ def get_dataset():
     T = jnp.repeat(jnp.array(Ts), n_samples)
     u = solution(t, T)
     return t, T, u, activation_R0(T)
+
 
 
 #print(get_dataset())

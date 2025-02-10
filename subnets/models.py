@@ -68,7 +68,8 @@ class CaseOneField(InverseIVP):
         #loss_dict = {"data1": data1_loss, "data2": data2_loss}
         #loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss}
         #loss_dict = {"data1": data1_loss, "data2": data2_loss, "res": res_loss}
-        loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss, "res": res_loss}
+        loss_dict = {"data1": data1_loss, "ics": ics_loss, "res": res_loss}
+        #loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss, "res": res_loss}
 
         return loss_dict
 
@@ -77,8 +78,9 @@ class CaseOneField(InverseIVP):
     def compute_l2_error(self, params, u1_test, u2_test):
         u1_pred, u2_pred = vmap(self.u_net, (None, 0, 0))(params, self.t_ref, self.T_ref)
         error1 = jnp.linalg.norm(u1_pred - u1_test) / jnp.linalg.norm(u1_test)
-        error2 = jnp.linalg.norm(u2_pred - u2_test) / jnp.linalg.norm(u2_test)
-        return error1 + error2
+        #error2 = jnp.linalg.norm(u2_pred - u2_test) / jnp.linalg.norm(u2_test)
+        #return error1 + error2
+        return error1
 
 
 class CaseOneFieldEvaluator(BaseEvaluator):
