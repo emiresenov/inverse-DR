@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "subnets testing"
-    wandb.name = "real data"
+    wandb.project = "subnets impl"
+    wandb.name = "retest fix 3d"
     wandb.tag = None
 
     # Arch

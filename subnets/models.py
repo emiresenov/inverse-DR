@@ -8,7 +8,10 @@ from jaxpi.evaluator import BaseEvaluator
 from jaxpi.utils import ntk_fn, flatten_pytree
 
 from matplotlib import pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
+from mpl_toolkits.mplot3d.art3d import Line3DCollection
 
+import wandb
 
 
 class CaseOneField(InverseIVP):
@@ -58,9 +61,14 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         u1_pred, u2_pred = vmap(self.model.u_net, (None, 0, 0))(params, self.model.t_ref, self.model.T_ref)
 
         fig = plt.figure(figsize=(6, 5))
-        plt.scatter(self.model.t_ref, self.model.u1_ref, s=50, alpha=0.9, c='orange')
-        plt.plot(self.model.t_ref, u1_pred, linewidth=8, c='black')
-        self.log_dict["u1_pred"] = fig
+        ax = fig.add_subplot(111, projection='3d')
+        ax.scatter(self.model.t_ref, self.model.T_ref, self.model.u1_ref, s=50, alpha=0.9, c='orange')
+        points = jnp.column_stack((self.model.t_ref, self.model.T_ref, u1_pred))
+        segments = jnp.split(points, jnp.unique(self.model.T_ref, return_index=True)[1][1:])
+        line_segments = [list(zip(seg[:, 0], seg[:, 1], seg[:, 2])) for seg in segments]
+        line_collection = Line3DCollection(line_segments, colors='black', linewidths=2)
+        ax.add_collection(line_collection)
+        self.log_dict["u1_pred"] = wandb.Image(fig)
         plt.close()
 
         fig = plt.figure(figsize=(6, 5))

@@ -61,5 +61,5 @@ def get_dataset():
     T_scaled = scale_T(T) # IMPORTANT
     return t, T_scaled, u, T_scaled
 
-print(get_dataset())
-print(get_initial_values())
+#print(get_dataset())
+#print(get_initial_values())
