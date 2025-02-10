@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "subnets impl"
-    wandb.name = "retest fix 3d"
+    wandb.name = "Placeholder R0 function"
     wandb.tag = None
 
     # Arch
