@@ -10,14 +10,13 @@ C1 = 0.5
 
 t_start = 0.0
 t_end = 10.0
-n_samples = 15
+n_samples = 25
 
-
-Ts = jnp.array([0.175, 0.5, 1, 2, 4, 6, 8, 10])
+Ts = jnp.array([0,0.5,1,2,3,4,5,6])
 
 
 def activation_R0(T):
-    return 5/jnp.sqrt(T)
+    return 6*jnp.exp(-0.5*T)
 
 def solution(t, T):
     return V/activation_R0(T) + (V/R1) * jnp.exp(-t/(R1*C1))
@@ -38,5 +37,11 @@ def get_dataset():
 
 
 #print(get_dataset())
-'''print(get_initial_values())
-print(activation_R0(Ts))'''
+#print(get_initial_values())
+#print(activation_R0(Ts))
+
+
+#print(activation_R0(0))
+
+
+#print(get_dataset())

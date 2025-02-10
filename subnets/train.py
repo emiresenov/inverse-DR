@@ -26,7 +26,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     logger = Logger()
 
     # Get dataset
-    t_ref, T_ref, u1_ref, u2_dummy = get_dataset()
+    t_ref, T_ref, u1_ref, u2_ref = get_dataset()
 
     # Define domain
     t0_ref = t_ref[0]
@@ -40,7 +40,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
     res_sampler = iter(UniformSampler(dom, config.training.batch_size_per_device))
 
     # Initialize model
-    model = models.CaseOneField(config, t_ref, T_ref, u1_ref, u2_dummy)
+    model = models.CaseOneField(config, t_ref, T_ref, u1_ref, u2_ref)
 
     # Initialize evaluator
     evaluator = models.CaseOneFieldEvaluator(config, model)
@@ -61,7 +61,7 @@ def train_and_evaluate(config: ml_collections.ConfigDict, workdir: str):
                 # Get the first replica of the state and batch
                 state = jax.device_get(tree_map(lambda x: x[0], model.state))
                 batch = jax.device_get(tree_map(lambda x: x[0], batch))
-                log_dict = evaluator(state, batch, u1_ref, u2_dummy)
+                log_dict = evaluator(state, batch, u1_ref, u2_ref)
                 wandb.log(log_dict, step)
 
                 end_time = time.time()

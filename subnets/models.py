@@ -13,30 +13,62 @@ from mpl_toolkits.mplot3d.art3d import Line3DCollection
 
 import wandb
 
+from utils import V, get_initial_values
+
 
 class CaseOneField(InverseIVP):
-    def __init__(self, config, t_ref, T_ref, u1_ref, u2_dummy):
+    def __init__(self, config, t_ref, T_ref, u1_ref, u2_ref):
         super().__init__(config)
         self.t_ref = t_ref
         self.T_ref = T_ref
         self.u1_ref = u1_ref
-        self.u2_dummy = u2_dummy
+        self.u2_ref = u2_ref
+
+        self.u_pred_fn = vmap(self.u_net, (None, 0, 0))
+        #self.r_pred_fn = vmap(vmap(self.r_net, (None, 0, None)), (None, None, 0))
+        #self.r_pred_fn = vmap(self.r_net, (None, 0, 0))
         
 
     def u_net(self, params, t, T):
         z = jnp.stack([t, T])
         u1, u2 = self.state.apply_fn(params, z)
         return u1[0], u2[0]
+    
+    def u1_net(self, params, t, T):
+        u1, _ = self.u_net(params, t, T)
+        return u1
+    
+    def r_net(self, params, t, T):
+        u1, u2 = self.u_net(params, t, T)
+        u1_t = grad(self.u1_net, argnums=1)(params, t, T)
+        R1 = params['params']['R1']
+        C1 = params['params']['C1']
+        return u1_t + (u1 - V/u2)/(R1*C1)
 
 
     @partial(jit, static_argnums=(0,))
     def losses(self, params, batch):
-        # In the real case, we do this and only take the first pred for data loss and ignore the second
+
+        # Data loss
         u1_pred, u2_pred = vmap(self.u_net, (None, 0, 0))(params, self.t_ref, self.T_ref)
         data1_loss = jnp.mean((self.u1_ref - u1_pred) ** 2)
-        data2_loss = jnp.mean((self.u2_dummy - u2_pred) ** 2)
+        data2_loss = jnp.mean((self.u2_ref - u2_pred) ** 2)
+
+        # IC loss
+        t0, T0 = get_initial_values()
+        u1_t0, u2_t0 = self.u_pred_fn(params, t0, T0)
+        R1 = params['params']['R1']
+        ic = V/u2_t0 + V/R1
+        ics_loss = jnp.mean((u1_t0 - ic) ** 2)
+
+        # Res loss
+        #r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1])
+        #res_loss = jnp.mean((r_pred) ** 2)
 
         loss_dict = {"data1": data1_loss, "data2": data2_loss}
+        #loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss}
+        #loss_dict = {"data1": data1_loss, "data2": data2_loss, "res": res_loss}
+        #loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss, "res": res_loss}
 
         return loss_dict
 
@@ -60,6 +92,7 @@ class CaseOneFieldEvaluator(BaseEvaluator):
     def log_preds(self, params):
         u1_pred, u2_pred = vmap(self.model.u_net, (None, 0, 0))(params, self.model.t_ref, self.model.T_ref)
 
+        # u1 plot in 3D
         fig = plt.figure(figsize=(6, 5))
         ax = fig.add_subplot(111, projection='3d')
         ax.scatter(self.model.t_ref, self.model.T_ref, self.model.u1_ref, s=50, alpha=0.9, c='orange')
@@ -71,8 +104,9 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["u1_pred"] = wandb.Image(fig)
         plt.close()
 
+        # u2 plot in 2D
         fig = plt.figure(figsize=(6, 5))
-        plt.scatter(self.model.T_ref, self.model.u2_dummy, s=50, alpha=0.9, c='orange')
+        plt.scatter(self.model.T_ref, self.model.u2_ref, s=50, alpha=0.9, c='orange')
         plt.plot(self.model.T_ref, u2_pred, linewidth=8, c='black')
         self.log_dict["u2_pred"] = fig
         plt.close()
@@ -82,11 +116,11 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         self.log_dict["C1"] = params['params']['C1'][0]
         
 
-    def __call__(self, state, batch, u1_ref, u2_dummy):
+    def __call__(self, state, batch, u1_ref, u2_ref):
         self.log_dict = super().__call__(state, batch)
 
         if self.config.logging.log_errors:
-            self.log_errors(state.params, u1_ref, u2_dummy)
+            self.log_errors(state.params, u1_ref, u2_ref)
 
         if self.config.logging.log_preds:
             self.log_preds(state.params)
