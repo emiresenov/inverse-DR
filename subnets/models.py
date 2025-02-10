@@ -54,7 +54,7 @@ class CaseOneField(InverseIVP):
         data1_loss = jnp.mean((self.u1_ref - u1_pred) ** 2)
         data2_loss = jnp.mean((self.u2_ref - u2_pred) ** 2)
 
-        '''# IC loss
+        # IC loss
         t0, T0 = get_initial_values()
         u1_t0, u2_t0 = self.u_pred_fn(params, t0, T0)
         R1 = params['params']['R1']
@@ -64,11 +64,11 @@ class CaseOneField(InverseIVP):
         # Res loss
         r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1])
         res_loss = jnp.mean((r_pred) ** 2)
-'''
-        loss_dict = {"data1": data1_loss, "data2": data2_loss}
+
+        #loss_dict = {"data1": data1_loss, "data2": data2_loss}
         #loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss}
         #loss_dict = {"data1": data1_loss, "data2": data2_loss, "res": res_loss}
-        #loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss, "res": res_loss}
+        loss_dict = {"data1": data1_loss, "data2": data2_loss, "ics": ics_loss, "res": res_loss}
 
         return loss_dict
 

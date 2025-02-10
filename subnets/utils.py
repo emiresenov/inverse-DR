@@ -12,11 +12,11 @@ t_start = 0.0
 t_end = 10.0
 n_samples = 40
 
-Ts = jnp.array([0,0.5,1,2,3,4,5,6])
+Ts = jnp.array([1,2,3,4,5,6,7,8])
 
 
 def activation_R0(T):
-    return 6*jnp.exp(-0.5*T)
+    return -T + 10
 
 def solution(t, T):
     return V/activation_R0(T) + (V/R1) * jnp.exp(-t/(R1*C1))

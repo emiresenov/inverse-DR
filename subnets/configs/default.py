@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Subnets placeholder"
-    wandb.name = "more samples?"
+    wandb.project = "Placeholder tests"
+    wandb.name = "No lax stop grad"
     wandb.tag = None
 
     # Arch
@@ -48,8 +48,8 @@ def get_config():
     weighting.init_weights = ml_collections.ConfigDict({
         "data1": 1.0, 
         "data2": 1.0,
-        #"ics": 1.0,
-        #"res": 1.0
+        "ics": 1.0,
+        "res": 1.0
         })
     weighting.momentum = 0.9
     weighting.update_every_steps = 1000
