@@ -12,7 +12,7 @@ def get_config():
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
     wandb.project = "Placeholder tests"
-    wandb.name = "Test nonlinear without data loss + ic data"
+    wandb.name = "retest with ic data"
     wandb.tag = None
 
     # Arch
