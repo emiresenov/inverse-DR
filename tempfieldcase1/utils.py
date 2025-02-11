@@ -12,7 +12,7 @@ t_start = 0.0
 t_end = 10.0
 n_samples = 50
 
-Ts = jnp.array([1,2,3,4,5,6,7,8])
+Ts = jnp.linspace(0, 8, 10)
 
 
 def activation_R0(T):

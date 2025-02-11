@@ -96,6 +96,9 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         line_segments = [list(zip(seg[:, 0], seg[:, 1], seg[:, 2])) for seg in segments]
         line_collection = Line3DCollection(line_segments, colors='black', linewidths=2)
         ax.add_collection(line_collection)
+        ax.set_xlabel("Time (t)")
+        ax.set_ylabel("Temperature (T)")
+        ax.set_zlabel("Current (I)")
         self.log_dict["u1_pred"] = wandb.Image(fig)
         plt.close()
 
@@ -103,7 +106,7 @@ class CaseOneFieldEvaluator(BaseEvaluator):
         fig = plt.figure(figsize=(6, 5))
         plt.scatter(self.model.T_ref, self.model.u2_ref, s=50, alpha=0.9, c='orange')
         plt.plot(self.model.T_ref, u2_pred, linewidth=8, c='black')
-        self.log_dict["u2_pred"] = fig
+        self.log_dict["R0 subnet"] = fig
         plt.close()
     
     def log_inv_params(self, params):
