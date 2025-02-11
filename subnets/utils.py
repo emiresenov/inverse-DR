@@ -37,7 +37,12 @@ def get_dataset():
     u = solution(t, T)
     return t, T, u, activation_R0(T)
 
+def get_u0():
+    t0s = jnp.zeros(len(Ts))
+    return solution(t0s, Ts)
 
+
+print(get_u0())
 
 #print(get_dataset())
 #print(get_initial_values())

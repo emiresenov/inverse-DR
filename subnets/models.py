@@ -13,7 +13,7 @@ from mpl_toolkits.mplot3d.art3d import Line3DCollection
 
 import wandb
 
-from utils import V, get_initial_values
+from utils import V, get_initial_values, get_u0
 
 
 class CaseOneField(InverseIVP):
@@ -23,6 +23,8 @@ class CaseOneField(InverseIVP):
         self.T_ref = T_ref
         self.u1_ref = u1_ref
         self.u2_ref = u2_ref
+
+        self.u0_ref = get_u0()
 
         self.u_pred_fn = vmap(self.u_net, (None, 0, 0))
         #self.r_pred_fn = vmap(vmap(self.r_net, (None, 0, None)), (None, None, 0))
@@ -59,7 +61,7 @@ class CaseOneField(InverseIVP):
         u1_t0, u2_t0 = self.u_pred_fn(params, t0, T0)
         R1 = params['params']['R1']
         ic = V/u2_t0 + V/R1
-        ics_loss = jnp.mean((u1_t0 - ic) ** 2)
+        ics_loss = jnp.mean((self.u0_ref - ic) ** 2)
 
         # Res loss
         r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1])
