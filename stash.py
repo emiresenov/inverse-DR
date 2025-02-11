@@ -87,3 +87,52 @@ def get_dataset():
 print(activation_R0(scale_T(Ts)))
 '''
 
+
+
+
+'''class TwoNetworkModel(nn.Module):
+    config: dict
+
+    def setup(self):
+        self.net1 = Mlp(**self.config)
+        self.net2 = Mlp(**self.config)
+
+    def __call__(self, x1, x2):
+        y1 = self.net1(x1)
+        y2 = self.net2(x2)
+        return y1, y2'''
+
+
+
+# TODO : REMOVE IF DEPRECATED
+'''def _create_shared_train_state(config, inverse_mode=False):
+    # Initialize network
+    arch = _create_arch(config.arch)
+    x = jnp.ones(config.input_dim)
+    params = arch.init(random.PRNGKey(config.seed), x, x)
+    if inverse_mode:
+        params['params'].update(config.inverse.params)
+
+    # Initialize optax optimizer
+    tx = _create_optimizer(config.optim)
+
+    # Convert config dict to dict
+    init_weights = dict(config.weighting.init_weights)
+
+    state = TrainState.create(
+        apply_fn=arch.apply,
+        params=params,
+        tx=tx,
+        weights=init_weights,
+        momentum=config.weighting.momentum,
+    )
+
+    return jax_utils.replicate(state)'''
+
+
+
+    # TODO: REMOVE IF NOT NEEDED (DEPRECATED)
+'''class InverseSubnetIVP(PINN):
+    def __init__(self, config):
+        self.config = config
+        self.state = _create_shared_train_state(config, inverse_mode=True)'''
