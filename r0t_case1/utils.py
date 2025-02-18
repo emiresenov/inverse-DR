@@ -14,7 +14,7 @@ n_samples = 25
 
 Ts = jnp.linspace(0, 8, 10)
 
-p_noise = 0.1
+p_noise = 0.0
 
 def activation_R0(T):
     return 10*jnp.exp(-0.2*T)
@@ -42,3 +42,5 @@ def get_dataset():
 def get_ic():
     t0s = jnp.zeros(len(Ts))
     return solution(t0s, Ts)
+
+print(get_dataset())
