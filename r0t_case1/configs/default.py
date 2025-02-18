@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 1 T-field scaled T test"
-    wandb.name = "check that unscaled works"
+    wandb.project = "Case 1 T-field + noise"
+    wandb.name = "scale=0.5, T_n = 4"
     wandb.tag = None
 
     # Arch
