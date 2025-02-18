@@ -64,6 +64,9 @@ class CaseOneField(InverseIVP):
         r_pred = self.r_pred_fn(params, batch[:, 0], batch[:, 1])
         res_loss = jnp.mean((r_pred) ** 2)
 
+        #l1_penalty = 1e-2 * sum(jnp.sum(jnp.abs(w)) for w in tree_leaves(params))
+        #loss_dict = {"data": data_loss + l1_penalty, "ics": ics_loss, "res": res_loss}
+
         loss_dict = {"data": data_loss, "ics": ics_loss, "res": res_loss}
 
         return loss_dict
