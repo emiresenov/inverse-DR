@@ -35,8 +35,8 @@ def get_dataset():
     T = jnp.repeat(jnp.array(Ts), n_samples)
     u1 = solution(t, T)
     #noise = np.random.normal(loc=0.0, scale=p_noise*jnp.mean(u1), size=u1.shape)
-    noise = np.random.normal(loc=0.0, scale=p_noise, size=u1.shape)
-    u1 = u1 + noise
+    #noise = np.random.normal(loc=0.0, scale=p_noise, size=u1.shape)
+    #u1 = u1 + noise
     u2 = activation_R0(T)
     return t, T, u1, u2
 
