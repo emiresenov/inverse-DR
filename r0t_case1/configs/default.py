@@ -11,15 +11,15 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 1 T-field Shift test"
-    wandb.name = "test upscale"
+    wandb.project = "25Feb"
+    wandb.name = "real act, 293-320"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
     arch.arch_name = "TwoNetworkModel"
     arch.num_layers = 1
-    arch.hidden_dim = 15
+    arch.hidden_dim = 20
     arch.out_dim = 1
     arch.activation = "tanh"
     arch.periodicity = None
@@ -32,7 +32,7 @@ def get_config():
     optim.beta1 = 0.9
     optim.beta2 = 0.999
     optim.eps = 1e-8
-    optim.learning_rate = 1e-1
+    optim.learning_rate = 1e-2
     optim.decay_rate = 0.9
     optim.decay_steps = 1000
     optim.grad_accum_steps = 0
