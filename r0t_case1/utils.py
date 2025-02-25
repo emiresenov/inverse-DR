@@ -65,7 +65,7 @@ u1 = solution(t, T)
 print(jnp.log(u1))'''
 
 
-
+print(get_ic())
 
 
 
