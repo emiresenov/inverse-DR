@@ -20,7 +20,7 @@ k = 8e-5
 Ts = jnp.linspace(293.15, 353.15, 10)
 t_scale = 330.15
 
-p_noise = 0.5
+p_noise = 0.2
 
 def activation_R0(T):
     return a*jnp.exp(W/(k*T))
@@ -40,16 +40,14 @@ def get_dataset():
     t = jnp.tile(jnp.linspace(t_start, t_end, n_samples), len(Ts))
     T = jnp.repeat(jnp.array(Ts), n_samples)
     u1 = solution(t, T)
-    #noise = np.random.normal(loc=0.0, scale=p_noise*jnp.mean(u1), size=u1.shape)
+    noise = np.random.normal(loc=0.0, scale=1.0, size=u1.shape)
     #noise = np.random.normal(loc=0.0, scale=p_noise, size=u1.shape)
-    #u1 = u1 + noise
+    u1 = u1 + noise
     u2 = activation_R0(T)
     return t, T / t_scale, u1, u2 # TODO:RM
 
 def get_ic_ref():
     t0s = jnp.repeat(t_start, len(Ts))
-    print(f'{t0s=}')
-    print(f'{Ts=}')
     return solution(t0s, Ts)
 
 

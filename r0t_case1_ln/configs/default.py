@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "25Feb"
-    wandb.name = "353 K"
+    wandb.project = "27Feb, noise ln"
+    wandb.name = "0.2, sigma=1"
     wandb.tag = None
 
     # Arch
