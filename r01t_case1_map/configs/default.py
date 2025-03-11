@@ -11,13 +11,13 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "single arch"
-    wandb.name = "first"
+    wandb.project = "Case 1 R0,R1 – constant mult"
+    wandb.name = "mapped subnet, lower lr"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
-    arch.arch_name = "TwoNetworkModel"
+    arch.arch_name = "Mapped"
     arch.num_layers = 1
     arch.hidden_dim = 15
     arch.out_dim = 1
@@ -76,7 +76,6 @@ def get_config():
     # Inverse parameters
     config.inverse = inverse = ml_collections.ConfigDict()
     inverse.params = {
-        'R1' : jnp.array([1.]),
         'C1' : jnp.array([1.])
     }
 

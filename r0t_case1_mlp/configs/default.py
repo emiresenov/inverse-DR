@@ -11,16 +11,16 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "single arch"
-    wandb.name = "first"
+    wandb.project = "25Feb"
+    wandb.name = "3 layers, 20 neurons"
     wandb.tag = None
 
     # Arch
     config.arch = arch = ml_collections.ConfigDict()
-    arch.arch_name = "TwoNetworkModel"
-    arch.num_layers = 1
-    arch.hidden_dim = 15
-    arch.out_dim = 1
+    arch.arch_name = "Mlp"
+    arch.num_layers = 3
+    arch.hidden_dim = 20
+    arch.out_dim = 2
     arch.activation = "tanh"
     arch.periodicity = None
     arch.fourier_emb = None
