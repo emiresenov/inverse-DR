@@ -9,8 +9,8 @@ R1 = 4.0
 C1 = 0.5
 
 t_start = 0.0
-t_end = 0.2
-n_samples = 25
+t_end = 3
+n_samples = 6
 
 
 a = 1e-13
@@ -48,7 +48,8 @@ def get_dataset():
     #noise = np.random.normal(loc=0.0, scale=p_noise, size=u1.shape)
     #u1 = u1 + noise
     u2 = activation_R0(T)
-    return t, T / t_scale, u1, u2 # TODO:RM
+    u3 = activation_R1(T)
+    return t, T / t_scale, u1, u2, u3 # TODO:RM
 
 def get_ic_ref():
     t0s = jnp.repeat(t_start, len(Ts))
@@ -63,3 +64,7 @@ print()
 print(get_ic_dom())
 print()
 print(get_ic_ref())'''
+
+for i in get_dataset():
+    print(i)
+    print()
