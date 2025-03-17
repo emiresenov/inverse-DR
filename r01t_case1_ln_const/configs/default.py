@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "r0r1t ln"
-    wandb.name = "R1=0.1, t=0.2"
+    wandb.project = "Demo - very small values"
+    wandb.name = "293-323 K"
     wandb.tag = None
 
     # Arch
@@ -66,7 +66,7 @@ def get_config():
     config.logging = logging = ml_collections.ConfigDict()
     logging.log_every_steps = 1000
     logging.log_errors = True
-    logging.log_losses = False
+    logging.log_losses = True
     logging.log_weights = False
     logging.log_grads = False
     logging.log_ntk = False
