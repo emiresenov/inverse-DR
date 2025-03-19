@@ -11,8 +11,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Demo - very small values"
-    wandb.name = "293-323 K"
+    wandb.project = "293-323 K, noise"
+    wandb.name = "inverse scaling"
     wandb.tag = None
 
     # Arch

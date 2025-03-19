@@ -44,10 +44,10 @@ def get_dataset():
     t = jnp.tile(jnp.linspace(t_start, t_end, n_samples), len(Ts))
     T = jnp.repeat(jnp.array(Ts), n_samples)
     u1 = solution(t, T)
-    #noise = np.random.normal(loc=0.0, scale=1.0, size=u1.shape)
-    #noise = np.random.normal(loc=0.0, scale=p_noise, size=u1.shape)
-    #u1 = u1 + noise
     u2 = activation_R0(T)
+    noise_level = p_noise / (jnp.abs(u1) + 1e-3)
+    noise = noise_level * np.random.normal(size=u1.shape)
+    u1 = u1 + noise
     return t, T / t_scale, u1, u2 # TODO:RM
 
 def get_ic_ref():
