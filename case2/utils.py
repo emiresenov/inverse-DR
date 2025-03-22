@@ -1,7 +1,7 @@
 import jax.numpy as jnp
 import numpy as np
 
-#np.random.seed(42)
+np.random.seed(42)
 
 V = 10.0
 R0 = 25.0
@@ -13,7 +13,7 @@ C2 = 0.5
 
 t_start = 0
 t_end = 10.0
-n_samples = 20
+n_samples = 50
 
 
 def solution(t):
@@ -24,5 +24,7 @@ def solution(t):
 def get_dataset():
     t = jnp.linspace(t_start, t_end, n_samples)
     u = solution(t)
+    noise = np.random.normal(0, 0.2, len(t))
+    u = solution(t) + noise
     return u, t
 
