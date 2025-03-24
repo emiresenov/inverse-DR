@@ -76,7 +76,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     line_proxy = mlines.Line2D([], [], color='blue', linewidth=2, label='PINN Predictions')
 
-    ax.set_xlabel("Time (t)")
+    ax.set_xlabel("Time (s)")
     ax.set_ylabel("Temperature (K)")
     ax.set_zlabel("Current (A)")
 
