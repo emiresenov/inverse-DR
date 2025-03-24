@@ -2,109 +2,91 @@ import os
 import ml_collections
 import jax.numpy as jnp
 import matplotlib.pyplot as plt
+import seaborn as sns
+from mpl_toolkits.mplot3d.art3d import Line3DCollection
+from matplotlib import rcParams
+import matplotlib.lines as mlines
 from jaxpi.utils import restore_checkpoint
 import models
-from utils import get_dataset
-import wandb
-import pandas as pd
-import seaborn as sns
-import matplotlib.lines as mlines
-from mpl_toolkits.mplot3d.art3d import Line3DCollection
+from utils import get_dataset, t_scale
 
-from utils import R1, C1
+
+from matplotlib.ticker import FuncFormatter
+
+# Custom formatter to scale T axis tick labels by 330.15
+def scale_temp(x, pos):
+    return f"{x * t_scale:.1f}"
+
+
 
 def evaluate(config: ml_collections.ConfigDict, workdir: str):
-    t_star, T_star, u1_ref, u2_ref = get_dataset()
-    
-    '''
-    Plot and save predictions
-    '''
+    """
+    Load dataset, restore the PINN model, predict current, and plot 
+    both measurements and predictions in 3D with a publication-quality style.
+    """
+    sns.set_style("whitegrid")
+    sns.set_context("paper", font_scale=1.2)
+    rcParams["font.family"] = "serif"
+    rcParams["font.sans-serif"] = ["Arial"]  # or another preferred font
 
-    # Restore model
+    t_star, T_star, u1_ref, u2_ref = get_dataset()
+
     model = models.CaseOneField(config, t_star, T_star, u1_ref, u2_ref)
     ckpt_path = os.path.join(workdir, config.wandb.name, "ckpt")
     ckpt_path = os.path.abspath(ckpt_path)
     model.state = restore_checkpoint(model.state, ckpt_path)
     params = model.state.params
 
+
     u1_pred, u2_pred = model.u_pred_fn(params, t_star, T_star)
 
-    # u1 plot in 3D
-    fig = plt.figure(figsize=(6, 5))
+
+    fig = plt.figure(figsize=(6,5))
     ax = fig.add_subplot(111, projection='3d')
-    ax.scatter(t_star, T_star, u1_ref, s=50, alpha=0.9, c='orange')
+
+
+    scatter_plot = ax.scatter(
+        t_star, T_star, u1_ref, 
+        s=50, 
+        alpha=0.8, 
+        c='orange', 
+        edgecolor='k', 
+        linewidth=0.5, 
+        label="Measurements"
+    )
+
     points = jnp.column_stack((t_star, T_star, u1_pred))
-    segments = jnp.split(points, jnp.unique(T_star, return_index=True)[1][1:])
+    unique_temps, temp_indices = jnp.unique(T_star, return_index=True)
+    segments = jnp.split(points, temp_indices[1:])
     line_segments = [list(zip(seg[:, 0], seg[:, 1], seg[:, 2])) for seg in segments]
-    line_collection = Line3DCollection(line_segments, colors='black', linewidths=2)
+
+    line_collection = Line3DCollection(
+        line_segments, 
+        colors='blue', 
+        linewidths=2
+    )
+
+    # Format axis labels only
+    from matplotlib.ticker import FuncFormatter
+    def scale_temp(x, pos):
+        return f"{x * t_scale:.1f}"
+    ax.yaxis.set_major_formatter(FuncFormatter(scale_temp))
     ax.add_collection(line_collection)
+
+
+    line_proxy = mlines.Line2D([], [], color='blue', linewidth=2, label='PINN Predictions')
+
     ax.set_xlabel("Time (t)")
-    ax.set_ylabel("Temperature (T)")
-    ax.set_zlabel("Current (I)")
-    plt.close()
+    ax.set_ylabel("Temperature (K)")
+    ax.set_zlabel("Current (A)")
 
-    # Save the figure
+    ax.view_init(elev=20, azim=-60)  # Adjust for best visibility
+
+    ax.legend([scatter_plot, line_proxy], ["Measurements", "PINN Predictions"], loc="upper left")
+
     save_dir = os.path.join(workdir, "figures", config.wandb.name)
     if not os.path.isdir(save_dir):
         os.makedirs(save_dir)
-
     fig_path = os.path.join(save_dir, "r01t_case1.pdf")
-    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
-
-
-
-    '''
-    Plot and save inverse parameter convergence
-    '''
-
-    '''# Initialize API
-    api = wandb.Api()
-    runs = api.runs(f"{config.wandb.project}")
-
-    # Get the last run
-    if runs:
-        last_run = runs[-1] 
-        run_id = last_run.id
-        print(f"Last run ID: {run_id}")
-    else:
-        print("No runs found in the project.")
-    
-    history = last_run.history()
-
-    # Convert to DataFrame for easy manipulation
-    df = pd.DataFrame(history)'''
-    '''history.to_csv("wandb_run_history.csv", index=False)
-    print(df.head())  # Display the data
-    print(df.columns.tolist())
-    print(df['R'])'''
-
-
-    '''plt.rc('font', family='serif')
-    plt.rc('font', size=14)
-    plt.rc('axes', titlesize=16)
-    plt.rc('axes', labelsize=12)
-    plt.rc('xtick', labelsize=12)
-    plt.rc('ytick', labelsize=12)
-    plt.rc('legend', fontsize=12)
-    plt.rc('figure', titlesize=16)
-
-    fig = plt.figure(figsize=(15, 8))
-
-
-    linecol = 'deepskyblue'
-    dashcolor = '#BB00BB'
-
-
-    # Update x-axis ticks for all axes
-    x_ticks = [0, 20, 40, 60, 80, 100]
-    x_labels = ['0', '10k', '20k', '30k', '40k', '50k']
-
-
-
-    # Save the figure
-    save_dir = os.path.join(workdir, "figures", config.wandb.name)
-    if not os.path.isdir(save_dir):
-        os.makedirs(save_dir)
-
-    fig_path = os.path.join(save_dir, "r01tcase1params.pdf")
-    fig.savefig(fig_path, bbox_inches="tight", dpi=300)'''
+    fig.savefig(fig_path, dpi=300)
+    plt.close(fig)
