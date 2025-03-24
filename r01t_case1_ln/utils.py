@@ -1,6 +1,5 @@
 import jax.numpy as jnp
 import numpy as np
-from jax.tree_util import tree_flatten, tree_unflatten
 
 np.random.seed(42)
 
@@ -11,7 +10,6 @@ C1 = 0.5
 t_start = 0.0
 t_end = 3
 n_samples = 20
-
 
 a = 1e-13
 W = 0.75
@@ -33,11 +31,11 @@ def solution(t, T):
     return jnp.log(V/activation_R0(T) + (V/R1) * jnp.exp(-t/(R1*C1)))
 
 def get_domain():
-    return jnp.array([[t_start, t_end], [min(Ts)/t_scale, max(Ts)/t_scale]]) # TODO: RM
+    return jnp.array([[t_start, t_end], [min(Ts)/t_scale, max(Ts)/t_scale]])
 
 def get_ic_dom():
     t0 = jnp.full(len(Ts), t_start)
-    T0 = jnp.array(Ts) / t_scale # TODO: RM
+    T0 = jnp.array(Ts) / t_scale
     return t0, T0
 
 def get_dataset():
@@ -48,7 +46,7 @@ def get_dataset():
     noise_level = p_noise / (jnp.abs(u1) + 1e-3)
     noise = noise_level * np.random.normal(size=u1.shape)
     u1 = u1 + noise
-    return t, T / t_scale, u1, u2 # TODO:RM
+    return t, T / t_scale, u1, u2
 
 def get_ic_ref():
     t0s = jnp.repeat(t_start, len(Ts))
