@@ -8,7 +8,9 @@ from matplotlib import rcParams
 import matplotlib.lines as mlines
 from jaxpi.utils import restore_checkpoint
 import models
-from utils import get_dataset, t_scale
+from utils import get_dataset, t_scale, C1
+import wandb
+import pandas as pd
 
 
 from matplotlib.ticker import FuncFormatter
@@ -120,5 +122,73 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
         os.makedirs(save_dir)
 
     fig_path = os.path.join(save_dir, "r0(T).pdf")
+    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
+    plt.close(fig)
+
+    '''
+    Plot and save inverse parameter convergence
+    '''
+
+    # Initialize API
+    api = wandb.Api()
+    runs = api.runs(f"{config.wandb.project}")
+
+    # Get the last run
+    if runs:
+        last_run = runs[-1]
+        run_id = last_run.id
+        print(f"Last run ID: {run_id}")
+    else:
+        print("No runs found in the project.")
+
+    history = last_run.history()
+    df = pd.DataFrame(history)
+
+    # Plot style settings
+    plt.rc('font', family='serif')
+    plt.rc('font', size=14)
+    plt.rc('axes', titlesize=16)
+    plt.rc('axes', labelsize=12)
+    plt.rc('xtick', labelsize=12)
+    plt.rc('ytick', labelsize=12)
+    plt.rc('legend', fontsize=12)
+    plt.rc('figure', titlesize=16)
+
+    # Define colors
+    linecol = 'deepskyblue'
+    dashcolor = '#BB00BB'
+
+    # Plot
+    fig, ax = plt.subplots(figsize=(3, 2.5))
+    sns.lineplot(data=df, x=df.index, y='C1', label='Estimated $C1$', ax=ax, linewidth=3, color=linecol)
+    ax.axhline(C1, color=dashcolor, linestyle='--', label='True $C1$', linewidth=3, dashes=(5, 6))
+    ax.set_xlabel('Training step')
+    ax.set_ylabel('Capacitance (farad)')
+    ax.grid(visible=True, which='major', linestyle='--', linewidth=0.5, alpha=0.5)
+
+    # Legend
+    true_c1 = mlines.Line2D([], [], color=dashcolor, linestyle=(0, (3.5, 2)), linewidth=2.5, label='True $C1$')
+    estimated_c1 = mlines.Line2D([], [], color=linecol, linewidth=2.5, label='Estimated $C1$')
+    ax.legend(
+        handles=[estimated_c1, true_c1],
+        loc='upper right',           # or 'upper left', 'lower left', etc.
+        frameon=True,                # box around the legend
+        framealpha=1.0,              # solid box background
+        edgecolor='gray',           # box border color
+        fontsize='small'            # optional: to keep legend compact
+    )
+
+    # Custom x-ticks (NEEDS TO BE HARDCODED)
+    x_ticks = [0, 10, 20, 30, 40, 50]
+    x_labels = ['0', '10k', '20k', '30k', '40k', '50k']
+    ax.set_xticks(x_ticks)
+    ax.set_xticklabels(x_labels)
+    for spine in ax.spines.values():
+        spine.set_linewidth(1.5)
+
+    # Save the figure
+    save_dir = os.path.join(workdir, "figures", config.wandb.name)
+    os.makedirs(save_dir, exist_ok=True)
+    fig_path = os.path.join(save_dir, "c1_plot.pdf")
     fig.savefig(fig_path, bbox_inches="tight", dpi=300)
     plt.close(fig)
