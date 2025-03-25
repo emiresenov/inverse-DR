@@ -90,3 +90,35 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     fig_path = os.path.join(save_dir, "r01t_case1.pdf")
     fig.savefig(fig_path, dpi=300)
     plt.close(fig)
+
+
+    # u2 plot in 2D
+    fig = plt.figure(figsize=(6, 4), dpi=300)
+    plt.rc('font', family='serif')
+    line_color = "#1f77b4"  # Professional blue
+    scatter_color = "#ff7f0e"  # Rich orange    
+
+    plt.plot(T_star, u2_pred, label='Learned $\hat{R}_0(T)$', color=line_color, zorder=1)
+    plt.scatter(T_star, model.u2_ref, label='Sampled $R_0(T)$',
+                color=scatter_color, edgecolor="black", s=80, marker='o', zorder=2)
+
+    # Apply temperature scaling formatter to x-axis
+    plt.gca().xaxis.set_major_formatter(FuncFormatter(scale_temp))
+
+    plt.xlabel('Temperature (K)', fontsize=16, labelpad=10)
+    plt.ylabel('Resistance (Ω)', fontsize=16, labelpad=10)
+
+    plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=13)
+
+    plt.legend(fontsize=14, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
+
+    # Save the figure
+    save_dir = os.path.join(workdir, "figures", config.wandb.name)
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
+
+    fig_path = os.path.join(save_dir, "r0(T).pdf")
+    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
+    plt.close(fig)
