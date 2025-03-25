@@ -20,11 +20,13 @@ t_scale = 330.15
 
 p_noise = 0.2
 
+R1_const = 0.5
+
 def activation_R0(T):
     return a*jnp.exp(W/(k*T))
 
 def activation_R1(T):
-    return 0.5*activation_R0(T)
+    return R1_const*activation_R0(T)
 
 def solution(t, T):
     R1 = activation_R1(T)

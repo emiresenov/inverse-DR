@@ -8,7 +8,7 @@ from matplotlib import rcParams
 import matplotlib.lines as mlines
 from jaxpi.utils import restore_checkpoint
 import models
-from utils import get_dataset, t_scale, C1
+from utils import get_dataset, t_scale, C1, R1_const
 import wandb
 import pandas as pd
 
@@ -42,6 +42,9 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     u1_pred, u2_pred = model.u_pred_fn(params, t_star, T_star)
 
+    ### ------------------------
+    # u1 PLOT
+    ### ------------------------
 
     fig = plt.figure(figsize=(6,5))
     ax = fig.add_subplot(111, projection='3d')
@@ -93,8 +96,9 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     fig.savefig(fig_path, dpi=300)
     plt.close(fig)
 
-
-    # u2 plot in 2D
+    ### ------------------------
+    # R0(T) PLOT
+    ### ------------------------
     fig = plt.figure(figsize=(6, 4), dpi=300)
     plt.rc('font', family='serif')
     line_color = "#1f77b4"  # Professional blue
@@ -144,6 +148,9 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     history = last_run.history()
     df = pd.DataFrame(history)
 
+    ### ------------------------
+    # C1 PLOT
+    ### ------------------------
     # Plot style settings
     plt.rc('font', family='serif')
     plt.rc('font', size=14)
@@ -190,5 +197,41 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     save_dir = os.path.join(workdir, "figures", config.wandb.name)
     os.makedirs(save_dir, exist_ok=True)
     fig_path = os.path.join(save_dir, "c1_plot.pdf")
+    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
+    plt.close(fig)
+
+    ### ------------------------
+    # R1(T) PLOT
+    ### ------------------------
+    # Extract final value of R1
+    final_r1 = df["R1"].dropna().values[-1]  # Drop NaNs just in case
+
+    # Apply the scaling
+    scaled_u2_ref = model.u2_ref * R1_const
+    scaled_u2_pred = u2_pred * final_r1
+
+    # New figure for scaled plot
+    fig = plt.figure(figsize=(6, 4), dpi=300)
+    plt.rc('font', family='serif')
+
+    plt.plot(T_star, scaled_u2_pred, label=f'Learned $\hat{{R}}_1(T)$)',
+             color=line_color, zorder=1)
+    plt.scatter(T_star, scaled_u2_ref, label='Sampled $R1_0(T)$',
+                color=scatter_color, edgecolor="black", s=80, marker='o', zorder=2)
+
+    # Apply temperature scaling formatter to x-axis
+    plt.gca().xaxis.set_major_formatter(FuncFormatter(scale_temp))
+
+    plt.xlabel('Temperature (K)', fontsize=16, labelpad=10)
+    plt.ylabel('Scaled Resistance (Ω)', fontsize=16, labelpad=10)
+
+    plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=13)
+
+    plt.legend(fontsize=14, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
+
+    # Save the figure
+    fig_path = os.path.join(save_dir, "r1(T).pdf")
     fig.savefig(fig_path, bbox_inches="tight", dpi=300)
     plt.close(fig)
