@@ -90,7 +90,108 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     print(df['R'])'''
 
 
-    plt.rc('font', family='serif')
+
+
+    plt.rc('font', family='serif', size=13)
+    plt.rc('axes', titlesize=14, labelsize=13)
+    plt.rc('xtick', labelsize=12)
+    plt.rc('ytick', labelsize=12)
+    plt.rc('legend', fontsize=12)
+    plt.rc('figure', titlesize=14)
+
+    fig, axs = plt.subplots(1, 2, figsize=(7.6, 3.1), dpi=300)  # smaller figure size
+
+    line_colors = {
+        'R0': '#1f77b4',
+        'R1': '#2ca02c',
+        'R2': '#d62728',
+        'C1': '#9467bd',
+        'C2': '#8c564b'
+    }
+
+    # Resistance Plot
+    for param in ['R0', 'R1', 'R2']:
+        sns.lineplot(data=df, x=df.index, y=param, ax=axs[0],
+                    linewidth=2.5, color=line_colors[param])
+        axs[0].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=2.5)
+
+    axs[0].set_xlabel("Training step")
+    axs[0].set_ylabel("Resistance (Ω)")
+    axs[0].grid(True, linestyle='--', linewidth=0.5, alpha=0.6)
+
+    # Capacitance Plot
+    for param in ['C1', 'C2']:
+        sns.lineplot(data=df, x=df.index, y=param, ax=axs[1],
+                    linewidth=2.5, color=line_colors[param])
+        axs[1].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=2.5)
+
+    axs[1].set_xlabel("Training step")
+    axs[1].set_ylabel("Capacitance (farad)")
+    axs[1].grid(True, linestyle='--', linewidth=0.5, alpha=0.6)
+
+    # Legends
+    resistance_legend = [
+        mlines.Line2D([], [], color=line_colors['R0'], lw=2.5, label='$R_0$'),
+        mlines.Line2D([], [], color=line_colors['R1'], lw=2.5, label='$R_1$'),
+        mlines.Line2D([], [], color=line_colors['R2'], lw=2.5, label='$R_2$'),
+    ]
+    capacitance_legend = [
+        mlines.Line2D([], [], color=line_colors['C1'], lw=2.5, label='$C_1$'),
+        mlines.Line2D([], [], color=line_colors['C2'], lw=2.5, label='$C_2$'),
+    ]
+
+    axs[0].legend(handles=resistance_legend, frameon=True, framealpha=0.9, edgecolor='gray')
+    axs[1].legend(handles=capacitance_legend,
+              frameon=True,
+              framealpha=0.9,
+              edgecolor='gray',
+              fontsize=14,
+              handlelength=3.0)
+
+    # Compact shared legend
+    shared_lines = [
+        mlines.Line2D([], [], color='black', lw=2.0, linestyle='-', label='Estimated value'),
+        mlines.Line2D([], [], color='black', lw=2.0, linestyle='--', label='True value')
+    ]
+    fig.legend(handles=shared_lines,
+               loc='upper center',
+               ncol=2,
+               frameon=True,
+               edgecolor='gray',
+               fontsize=12,
+               bbox_to_anchor=(0.5, 1.07),  # move legend slightly higher
+               handlelength=2.5)
+
+    # Adjust layout to prevent label cutoff
+    fig.tight_layout(rect=[0, 0, 1, 0.97])  # leave space for top legend
+
+    # Shared layout settings
+    for ax in axs:
+        ax.set_xticks([0, 20, 40, 60, 80, 100])
+        ax.set_xticklabels(['0', '10k', '20k', '30k', '40k', '50k'])
+        for spine in ax.spines.values():
+            spine.set_linewidth(1.5)
+            
+    # Save
+    save_dir = os.path.join(workdir, "figures", config.wandb.name)
+    os.makedirs(save_dir, exist_ok=True)
+    fig_path = os.path.join(save_dir, "case2params_combined.pdf")
+    fig.savefig(fig_path, dpi=300, bbox_inches='tight')
+
+
+
+
+
+
+
+
+
+
+
+
+
+    # Old version
+    '''plt.rc('font', family='serif')
     plt.rc('font', size=14)
     plt.rc('axes', titlesize=16)
     plt.rc('axes', labelsize=12)
@@ -179,4 +280,4 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
         os.makedirs(save_dir)
 
     fig_path = os.path.join(save_dir, "case2params.pdf")
-    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
+    fig.savefig(fig_path, bbox_inches="tight", dpi=300)'''
