@@ -15,9 +15,6 @@ import pandas as pd
 
 from matplotlib.ticker import FuncFormatter
 
-# Custom formatter to scale T axis tick labels by 330.15
-def scale_temp(x, pos):
-    return f"{x * t_scale:.1f}"
 
 
 
@@ -71,13 +68,13 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
         linewidths=2
     )
 
+    
     # Format axis labels only
     from matplotlib.ticker import FuncFormatter
     def scale_temp(x, pos):
-        return f"{x * t_scale:.1f}"
+        return f"{x * t_scale:.0f}"
     ax.yaxis.set_major_formatter(FuncFormatter(scale_temp))
     ax.add_collection(line_collection)
-
 
     line_proxy = mlines.Line2D([], [], color='blue', linewidth=2, label='PINN Predictions')
 
@@ -97,41 +94,8 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     plt.close(fig)
 
     ### ------------------------
-    # R0(T) PLOT
+    # COMBINED R0(T) & R1(T) PLOT
     ### ------------------------
-    fig = plt.figure(figsize=(6, 4), dpi=300)
-    plt.rc('font', family='serif')
-    line_color = "#1f77b4"  # Professional blue
-    scatter_color = "#ff7f0e"  # Rich orange    
-
-    plt.plot(T_star, u2_pred, label='Learned $\hat{R}_0(T)$', color=line_color, zorder=1)
-    plt.scatter(T_star, model.u2_ref, label='Sampled $R_0(T)$',
-                color=scatter_color, edgecolor="black", s=80, marker='o', zorder=2)
-
-    # Apply temperature scaling formatter to x-axis
-    plt.gca().xaxis.set_major_formatter(FuncFormatter(scale_temp))
-
-    plt.xlabel('Temperature (K)', fontsize=16, labelpad=10)
-    plt.ylabel('Resistance (Ω)', fontsize=16, labelpad=10)
-
-    plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
-    plt.xticks(fontsize=13)
-    plt.yticks(fontsize=13)
-
-    plt.legend(fontsize=14, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
-
-    # Save the figure
-    save_dir = os.path.join(workdir, "figures", config.wandb.name)
-    if not os.path.isdir(save_dir):
-        os.makedirs(save_dir)
-
-    fig_path = os.path.join(save_dir, "r0(T).pdf")
-    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
-    plt.close(fig)
-
-    '''
-    Plot and save inverse parameter convergence
-    '''
 
     # Initialize API
     api = wandb.Api()
@@ -148,7 +112,60 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     history = last_run.history()
     df = pd.DataFrame(history)
 
-    ### ------------------------
+
+    fig = plt.figure(figsize=(6, 4), dpi=300)
+    plt.rc('font', family='serif')
+    line_color_r0 = "#1f77b4"  # Professional blue
+    scatter_color_r0 = "#ff7f0e"  # Rich orange
+    line_color_r1 = "#2ca02c"  # Green
+    scatter_color_r1 = "#d62728"  # Red
+
+    # R0(T)
+    plt.plot(T_star, u2_pred, label='Learned $\hat{R}_0(T)$', color=line_color_r0, zorder=1)
+    plt.scatter(T_star, model.u2_ref, label='Sampled $R_0(T)$',
+                color=scatter_color_r0, edgecolor="black", s=80, marker='o', zorder=2)
+
+    # R1(T) - scaled
+    final_r1 = df["R1"].dropna().values[-1]
+    scaled_u2_ref = model.u2_ref * R1_const
+    scaled_u2_pred = u2_pred * final_r1
+
+    plt.plot(T_star, scaled_u2_pred, label='Learned $\hat{R}_1(T)$', color=line_color_r1, zorder=3)
+    plt.scatter(T_star, scaled_u2_ref, label='Sampled $R_1(T)$',
+                color=scatter_color_r1, edgecolor="black", s=80, marker='s', zorder=4)
+
+    # Axes and formatting
+    plt.gca().xaxis.set_major_formatter(FuncFormatter(scale_temp))
+    plt.xlabel('Temperature (K)', fontsize=16, labelpad=10)
+    plt.ylabel('Resistance (Ω)', fontsize=16, labelpad=10)
+
+    plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
+    plt.xticks(fontsize=13)
+    plt.yticks(fontsize=13)
+
+    plt.legend(fontsize=13, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
+
+    # Save the figure
+    save_dir = os.path.join(workdir, "figures", config.wandb.name)
+    if not os.path.isdir(save_dir):
+        os.makedirs(save_dir)
+
+    fig_path = os.path.join(save_dir, "r01(T).pdf")
+    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
+    plt.close(fig)
+
+
+
+
+
+
+
+
+
+
+
+
+    '''    ### ------------------------
     # C1 PLOT
     ### ------------------------
     # Plot style settings
@@ -198,40 +215,4 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     os.makedirs(save_dir, exist_ok=True)
     fig_path = os.path.join(save_dir, "c1_plot.pdf")
     fig.savefig(fig_path, bbox_inches="tight", dpi=300)
-    plt.close(fig)
-
-    ### ------------------------
-    # R1(T) PLOT
-    ### ------------------------
-    # Extract final value of R1
-    final_r1 = df["R1"].dropna().values[-1]  # Drop NaNs just in case
-
-    # Apply the scaling
-    scaled_u2_ref = model.u2_ref * R1_const
-    scaled_u2_pred = u2_pred * final_r1
-
-    # New figure for scaled plot
-    fig = plt.figure(figsize=(6, 4), dpi=300)
-    plt.rc('font', family='serif')
-
-    plt.plot(T_star, scaled_u2_pred, label=f'Learned $\hat{{R}}_1(T)$)',
-             color=line_color, zorder=1)
-    plt.scatter(T_star, scaled_u2_ref, label='Sampled $R1_0(T)$',
-                color=scatter_color, edgecolor="black", s=80, marker='o', zorder=2)
-
-    # Apply temperature scaling formatter to x-axis
-    plt.gca().xaxis.set_major_formatter(FuncFormatter(scale_temp))
-
-    plt.xlabel('Temperature (K)', fontsize=16, labelpad=10)
-    plt.ylabel('Scaled Resistance (Ω)', fontsize=16, labelpad=10)
-
-    plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
-    plt.xticks(fontsize=13)
-    plt.yticks(fontsize=13)
-
-    plt.legend(fontsize=14, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
-
-    # Save the figure
-    fig_path = os.path.join(save_dir, "r1(T).pdf")
-    fig.savefig(fig_path, bbox_inches="tight", dpi=300)
-    plt.close(fig)
+    plt.close(fig)'''
