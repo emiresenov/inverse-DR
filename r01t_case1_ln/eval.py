@@ -121,7 +121,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     scatter_color_r1 = "#d62728"  # Red
 
     # R0(T)
-    plt.plot(T_star, u2_pred, label='Learned $\hat{R}_0(T)$', color=line_color_r0, zorder=1)
+    plt.plot(T_star, u2_pred, label='Learned $\widehat{R}_0(T)$', color=line_color_r0, zorder=1)
     plt.scatter(T_star, model.u2_ref, label='Sampled $R_0(T)$',
                 color=scatter_color_r0, edgecolor="black", s=80, marker='o', zorder=2)
 
@@ -130,7 +130,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     scaled_u2_ref = model.u2_ref * R1_const
     scaled_u2_pred = u2_pred * final_r1
 
-    plt.plot(T_star, scaled_u2_pred, label='Learned $\hat{R}_1(T)$', color=line_color_r1, zorder=3)
+    plt.plot(T_star, scaled_u2_pred, label='Learned $\widehat{R}_1(T)$', color=line_color_r1, zorder=3)
     plt.scatter(T_star, scaled_u2_ref, label='Sampled $R_1(T)$',
                 color=scatter_color_r1, edgecolor="black", s=80, marker='s', zorder=4)
 
