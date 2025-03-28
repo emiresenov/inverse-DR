@@ -28,24 +28,23 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     u1_pred, u2_pred = model.u_pred_fn(params, model.t_star)
 
-    fig = plt.figure(figsize=(8, 4), dpi=300)
+    fig = plt.figure(figsize=(8, 4.5), dpi=300)
     plt.rc('font', family='serif')
     line_color = "#1f77b4"  # Professional blue
     scatter_color = "#ff7f0e"  # Rich orange    
     plt.plot(model.t_star, u1_pred + u2_pred, color=line_color, linewidth=8, alpha=0.15, zorder=1)
-    plt.plot(model.t_star, u1_pred + u2_pred, label='Prediction', color=line_color, linewidth=3.5, zorder=2)
-    plt.scatter(model.t_star, model.u_ref, label='Measurement', color=scatter_color, edgecolor="black", s=80, marker='o', zorder=1)
+    plt.plot(model.t_star, u1_pred + u2_pred, label='PINN prediction', color=line_color, linewidth=3.5, zorder=2)
+    plt.scatter(model.t_star, model.u_ref, label='Measurement', color=scatter_color, edgecolor="black", s=100, marker='o', zorder=1)
     
-    plt.xlabel('Time (s)', fontsize=16, labelpad=10)
-    plt.ylabel('Current (A)', fontsize=16, labelpad=10)
-    plt.title('PINN Solution', fontsize=18, weight='bold', pad=15)
+    plt.xlabel('Time (s)', fontsize=20, labelpad=10)
+    plt.ylabel('Current (A)', fontsize=20, labelpad=10)
 
     plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
-    plt.xticks(fontsize=13)
-    plt.yticks(fontsize=13)
+    plt.xticks(fontsize=16)
+    plt.yticks(fontsize=16)
 
     # Legend
-    plt.legend(fontsize=14, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
+    plt.legend(fontsize=18, frameon=True, loc='upper right', framealpha=0.8, edgecolor='gray')
 
     # Remove unnecessary spines
     for spine in ['top', 'right']:
@@ -92,14 +91,18 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
 
 
-    plt.rc('font', family='serif', size=13)
-    plt.rc('axes', titlesize=14, labelsize=13)
-    plt.rc('xtick', labelsize=12)
-    plt.rc('ytick', labelsize=12)
-    plt.rc('legend', fontsize=12)
-    plt.rc('figure', titlesize=14)
+    plt.rc('font', family='serif', size=22)
+    plt.rc('axes', titlesize=24, labelsize=22)
+    plt.rc('xtick', labelsize=20)
+    plt.rc('ytick', labelsize=20)
+    plt.rc('legend', fontsize=20)
+    plt.rc('figure', titlesize=24)
 
-    fig, axs = plt.subplots(1, 2, figsize=(7.6, 3.1), dpi=300)  # smaller figure size
+    fig, axs = plt.subplots(1, 2, figsize=(10.5, 4.8), dpi=400)  # Larger figure size
+
+    line_width = 4.0  # Thicker plot lines
+    tick_width = 2.0
+    spine_width = 2.2
 
     line_colors = {
         'R0': '#1f77b4',
@@ -112,71 +115,63 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     # Resistance Plot
     for param in ['R0', 'R1', 'R2']:
         sns.lineplot(data=df, x=df.index, y=param, ax=axs[0],
-                    linewidth=2.5, color=line_colors[param])
-        axs[0].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=2.5)
+                    linewidth=line_width, color=line_colors[param])
+        axs[0].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=line_width)
 
-    axs[0].set_xlabel("Training step")
-    axs[0].set_ylabel("Resistance (Ω)")
-    axs[0].grid(True, linestyle='--', linewidth=0.5, alpha=0.6)
+    axs[0].set_xlabel("Training step", labelpad=10)
+    axs[0].set_ylabel("Resistance (Ω)", labelpad=10)
+    axs[0].grid(True, linestyle='--', linewidth=0.7, alpha=0.6)
 
     # Capacitance Plot
     for param in ['C1', 'C2']:
         sns.lineplot(data=df, x=df.index, y=param, ax=axs[1],
-                    linewidth=2.5, color=line_colors[param])
-        axs[1].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=2.5)
+                    linewidth=line_width, color=line_colors[param])
+        axs[1].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=line_width)
 
-    axs[1].set_xlabel("Training step")
-    axs[1].set_ylabel("Capacitance (farad)")
-    axs[1].grid(True, linestyle='--', linewidth=0.5, alpha=0.6)
+    axs[1].set_xlabel("Training step", labelpad=10)
+    axs[1].set_ylabel("Capacitance (farad)", labelpad=10)
+    axs[1].grid(True, linestyle='--', linewidth=0.7, alpha=0.6)
 
-    # Legends
+    # Custom Legends
     resistance_legend = [
-        mlines.Line2D([], [], color=line_colors['R0'], lw=2.5, label='$R_0$'),
-        mlines.Line2D([], [], color=line_colors['R1'], lw=2.5, label='$R_1$'),
-        mlines.Line2D([], [], color=line_colors['R2'], lw=2.5, label='$R_2$'),
+        mlines.Line2D([], [], color=line_colors['R0'], lw=line_width, label='$R_0$'),
+        mlines.Line2D([], [], color=line_colors['R1'], lw=line_width, label='$R_1$'),
+        mlines.Line2D([], [], color=line_colors['R2'], lw=line_width, label='$R_2$'),
     ]
     capacitance_legend = [
-        mlines.Line2D([], [], color=line_colors['C1'], lw=2.5, label='$C_1$'),
-        mlines.Line2D([], [], color=line_colors['C2'], lw=2.5, label='$C_2$'),
+        mlines.Line2D([], [], color=line_colors['C1'], lw=line_width, label='$C_1$'),
+        mlines.Line2D([], [], color=line_colors['C2'], lw=line_width, label='$C_2$'),
     ]
 
-    axs[0].legend(handles=resistance_legend, frameon=True, framealpha=0.9, edgecolor='gray')
-    axs[1].legend(handles=capacitance_legend,
-              frameon=True,
-              framealpha=0.9,
-              edgecolor='gray',
-              fontsize=14,
-              handlelength=3.0)
+    axs[0].legend(handles=resistance_legend, frameon=True, framealpha=0.95,
+                edgecolor='gray', handlelength=3.5, fontsize=19.5)
+    axs[1].legend(handles=capacitance_legend, frameon=True, framealpha=0.95,
+                edgecolor='gray', handlelength=3.5, fontsize=20)
 
-    # Compact shared legend
+    # Shared legend for Estimated/True
     shared_lines = [
-        mlines.Line2D([], [], color='black', lw=2.0, linestyle='-', label='Estimated value'),
-        mlines.Line2D([], [], color='black', lw=2.0, linestyle='--', label='True value')
+        mlines.Line2D([], [], color='black', lw=3.2, linestyle='-', label='Estimated value'),
+        mlines.Line2D([], [], color='black', lw=3.2, linestyle='--', label='True value')
     ]
     fig.legend(handles=shared_lines,
-               loc='upper center',
-               ncol=2,
-               frameon=True,
-               edgecolor='gray',
-               fontsize=12,
-               bbox_to_anchor=(0.5, 1.07),  # move legend slightly higher
-               handlelength=2.5)
+           loc='upper center', ncol=2, frameon=True,
+           edgecolor='gray', fontsize=20,
+           bbox_to_anchor=(0.5, 1.05), handlelength=3.2)
 
-    # Adjust layout to prevent label cutoff
-    fig.tight_layout(rect=[0, 0, 1, 0.97])  # leave space for top legend
-
-    # Shared layout settings
+    # Axis & Ticks
     for ax in axs:
         ax.set_xticks([0, 20, 40, 60, 80, 100])
         ax.set_xticklabels(['0', '10k', '20k', '30k', '40k', '50k'])
+        ax.tick_params(width=tick_width, length=6)
         for spine in ax.spines.values():
-            spine.set_linewidth(1.5)
-            
-    # Save
+            spine.set_linewidth(spine_width)
+
+    # Layout & Save
+    fig.tight_layout(rect=[0, 0, 1, 0.95])
     save_dir = os.path.join(workdir, "figures", config.wandb.name)
     os.makedirs(save_dir, exist_ok=True)
     fig_path = os.path.join(save_dir, "case2params_combined.pdf")
-    fig.savefig(fig_path, dpi=300, bbox_inches='tight')
+    fig.savefig(fig_path, dpi=400, bbox_inches='tight')
 
 
 
