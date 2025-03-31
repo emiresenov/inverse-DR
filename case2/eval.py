@@ -32,9 +32,10 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     plt.rc('font', family='serif')
     line_color = "#1f77b4"  # Professional blue
     scatter_color = "#ff7f0e"  # Rich orange    
+    plt.scatter(model.t_star, model.u_ref, label='Measurement', color=scatter_color, edgecolor="black", s=100, marker='o', zorder=1)
     plt.plot(model.t_star, u1_pred + u2_pred, color=line_color, linewidth=8, alpha=0.15, zorder=1)
     plt.plot(model.t_star, u1_pred + u2_pred, label='PINN Prediction', color=line_color, linewidth=3.5, zorder=2)
-    plt.scatter(model.t_star, model.u_ref, label='Measurement', color=scatter_color, edgecolor="black", s=100, marker='o', zorder=1)
+    
     
     plt.xlabel('Time (s)', fontsize=20, labelpad=10)
     plt.ylabel('Current (A)', fontsize=20, labelpad=10)
