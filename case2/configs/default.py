@@ -10,8 +10,8 @@ def get_config():
 
     # Weights & Biases
     config.wandb = wandb = ml_collections.ConfigDict()
-    wandb.project = "Case 2 + noise"
-    wandb.name = "baseline+noise"
+    wandb.project = "Article Case 2"
+    wandb.name = "baseline, scale=0.2"
     wandb.tag = None
 
     # Arch
