@@ -37,8 +37,8 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     plt.plot(model.t_star, u1_pred + u2_pred, label='PINN Prediction', color=line_color, linewidth=3.5, zorder=2)
     
     
-    plt.xlabel('Time (n.u.)', fontsize=20, labelpad=10)
-    plt.ylabel('Current (n.u.)', fontsize=20, labelpad=10)
+    plt.xlabel('Normalized time (a.u.)', fontsize=20, labelpad=10)
+    plt.ylabel('Normalized\ncurrent (a.u.)', fontsize=20, labelpad=10)
 
     plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
     plt.xticks(fontsize=16)
@@ -120,7 +120,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
         axs[0].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=line_width)
 
     axs[0].set_xlabel("Training step", labelpad=10)
-    axs[0].set_ylabel("Resistance (n.u.)", labelpad=10)
+    axs[0].set_ylabel("Normalized\nresistance (a.u.)", labelpad=10)
     axs[0].grid(True, linestyle='--', linewidth=0.7, alpha=0.6)
 
     # Capacitance Plot
@@ -130,7 +130,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
         axs[1].axhline(eval(param), color=line_colors[param], linestyle='--', linewidth=line_width)
 
     axs[1].set_xlabel("Training step", labelpad=10)
-    axs[1].set_ylabel("Capacitance (n.u.)", labelpad=10)
+    axs[1].set_ylabel("Normalized\ncapacitance (a.u.)", labelpad=10)
     axs[1].grid(True, linestyle='--', linewidth=0.7, alpha=0.6)
 
     # Custom Legends
@@ -153,7 +153,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
         fontsize=19.5,
         loc='best',
         bbox_transform=axs[0].transAxes,
-        bbox_to_anchor=(0.5, 0.6)
+        bbox_to_anchor=(0.425, 0.6)
     )
 
     axs[1].legend(handles=capacitance_legend, frameon=True, framealpha=0.95,

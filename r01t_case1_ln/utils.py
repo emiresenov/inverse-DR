@@ -54,13 +54,3 @@ def get_ic_ref():
     t0s = jnp.repeat(t_start, len(Ts))
     return solution(t0s, Ts)
 
-
-
-'''print(get_dataset())
-print()
-print(get_domain())
-print()
-print(get_ic_dom())
-print()
-print(get_ic_ref())'''
-
