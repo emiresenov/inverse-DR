@@ -18,7 +18,7 @@ k = 8e-5
 Ts = jnp.linspace(293.15, 323.15, 10)
 t_scale = 330.15
 
-p_noise = 0.2
+p_noise = 0.4
 
 R1_const = 0.5
 

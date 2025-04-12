@@ -54,7 +54,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
         c='orange', 
         edgecolor='k', 
         linewidth=0.5, 
-        label="Measurements"
+        label="Samples"
     )
 
     points = jnp.column_stack((t_star, T_star, u1_pred))
@@ -78,13 +78,13 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
 
     line_proxy = mlines.Line2D([], [], color='blue', linewidth=2, label='PINN Predictions')
 
-    ax.set_xlabel("Time (s)")
+    ax.set_xlabel("Normalized time (a.u.)")
     ax.set_ylabel("Temperature (K)")
-    ax.set_zlabel("Current (A)")
+    ax.set_zlabel("Normalized\ncurrent (a.u.)")
 
     ax.view_init(elev=20, azim=-60)  # Adjust for best visibility
 
-    ax.legend([scatter_plot, line_proxy], ["Measurements", "PINN Predictions"], loc="upper left")
+    ax.legend([scatter_plot, line_proxy], ["Samples", "PINN Predictions"], loc="upper left")
 
     save_dir = os.path.join(workdir, "figures", config.wandb.name)
     if not os.path.isdir(save_dir):
@@ -137,7 +137,7 @@ def evaluate(config: ml_collections.ConfigDict, workdir: str):
     # Axes and formatting
     plt.gca().xaxis.set_major_formatter(FuncFormatter(scale_temp))
     plt.xlabel('Temperature (K)', fontsize=16, labelpad=10)
-    plt.ylabel('Resistance (Ω)', fontsize=16, labelpad=10)
+    plt.ylabel('Normalized\nresistance (a.u.)', fontsize=16, labelpad=10)
 
     plt.grid(visible=True, linestyle='--', linewidth=0.6, alpha=0.5)
     plt.xticks(fontsize=13)
