@@ -2,7 +2,7 @@ import scipy.io
 import jax.numpy as jnp
 import numpy as np
 
-#np.random.seed(42)
+np.random.seed(42)
 
 V = 10.0
 R = 10.0
