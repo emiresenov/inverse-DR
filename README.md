@@ -60,6 +60,8 @@ $$\frac{dI_2}{dt} + \frac{I}{R_{2}C_{2}} = 0$$
 ---
 ### $R_0(T)$ Case 1
 
+![](doc/subnets.drawio.svg)
+
 - One temperature-dependent steady-state branch, one RC branch
 - Since resistance values coming from Arrhenius function had high numerical variance, leading to highly varied current values, we solved temperature-dependent cases with logarithmic current 
 - Analytical solution:
@@ -72,7 +74,7 @@ $$\ln \left( I(t=0) \right) = \ln \left( \frac{U}{R_{0}} + \frac{U}{R_{1}} \righ
 
 - Residual:
 
-$$\frac{d\ln(I)}{dt} + \frac{1}{R_{1}C_{1}} \left( 1 - \frac{U}{R_{0}(T)} e^{ \ln(I) }\right)$$
+$$\frac{d\ln(I)}{dt} + \frac{1}{R_{1}C_{1}} \left( 1 - \frac{U}{R_{0}(T)} e^{ - \ln(I) }\right)$$
 
 ---
 ### $R_0(T), R_1(T)$ Case 1
