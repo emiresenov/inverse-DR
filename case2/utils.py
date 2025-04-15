@@ -2,7 +2,6 @@ import jax.numpy as jnp
 import numpy as np
 
 
-# Seed set for reproducibility
 np.random.seed(42)
 
 V = 10.0
